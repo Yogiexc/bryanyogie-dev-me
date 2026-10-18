@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { Coffee, Server, Users, Eye, Sparkles, Compass, CheckCircle2 } from "lucide-react";
+import { Coffee, Server, Users, Eye, Sparkles, Activity, ShieldCheck, Zap } from "lucide-react";
 
 interface AgentData {
   id: string;
@@ -14,6 +14,8 @@ interface AgentData {
   badgeCol: string;
   x: number;
   z: number;
+  chairX: number;
+  chairZ: number;
   hair: string;
   cloth: string;
 }
@@ -21,54 +23,50 @@ interface AgentData {
 export default function VirtualOffice() {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const [selectedAgent, setSelectedAgent] = useState<AgentData | null>(null);
-  const [metrics, setMetrics] = useState({ coffeeCount: 164, deploysCount: 72, activeAgents: 9 });
+  const [metrics, setMetrics] = useState({ coffeeCount: 184, deploysCount: 89, packetRate: "1.2 Gbps" });
 
   const agentDefs: AgentData[] = [
-    { id: "bryan", name: "Bryan Yogie", role: "Lead Fullstack & Network", dept: "Dev Lead", status: "Architecting Next.js 16 core & network tunnels.", badgeCol: "#FF7043", x: -5.5, z: -2.8, hair: "#111827", cloth: "#FF7043" },
-    { id: "jarwo", name: "Jarwo AI", role: "Chief AI Orchestrator", dept: "AI Operations", status: "Dispatching multi-agent tasks & balancing edge queues.", badgeCol: "#B9F5D8", x: -2.0, z: -2.8, hair: "#334155", cloth: "#B9F5D8" },
-    { id: "maya", name: "Maya UI", role: "Design Systems & 3D Web", dept: "Creative Tech", status: "Fine-tuning PBR shaders, lighting & micro-interactions.", badgeCol: "#F472B6", x: 1.5, z: -2.8, hair: "#64748b", cloth: "#F472B6" },
-    { id: "backend", name: "Backend Bot", role: "Distributed DB & API", dept: "Systems", status: "Indexing SQL query execution plans under 2ms.", badgeCol: "#38BDF8", x: -5.5, z: 1.8, hair: "#1e293b", cloth: "#38BDF8" },
-    { id: "sentinel_qa", name: "Sentinel QA", role: "E2E Mobile Tester", dept: "Quality Assurance", status: "Simulating mobile touch viewports (375px) with 0 glitches.", badgeCol: "#A78BFA", x: -2.0, z: 1.8, hair: "#475569", cloth: "#A78BFA" },
-    { id: "pipeline_ops", name: "Pipeline Ops", role: "CI/CD & Serverless Deploy", dept: "DevOps", status: "All Vercel edge build pipelines verified & live.", badgeCol: "#34D399", x: 1.5, z: 1.8, hair: "#0f172a", cloth: "#34D399" },
-    { id: "cisco_net", name: "Cisco Agent", role: "Network Security & Router", dept: "Infrastructure", status: "Packet firewall, BGP route table & VLANs synchronized.", badgeCol: "#FBBF24", x: 7.2, z: -3.8, hair: "#1e1e1e", cloth: "#FBBF24" },
-    { id: "growth_agent", name: "Growth Agent", role: "Global Traffic & Telemetry", dept: "Analytics", status: "Tracking global organic visitor conversion metrics.", badgeCol: "#FB923C", x: 6.5, z: 3.5, hair: "#78350f", cloth: "#FB923C" },
-    { id: "barista_bot", name: "Barista Bot", role: "Executive Fuel & Pantry", dept: "Refreshment", status: "Double-shot espresso freshly extracted! ☕", badgeCol: "#E2E8F0", x: -7.5, z: 4.8, hair: "#3f3f46", cloth: "#FFFFFF" },
+    { id: "bryan", name: "Bryan Yogie", role: "Lead Fullstack & Network", dept: "Dev Lead", status: "Designing Next.js scalable architecture & microservices.", badgeCol: "#FF7043", x: -5.5, z: -2.4, chairX: -5.5, chairZ: -2.4, hair: "#111827", cloth: "#FF7043" },
+    { id: "jarwo", name: "Jarwo AI", role: "Chief AI Orchestrator", dept: "AI Operations", status: "Orchestrating agent workflows & load-balancing edge tasks.", badgeCol: "#B9F5D8", x: -2.0, z: -2.4, chairX: -2.0, chairZ: -2.4, hair: "#334155", cloth: "#B9F5D8" },
+    { id: "maya", name: "Maya UI", role: "Design Systems & 3D Web", dept: "Creative Tech", status: "Refining 3D Three.js PBR shaders & layout responsiveness.", badgeCol: "#F472B6", x: 1.5, z: -2.4, chairX: 1.5, chairZ: -2.4, hair: "#64748b", cloth: "#F472B6" },
+    { id: "backend", name: "Backend Bot", role: "Distributed DB & API", dept: "Systems", status: "Optimizing indexed SQL query caching under 1.8ms.", badgeCol: "#38BDF8", x: -5.5, z: 2.1, chairX: -5.5, chairZ: 2.1, hair: "#1e293b", cloth: "#38BDF8" },
+    { id: "sentinel_qa", name: "Sentinel QA", role: "E2E Mobile Tester", dept: "Quality Assurance", status: "Simulating mobile touch gestures on 375px viewports.", badgeCol: "#A78BFA", x: -2.0, z: 2.1, chairX: -2.0, chairZ: 2.1, hair: "#475569", cloth: "#A78BFA" },
+    { id: "pipeline_ops", name: "Pipeline Ops", role: "CI/CD & Serverless Deploy", dept: "DevOps", status: "Zero downtime verified on Vercel Edge networks.", badgeCol: "#34D399", x: 1.5, z: 2.1, chairX: 1.5, chairZ: 2.1, hair: "#0f172a", cloth: "#34D399" },
+    { id: "cisco_net", name: "Cisco Agent", role: "Network Security & Router", dept: "Infrastructure", status: "Monitoring patch cables, fiber switches & VLAN tunnels.", badgeCol: "#FBBF24", x: 7.2, z: -3.5, chairX: 7.2, chairZ: -3.5, hair: "#1e1e1e", cloth: "#FBBF24" },
+    { id: "growth_agent", name: "Growth Agent", role: "Global Traffic & Telemetry", dept: "Analytics", status: "Streaming real-time global visitor analytics.", badgeCol: "#FB923C", x: 6.8, z: 4.0, chairX: 6.8, chairZ: 4.0, hair: "#78350f", cloth: "#FB923C" },
+    { id: "barista_bot", name: "Barista Bot", role: "Executive Fuel & Pantry", dept: "Refreshment", status: "Fresh Arabica double-shot espresso brewed! ☕", badgeCol: "#E2E8F0", x: -7.5, z: 5.2, chairX: -7.5, chairZ: 5.2, hair: "#3f3f46", cloth: "#FFFFFF" },
   ];
 
-  // Helper to create 3D Sprite Billboard Name Tags
   const createTextSprite = (text: string, color: string, subText?: string) => {
     const canvas = document.createElement("canvas");
-    canvas.width = 300;
-    canvas.height = 100;
+    canvas.width = 320;
+    canvas.height = 110;
     const ctx = canvas.getContext("2d");
     if (ctx) {
-      // Rounded bubble
-      ctx.fillStyle = "rgba(10, 20, 20, 0.9)";
+      ctx.fillStyle = "rgba(10, 20, 20, 0.92)";
       ctx.strokeStyle = color;
       ctx.lineWidth = 4;
       ctx.beginPath();
-      ctx.roundRect(10, 10, 280, 80, 16);
+      ctx.roundRect(10, 10, 300, 90, 18);
       ctx.fill();
       ctx.stroke();
 
-      // Text Title
-      ctx.font = "bold 28px sans-serif";
+      ctx.font = "bold 30px sans-serif";
       ctx.fillStyle = "#ffffff";
       ctx.textAlign = "center";
-      ctx.fillText(text, 150, 48);
+      ctx.fillText(text, 160, 50);
 
-      // Sub text
       if (subText) {
-        ctx.font = "bold 18px monospace";
+        ctx.font = "bold 20px monospace";
         ctx.fillStyle = color;
-        ctx.fillText(subText, 150, 74);
+        ctx.fillText(subText, 160, 80);
       }
     }
 
     const texture = new THREE.CanvasTexture(canvas);
     const spriteMat = new THREE.SpriteMaterial({ map: texture, depthTest: false });
     const sprite = new THREE.Sprite(spriteMat);
-    sprite.scale.set(2.8, 0.95, 1);
+    sprite.scale.set(3.0, 1.05, 1);
     return sprite;
   };
 
@@ -76,19 +74,24 @@ export default function VirtualOffice() {
     const container = mountRef.current;
     if (!container) return;
 
-    // 1. SCENE SETUP - Clean Bright Modern Studio
+    const isMobile = window.innerWidth < 768;
+
+    // 1. SCENE SETUP
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#0c1515"); // Deep rich Cinder
-    // Gentle fog that doesn't black out the room
-    scene.fog = new THREE.Fog("#0c1515", 35, 75);
+    scene.background = new THREE.Color("#0c1515");
+    scene.fog = new THREE.Fog("#0c1515", 35, 80);
 
     const width = container.clientWidth || 980;
-    const height = 540;
+    const height = isMobile ? 420 : 560;
 
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
-    // Positioned closer and higher so the whole office pops
-    camera.position.set(16, 17, 20);
-    camera.lookAt(0, 1, 0);
+    // Dynamic camera for mobile vs desktop
+    if (isMobile) {
+      camera.position.set(20, 24, 24); // Wider viewpoint on mobile
+    } else {
+      camera.position.set(16, 17, 20);
+    }
+    camera.lookAt(0, 1.2, 0);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
     renderer.setSize(width, height);
@@ -96,28 +99,26 @@ export default function VirtualOffice() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.35; // Bright, vibrant exposure
+    renderer.toneMappingExposure = 1.35;
     container.appendChild(renderer.domElement);
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.maxPolarAngle = Math.PI / 2.15;
-    controls.minDistance = 10;
-    controls.maxDistance = 38;
+    controls.minDistance = 9;
+    controls.maxDistance = 45;
     controls.target.set(0, 1.2, 0);
 
-    // 2. BRIGHT COMPREHENSIVE LIGHTING
+    // 2. STUDIO LIGHTING
     const hemiLight = new THREE.HemisphereLight("#b9f5d8", "#111827", 2.2);
     scene.add(hemiLight);
 
-    const mainSun = new THREE.DirectionalLight("#ffffff", 2.6);
-    mainSun.position.set(16, 26, 16);
+    const mainSun = new THREE.DirectionalLight("#ffffff", 2.8);
+    mainSun.position.set(16, 28, 16);
     mainSun.castShadow = true;
     mainSun.shadow.mapSize.width = 2048;
     mainSun.shadow.mapSize.height = 2048;
-    mainSun.shadow.camera.near = 0.5;
-    mainSun.shadow.camera.far = 65;
     const d = 18;
     mainSun.shadow.camera.left = -d;
     mainSun.shadow.camera.right = d;
@@ -125,26 +126,24 @@ export default function VirtualOffice() {
     mainSun.shadow.camera.bottom = -d;
     scene.add(mainSun);
 
-    // Warm Key Light (Flare Orange)
     const flareKey = new THREE.PointLight("#ff7043", 4.5, 25);
     flareKey.position.set(-6, 6, 4);
     scene.add(flareKey);
 
-    // Cool Tech Light (Mint & Cyan)
     const mintKey = new THREE.PointLight("#b9f5d8", 4.0, 25);
     mintKey.position.set(2, 6, -4);
     scene.add(mintKey);
 
-    // Server Bay Glow
     const serverGlow = new THREE.PointLight("#38bdf8", 5.0, 20);
     serverGlow.position.set(7.5, 5, -4);
     scene.add(serverGlow);
 
-    // 3. ARCHITECTURAL FLOOR WITH WARM INLAYS
+    // 3. ARCHITECTURAL WALLS & FLOORS
+    // Main Floor
     const floorGeo = new THREE.BoxGeometry(26, 0.4, 20);
     const floorMat = new THREE.MeshStandardMaterial({
-      color: "#142424", // Premium Cinder Floor
-      roughness: 0.4,
+      color: "#142424",
+      roughness: 0.35,
       metalness: 0.15,
     });
     const floor = new THREE.Mesh(floorGeo, floorMat);
@@ -152,14 +151,43 @@ export default function VirtualOffice() {
     floor.receiveShadow = true;
     scene.add(floor);
 
-    // Grid inlays
-    const gridHelper = new THREE.GridHelper(26, 26, "#b9f5d8", "#1a3232");
-    gridHelper.position.y = 0.01;
-    (gridHelper.material as THREE.Material).opacity = 0.25;
-    (gridHelper.material as THREE.Material).transparent = true;
-    scene.add(gridHelper);
+    // Background Architectural Back Wall with Glass Window Strips
+    const wallGeo = new THREE.BoxGeometry(26, 7, 0.5);
+    const wallMat = new THREE.MeshStandardMaterial({ color: "#0e1a1a", roughness: 0.8 });
+    const backWall = new THREE.Mesh(wallGeo, wallMat);
+    backWall.position.set(0, 3.3, -10);
+    backWall.receiveShadow = true;
+    scene.add(backWall);
 
-    // Engineering Rug (Dark Cinder)
+    // Side Wall (Left)
+    const sideWallGeo = new THREE.BoxGeometry(0.5, 7, 20);
+    const leftWall = new THREE.Mesh(sideWallGeo, wallMat);
+    leftWall.position.set(-13, 3.3, 0);
+    leftWall.receiveShadow = true;
+    scene.add(leftWall);
+
+    // Glowing Neon Wall Sign "BYS LAB // CLOUD METAVERSE"
+    const signGeo = new THREE.PlaneGeometry(8, 1.4);
+    const signCanvas = document.createElement("canvas");
+    signCanvas.width = 400;
+    signCanvas.height = 70;
+    const signCtx = signCanvas.getContext("2d");
+    if (signCtx) {
+      signCtx.fillStyle = "#162828";
+      signCtx.fillRect(0, 0, 400, 70);
+      signCtx.strokeStyle = "#b9f5d8";
+      signCtx.lineWidth = 4;
+      signCtx.strokeRect(4, 4, 392, 62);
+      signCtx.font = "bold 26px monospace";
+      signCtx.fillStyle = "#b9f5d8";
+      signCtx.fillText("BYS LAB // DEV METAVERSE", 24, 44);
+    }
+    const signTex = new THREE.CanvasTexture(signCanvas);
+    const signMesh = new THREE.Mesh(signGeo, new THREE.MeshBasicMaterial({ map: signTex }));
+    signMesh.position.set(-4, 5.0, -9.7);
+    scene.add(signMesh);
+
+    // Floor Inset Rugs
     const engRug = new THREE.Mesh(
       new THREE.BoxGeometry(13.5, 0.04, 9.5),
       new THREE.MeshStandardMaterial({ color: "#182c2c", roughness: 0.7 })
@@ -168,7 +196,7 @@ export default function VirtualOffice() {
     engRug.receiveShadow = true;
     scene.add(engRug);
 
-    // Data Center Platform (Cold Metal Grate)
+    // Data Center Platform
     const dataPlatform = new THREE.Mesh(
       new THREE.BoxGeometry(7.5, 0.08, 7.5),
       new THREE.MeshStandardMaterial({ color: "#0c1824", roughness: 0.2, metalness: 0.8 })
@@ -177,43 +205,24 @@ export default function VirtualOffice() {
     dataPlatform.receiveShadow = true;
     scene.add(dataPlatform);
 
-    // Executive Lounge Wood Rug
-    const loungeRug = new THREE.Mesh(
-      new THREE.BoxGeometry(8, 0.04, 7.5),
-      new THREE.MeshStandardMaterial({ color: "#221d1b", roughness: 0.9 })
-    );
-    loungeRug.position.set(6.5, 0.02, 4.5);
-    loungeRug.receiveShadow = true;
-    scene.add(loungeRug);
-
-    // Pantry Tile
-    const pantryTile = new THREE.Mesh(
-      new THREE.BoxGeometry(6.5, 0.04, 7),
-      new THREE.MeshStandardMaterial({ color: "#251c17", roughness: 0.5 })
-    );
-    pantryTile.position.set(-8, 0.02, 5);
-    pantryTile.receiveShadow = true;
-    scene.add(pantryTile);
-
-    // 4. FURNITURE BUILDER
+    // 4. REALISTIC DETAILED WORKSTATIONS (DESKS, MONITORS, TOWER PC, CABLES)
     const deskMat = new THREE.MeshStandardMaterial({ color: "#1e3535", roughness: 0.4, metalness: 0.3 });
     const monitorMat = new THREE.MeshStandardMaterial({ color: "#050a0a", roughness: 0.2 });
     const mintScreen = new THREE.MeshBasicMaterial({ color: "#b9f5d8" });
     const flareScreen = new THREE.MeshBasicMaterial({ color: "#ff7043" });
-    const chairMat = new THREE.MeshStandardMaterial({ color: "#0f172a", roughness: 0.7 });
 
-    const createWorkstation = (x: number, z: number) => {
+    const createRealWorkstation = (x: number, z: number) => {
       const g = new THREE.Group();
       g.position.set(x, 0, z);
 
-      // Top
+      // Wooden Top with bevel
       const top = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.14, 1.6), deskMat);
       top.position.y = 1.35;
       top.castShadow = true;
       top.receiveShadow = true;
       g.add(top);
 
-      // Legs
+      // Metal Legs
       const legMat = new THREE.MeshStandardMaterial({ color: "#475569", metalness: 0.8 });
       [[-1.2, -0.6], [1.2, -0.6], [-1.2, 0.6], [1.2, 0.6]].forEach(([lx, lz]) => {
         const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.35), legMat);
@@ -222,7 +231,24 @@ export default function VirtualOffice() {
         g.add(leg);
       });
 
-      // Dual Monitors
+      // Realistic Gaming / Dev PC Case (Under the desk)
+      const tower = new THREE.Mesh(
+        new THREE.BoxGeometry(0.5, 0.9, 0.9),
+        new THREE.MeshStandardMaterial({ color: "#0f172a", roughness: 0.3, metalness: 0.7 })
+      );
+      tower.position.set(-1.0, 0.45, 0.2);
+      tower.castShadow = true;
+      g.add(tower);
+
+      // PC Case Glass RGB Fan Glow
+      const fanGlow = new THREE.Mesh(
+        new THREE.CircleGeometry(0.18, 16),
+        new THREE.MeshBasicMaterial({ color: (x < 0) ? "#ff7043" : "#38bdf8" })
+      );
+      fanGlow.position.set(-1.0, 0.55, 0.66);
+      g.add(fanGlow);
+
+      // Dual Curved Monitors
       const scrGeo = new THREE.BoxGeometry(0.95, 0.6, 0.05);
       const faceGeo = new THREE.PlaneGeometry(0.88, 0.52);
 
@@ -246,45 +272,122 @@ export default function VirtualOffice() {
       f2.rotation.y = -0.18;
       g.add(f2);
 
-      // Chair
-      const seat = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.1, 0.75), chairMat);
-      seat.position.set(0, 0.85, 0.65);
-      g.add(seat);
+      // Curved Cable Tubes dropping from desk to PC
+      const cableCurve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3(0.2, 1.3, -0.2),
+        new THREE.Vector3(-0.4, 0.9, 0.0),
+        new THREE.Vector3(-0.8, 0.5, 0.2),
+      ]);
+      const cableMesh = new THREE.Mesh(
+        new THREE.TubeGeometry(cableCurve, 12, 0.025, 6, false),
+        new THREE.MeshStandardMaterial({ color: "#0f172a", roughness: 0.9 })
+      );
+      g.add(cableMesh);
 
-      const back = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.85, 0.1), chairMat);
-      back.position.set(0, 1.25, 0.98);
-      g.add(back);
+      // Ergonomic Mesh Swivel Chair
+      const chairGroup = new THREE.Group();
+      chairGroup.position.set(0, 0, 0.65);
 
+      const seat = new THREE.Mesh(
+        new THREE.BoxGeometry(0.75, 0.1, 0.75),
+        new THREE.MeshStandardMaterial({ color: "#090d16", roughness: 0.6 })
+      );
+      seat.position.y = 0.85;
+      seat.castShadow = true;
+      chairGroup.add(seat);
+
+      const back = new THREE.Mesh(
+        new THREE.BoxGeometry(0.75, 0.9, 0.08),
+        new THREE.MeshStandardMaterial({ color: "#1e293b", roughness: 0.5 })
+      );
+      back.position.set(0, 1.3, 0.36);
+      back.castShadow = true;
+      chairGroup.add(back);
+
+      // Armrests
+      [-0.4, 0.4].forEach((ax) => {
+        const arm = new THREE.Mesh(
+          new THREE.BoxGeometry(0.08, 0.4, 0.5),
+          new THREE.MeshStandardMaterial({ color: "#334155" })
+        );
+        arm.position.set(ax, 1.05, 0.05);
+        chairGroup.add(arm);
+      });
+
+      // Five-star chair base & cylinder
+      const basePillar = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.06, 0.06, 0.85),
+        new THREE.MeshStandardMaterial({ color: "#64748b", metalness: 0.9 })
+      );
+      basePillar.position.y = 0.425;
+      chairGroup.add(basePillar);
+
+      g.add(chairGroup);
       scene.add(g);
     };
 
-    // 6 Workstations
-    createWorkstation(-5.5, -3.5);
-    createWorkstation(-2.0, -3.5);
-    createWorkstation(1.5, -3.5);
-    createWorkstation(-5.5, 1.0);
-    createWorkstation(-2.0, 1.0);
-    createWorkstation(1.5, 1.0);
+    // 6 Full Dev Workstations
+    createRealWorkstation(-5.5, -3.5);
+    createRealWorkstation(-2.0, -3.5);
+    createRealWorkstation(1.5, -3.5);
+    createRealWorkstation(-5.5, 1.0);
+    createRealWorkstation(-2.0, 1.0);
+    createRealWorkstation(1.5, 1.0);
 
-    // 3 Server Racks
-    const rackGeo = new THREE.BoxGeometry(1.4, 4.0, 1.5);
+    // 5. DATA CENTER WITH VISIBLE TANGLED FIBER PATCH CABLES & SWITCHES
+    const rackGeo = new THREE.BoxGeometry(1.4, 4.2, 1.5);
     const rackMat = new THREE.MeshStandardMaterial({ color: "#020617", metalness: 0.8, roughness: 0.2 });
     for (let s = 0; s < 3; s++) {
       const rack = new THREE.Mesh(rackGeo, rackMat);
-      rack.position.set(5.8 + s * 1.8, 2.0, -5.5);
+      const rx = 5.8 + s * 1.8;
+      rack.position.set(rx, 2.1, -5.5);
       rack.castShadow = true;
       rack.receiveShadow = true;
       scene.add(rack);
 
       const ledFace = new THREE.Mesh(
-        new THREE.PlaneGeometry(1.1, 3.2),
+        new THREE.PlaneGeometry(1.1, 3.4),
         new THREE.MeshBasicMaterial({ color: s % 2 === 0 ? "#38bdf8" : "#22c55e" })
       );
-      ledFace.position.set(5.8 + s * 1.8, 2.0, -4.74);
+      ledFace.position.set(rx, 2.1, -4.74);
       scene.add(ledFace);
+
+      // Realistic Patch Cables hanging down the front of the server racks
+      const colors = ["#ef4444", "#3b82f6", "#eab308", "#10b981", "#8b5cf6"];
+      for (let c = 0; c < 4; c++) {
+        const cableCurve = new THREE.CatmullRomCurve3([
+          new THREE.Vector3(rx - 0.4 + c * 0.25, 3.2 - c * 0.4, -4.7),
+          new THREE.Vector3(rx - 0.3 + c * 0.2, 2.2 - c * 0.3, -4.55),
+          new THREE.Vector3(rx - 0.4 + c * 0.25, 1.2 - c * 0.2, -4.7),
+        ]);
+        const tube = new THREE.Mesh(
+          new THREE.TubeGeometry(cableCurve, 10, 0.02, 6, false),
+          new THREE.MeshStandardMaterial({ color: colors[c % colors.length], roughness: 0.5 })
+        );
+        scene.add(tube);
+      }
     }
 
-    // Glass Conference Table & Chairs
+    // Overhead Cable Tray running from Server Room to Desks
+    const trayGeo = new THREE.BoxGeometry(12, 0.15, 0.6);
+    const trayMat = new THREE.MeshStandardMaterial({ color: "#1e293b", metalness: 0.7 });
+    const cableTray = new THREE.Mesh(trayGeo, trayMat);
+    cableTray.position.set(1.0, 5.2, -4.5);
+    scene.add(cableTray);
+
+    // Hanging Yellow & Cyan Network Trunk Cables
+    const trunkCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(6.5, 4.2, -5.0),
+      new THREE.Vector3(2.0, 5.1, -4.5),
+      new THREE.Vector3(-3.5, 3.5, -3.5),
+    ]);
+    const trunkMesh = new THREE.Mesh(
+      new THREE.TubeGeometry(trunkCurve, 20, 0.045, 6, false),
+      new THREE.MeshStandardMaterial({ color: "#eab308", roughness: 0.6 })
+    );
+    scene.add(trunkMesh);
+
+    // 6. EXECUTIVE CONFERENCE ROOM & PANTRY
     const confTable = new THREE.Mesh(
       new THREE.BoxGeometry(5.0, 0.15, 3.0),
       new THREE.MeshPhysicalMaterial({ color: "#1e293b", roughness: 0.1, transmission: 0.5, thickness: 0.4 })
@@ -293,7 +396,6 @@ export default function VirtualOffice() {
     confTable.castShadow = true;
     scene.add(confTable);
 
-    // Laptops on Conference table
     [[-1.5, 0], [0, 0], [1.5, 0]].forEach(([lx, lz]) => {
       const lap = new THREE.Mesh(
         new THREE.BoxGeometry(0.6, 0.04, 0.45),
@@ -303,7 +405,6 @@ export default function VirtualOffice() {
       scene.add(lap);
     });
 
-    // Espresso Bar & Machine
     const barCounter = new THREE.Mesh(
       new THREE.BoxGeometry(3.5, 1.5, 1.8),
       new THREE.MeshStandardMaterial({ color: "#3e2723", roughness: 0.6 })
@@ -335,14 +436,17 @@ export default function VirtualOffice() {
       scene.add(leaf);
     });
 
-    // 5. AGENTS WITH PERSISTENT 3D BILLBOARD NAME TAGS
+    // 7. AGENTS WITH SEATED / WALKING STATE MACHINE
     interface AgentRuntime {
       data: AgentData;
       group: THREE.Group;
       targetPos: THREE.Vector3;
       homePos: THREE.Vector3;
       isMoving: boolean;
-      tagSprite: THREE.Sprite;
+      isSeated: boolean;
+      bodyMesh: THREE.Mesh;
+      legL: THREE.Mesh;
+      legR: THREE.Mesh;
     }
 
     const agentsRuntime: AgentRuntime[] = [];
@@ -350,7 +454,6 @@ export default function VirtualOffice() {
     const createVoxelCharacter = (hairCol: string, clothCol: string) => {
       const g = new THREE.Group();
 
-      // Torso
       const body = new THREE.Mesh(
         new THREE.BoxGeometry(0.7, 0.85, 0.42),
         new THREE.MeshStandardMaterial({ color: clothCol, roughness: 0.4 })
@@ -359,7 +462,6 @@ export default function VirtualOffice() {
       body.castShadow = true;
       g.add(body);
 
-      // Head
       const head = new THREE.Mesh(
         new THREE.BoxGeometry(0.55, 0.55, 0.55),
         new THREE.MeshStandardMaterial({ color: "#fecdd3", roughness: 0.6 })
@@ -368,7 +470,6 @@ export default function VirtualOffice() {
       head.castShadow = true;
       g.add(head);
 
-      // Hair
       const hair = new THREE.Mesh(
         new THREE.BoxGeometry(0.6, 0.22, 0.6),
         new THREE.MeshStandardMaterial({ color: hairCol, roughness: 0.8 })
@@ -376,7 +477,6 @@ export default function VirtualOffice() {
       hair.position.y = 2.05;
       g.add(hair);
 
-      // Legs
       const legGeo = new THREE.BoxGeometry(0.24, 0.65, 0.24);
       const legMat = new THREE.MeshStandardMaterial({ color: "#0f172a" });
 
@@ -392,7 +492,6 @@ export default function VirtualOffice() {
       legR.castShadow = true;
       g.add(legR);
 
-      // Ground Aura
       const aura = new THREE.Mesh(
         new THREE.RingGeometry(0.5, 0.65, 32),
         new THREE.MeshBasicMaterial({ color: clothCol, side: THREE.DoubleSide })
@@ -401,15 +500,14 @@ export default function VirtualOffice() {
       aura.position.y = 0.05;
       g.add(aura);
 
-      return g;
+      return { group: g, body, legL, legR };
     };
 
     agentDefs.forEach((d) => {
-      const charGroup = createVoxelCharacter(d.hair, d.cloth);
+      const { group: charGroup, body, legL, legR } = createVoxelCharacter(d.hair, d.cloth);
       charGroup.position.set(d.x, 0, d.z);
       scene.add(charGroup);
 
-      // Create Overhead 3D Name Tag Sprite
       const sprite = createTextSprite(d.name, d.badgeCol, d.dept);
       sprite.position.set(0, 2.9, 0);
       charGroup.add(sprite);
@@ -418,43 +516,50 @@ export default function VirtualOffice() {
         data: d,
         group: charGroup,
         targetPos: new THREE.Vector3(d.x, 0, d.z),
-        homePos: new THREE.Vector3(d.x, 0, d.z),
+        homePos: new THREE.Vector3(d.chairX, 0, d.chairZ),
         isMoving: false,
-        tagSprite: sprite,
+        isSeated: true, // Initially seated comfortably at desk
+        bodyMesh: body,
+        legL,
+        legR,
       });
     });
 
-    // Default focus
     setSelectedAgent(agentDefs[0]);
 
-    // AUTONOMOUS ROUTINE: Agents walk safely within office bounds (NO DISAPPEARING BUGS)
+    // AUTONOMOUS ROUTINE: AGENTS SIT AT DESKS & OCCASIONALLY STAND UP TO WALK
     const routineTimer = setInterval(() => {
       agentsRuntime.forEach((a) => {
-        if (Math.random() < 0.32 && !a.isMoving) {
-          const choice = Math.random();
-          if (choice < 0.25) {
-            // Visit Espresso Bar (Safe bounded zone)
-            a.targetPos.set(-7.5 + (Math.random() - 0.5) * 2, 0, 4.5 + (Math.random() - 0.5) * 1.5);
-            a.data.status = "Grabbing fresh double-shot espresso! ☕";
-            setMetrics((m) => ({ ...m, coffeeCount: m.coffeeCount + 1 }));
-          } else if (choice < 0.55) {
-            // Visit Conference Table
-            a.targetPos.set(6.5 + (Math.random() - 0.5) * 2.5, 0, 4.5 + (Math.random() - 0.5) * 1.5);
-            a.data.status = "Syncing in sprint collaboration meeting 💡";
-          } else if (choice < 0.75) {
-            // Visit Server Room
-            a.targetPos.set(7.5 + (Math.random() - 0.5) * 2, 0, -3.5 + (Math.random() - 0.5) * 1.5);
-            a.data.status = "Inspecting edge telemetry & DNS routing ⚡";
-            setMetrics((m) => ({ ...m, deploysCount: m.deploysCount + 1 }));
-          } else {
-            // Return to Assigned Desk
+        if (!a.isMoving) {
+          const rand = Math.random();
+          if (a.isSeated && rand < 0.28) {
+            // Stand up and walk!
+            a.isSeated = false;
+            a.isMoving = true;
+            if (rand < 0.1) {
+              // Visit Pantry
+              a.targetPos.set(-7.5 + (Math.random() - 0.5) * 2, 0, 4.5 + (Math.random() - 0.5) * 1.5);
+              a.data.status = "Standing up to grab espresso from barista pantry ☕";
+              setMetrics((m) => ({ ...m, coffeeCount: m.coffeeCount + 1 }));
+            } else if (rand < 0.2) {
+              // Visit Server Room
+              a.targetPos.set(7.5 + (Math.random() - 0.5) * 2, 0, -3.5 + (Math.random() - 0.5) * 1.5);
+              a.data.status = "Walking to server room to check patch cables & packet logs ⚡";
+              setMetrics((m) => ({ ...m, deploysCount: m.deploysCount + 1 }));
+            } else {
+              // Visit Meeting Table
+              a.targetPos.set(6.5 + (Math.random() - 0.5) * 2.5, 0, 4.5 + (Math.random() - 0.5) * 1.5);
+              a.data.status = "Joining executive architecture sprint at glass table 💡";
+            }
+          } else if (!a.isSeated && rand < 0.45) {
+            // Return to chair and sit down!
             a.targetPos.copy(a.homePos);
-            a.data.status = `Executing ${a.data.dept} automated workload.`;
+            a.isMoving = true;
+            a.data.status = `Returning to desk, sitting down & coding ${a.data.dept} services.`;
           }
-          a.isMoving = true;
         }
       });
-    }, 4000);
+    }, 4200);
 
     // CLICK TO MOVE OR INSPECT
     const raycaster = new THREE.Raycaster();
@@ -467,7 +572,6 @@ export default function VirtualOffice() {
 
       raycaster.setFromCamera(mouse, camera);
 
-      // Check agent click
       let clickedAgent: AgentRuntime | null = null;
       for (const a of agentsRuntime) {
         const hits = raycaster.intersectObjects(a.group.children, true);
@@ -482,20 +586,20 @@ export default function VirtualOffice() {
         return;
       }
 
-      // Check Floor hit -> Direct Bryan
+      // Floor click -> direct Bryan
       const floorHits = raycaster.intersectObject(floor);
       if (floorHits.length > 0) {
         const pt = floorHits[0].point;
         const bryan = agentsRuntime.find((a) => a.data.id === "bryan");
         if (bryan) {
-          // Keep strictly inside bounds
+          bryan.isSeated = false;
           bryan.targetPos.set(
             Math.max(-11.5, Math.min(11.5, pt.x)),
             0,
             Math.max(-8.5, Math.min(8.5, pt.z))
           );
           bryan.isMoving = true;
-          bryan.data.status = "Walking to selected office station! 🚶‍♂️";
+          bryan.data.status = "Walking to requested coordinates! 🚶‍♂️";
           setSelectedAgent(bryan.data);
         }
       }
@@ -503,18 +607,19 @@ export default function VirtualOffice() {
 
     renderer.domElement.addEventListener("pointerdown", handlePointerDown);
 
-    // Resize handler
+    // Responsive resize
     const handleResize = () => {
       if (!container) return;
       const w = container.clientWidth || 980;
-      camera.aspect = w / height;
+      const h = window.innerWidth < 768 ? 420 : 560;
+      camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      renderer.setSize(w, height);
+      renderer.setSize(w, h);
     };
 
     window.addEventListener("resize", handleResize);
 
-    // 6. RENDER 60FPS ANIMATION LOOP
+    // 8. RENDER 60FPS LOOP WITH SITTING & WALKING KINEMATICS
     let frameId: number;
     let clock = new THREE.Clock();
 
@@ -522,7 +627,6 @@ export default function VirtualOffice() {
       const delta = clock.getDelta();
       const time = clock.getElapsedTime();
 
-      // Update Walking Mechanics with Bound Clamping
       agentsRuntime.forEach((a) => {
         if (a.isMoving) {
           const dir = new THREE.Vector3().subVectors(a.targetPos, a.group.position);
@@ -532,28 +636,35 @@ export default function VirtualOffice() {
             dir.normalize();
             a.group.position.addScaledVector(dir, delta * 3.8);
 
-            // Rotate towards target
             const angle = Math.atan2(dir.x, dir.z);
             a.group.rotation.y = angle;
 
-            // Leg stride
-            const legL = a.group.getObjectByName("legL");
-            const legR = a.group.getObjectByName("legR");
-            if (legL && legR) {
-              legL.rotation.x = Math.sin(time * 14) * 0.65;
-              legR.rotation.x = -Math.sin(time * 14) * 0.65;
-            }
+            // Character is standing up & walking
+            a.group.position.y = 0;
+            a.bodyMesh.position.y = 1.05;
+            a.legL.rotation.x = Math.sin(time * 14) * 0.65;
+            a.legR.rotation.x = -Math.sin(time * 14) * 0.65;
           } else {
             a.group.position.copy(a.targetPos);
             a.isMoving = false;
 
-            const legL = a.group.getObjectByName("legL");
-            const legR = a.group.getObjectByName("legR");
-            if (legL && legR) {
-              legL.rotation.x = 0;
-              legR.rotation.x = 0;
+            // Check if arrived at home chair
+            if (a.targetPos.distanceTo(a.homePos) < 0.2) {
+              a.isSeated = true;
             }
           }
+        } else if (a.isSeated) {
+          // SEATED POSE: Legs bent horizontally on chair, lower body height
+          a.group.rotation.y = 0; // Face forward towards monitor
+          a.group.position.y = -0.22; // Lower to sit comfortably
+          a.bodyMesh.position.y = 1.05;
+          a.legL.rotation.x = Math.PI / 2.2; // Legs bent forward sitting
+          a.legR.rotation.x = Math.PI / 2.2;
+        } else {
+          // Idle Standing
+          a.group.position.y = 0;
+          a.legL.rotation.x = 0;
+          a.legR.rotation.x = 0;
         }
       });
 
@@ -604,15 +715,15 @@ export default function VirtualOffice() {
               BYS <span className="text-mint">3D Virtual Office</span>
             </h2>
             <p className="text-foreground/70 font-mono text-xs md:text-sm max-w-2xl mt-2 leading-relaxed">
-              Real-time 3D metaverse powered by Three.js: 9 autonomous voxel agents with visible nametags, live task telemetry, and real-time pathfinding.
+              Real-time 3D metaverse powered by Three.js: 9 voxel agents sitting at ergonomic desks, walking to espresso bars, with detailed network cabling, RGB gaming rigs & fiber racks.
               <span className="text-flare font-bold block mt-1">
-                🕹️ Click & drag to rotate view • Click any floor tile to walk Bryan around!
+                🕹️ Touch or drag to orbit in 3D • Tap any floor tile to command Bryan!
               </span>
             </p>
           </div>
 
-          {/* Realtime Telemetry */}
-          <div className="flex items-center gap-4 bg-[#121f1f] p-3 rounded-2xl border border-mint/20 text-xs font-mono">
+          {/* Realtime Metrics */}
+          <div className="flex flex-wrap items-center gap-3 md:gap-4 bg-[#121f1f] p-3 rounded-2xl border border-mint/20 text-xs font-mono">
             <div className="flex items-center gap-1.5 text-mint">
               <Coffee size={15} className="text-flare" />
               <span>{metrics.coffeeCount} Coffees</span>
@@ -624,8 +735,8 @@ export default function VirtualOffice() {
             </div>
             <div className="w-[1px] h-4 bg-white/20" />
             <div className="flex items-center gap-1.5 text-white">
-              <Users size={15} className="text-flare" />
-              <span>9 Live Agents</span>
+              <Zap size={15} className="text-amber-400" />
+              <span>{metrics.packetRate}</span>
             </div>
           </div>
         </div>
@@ -634,27 +745,27 @@ export default function VirtualOffice() {
         <div className="w-full bg-[#101b1b] rounded-3xl border-2 border-mint/30 shadow-[0_25px_70px_rgba(0,0,0,0.85)] overflow-hidden relative">
           
           {/* Top Control Bar */}
-          <div className="bg-[#142323] px-6 py-3.5 flex items-center justify-between border-b border-mint/20">
+          <div className="bg-[#142323] px-4 md:px-6 py-3 flex items-center justify-between border-b border-mint/20">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
               <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
               <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-              <span className="ml-3 font-mono text-xs text-foreground/70 tracking-wider hidden sm:inline">
-                three_pbr_studio // high_exposure_vibrant
+              <span className="ml-3 font-mono text-[11px] md:text-xs text-foreground/70 tracking-wider">
+                bys_cyber_studio // mobile_responsive_pbr
               </span>
             </div>
 
-            <div className="flex items-center gap-3 text-xs font-mono text-mint">
-              <span className="flex items-center gap-1.5">
-                <Eye size={13} /> Left-Click to Orbit • Right-Click to Pan • Scroll to Zoom
-              </span>
+            <div className="flex items-center gap-2 text-[11px] md:text-xs font-mono text-mint">
+              <Eye size={13} />
+              <span className="hidden sm:inline">Left-Click Orbit • Right-Click Pan • Pinch / Scroll Zoom</span>
+              <span className="sm:hidden">Drag to Rotate 3D</span>
             </div>
           </div>
 
-          {/* 3D WebGL Canvas */}
+          {/* 3D Canvas Mount (Responsive Height) */}
           <div 
             ref={mountRef} 
-            className="w-full h-[540px] bg-[#0c1515] relative cursor-grab active:cursor-grabbing overflow-hidden"
+            className="w-full h-[420px] md:h-[560px] bg-[#0c1515] relative cursor-grab active:cursor-grabbing overflow-hidden"
           />
 
           {/* LIVE AGENT INSPECTOR HUD */}
@@ -667,14 +778,14 @@ export default function VirtualOffice() {
               <div className="text-foreground/90">
                 <span className="text-foreground/50">Inspecting: </span>
                 <strong className="text-white text-sm">{selectedAgent?.name}</strong>
-                <span className="text-mint ml-2 px-2 py-0.5 rounded-md bg-mint/10 border border-mint/30">
+                <span className="text-mint ml-2 px-2 py-0.5 rounded-md bg-mint/10 border border-mint/30 text-[10px]">
                   {selectedAgent?.role}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-foreground/80 bg-[#090f0f] px-4 py-2 rounded-xl border border-white/10 max-w-xl">
-              <span className="text-flare font-bold">STATUS:</span>
+            <div className="flex items-center gap-2 text-foreground/80 bg-[#090f0f] px-3.5 py-2 rounded-xl border border-white/10 max-w-xl w-full md:w-auto">
+              <span className="text-flare font-bold text-[11px]">STATUS:</span>
               <span className="text-mint font-sans text-xs truncate">
                 &quot;{selectedAgent?.status}&quot;
               </span>
