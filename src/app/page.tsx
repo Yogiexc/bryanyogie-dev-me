@@ -12,6 +12,7 @@ import TechMarquee from "@/components/TechMarquee";
 import HorizontalTimeline from "@/components/HorizontalTimeline";
 import Highlights from "@/components/Highlights";
 import CertificatesGallery from "@/components/CertificatesGallery";
+import VirtualOffice from "@/components/VirtualOffice";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -32,6 +33,7 @@ export default function Home() {
         <HorizontalTimeline />
         <Highlights />
         <CertificatesGallery />
+        <VirtualOffice />
         <Footer />
       </div>
     </main>
