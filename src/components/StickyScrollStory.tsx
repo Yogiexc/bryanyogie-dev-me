@@ -199,7 +199,7 @@ export default function StickyScrollStory() {
             <span className="text-[#3b82f6] font-mono text-sm tracking-widest uppercase border border-[#3b82f6] self-start px-3 py-1 rounded-full">
               0{index + 1} // {story.title}
             </span>
-            <div className="text-4xl md:text-5xl lg:text-6xl font-outfit font-black text-white leading-[0.9] tracking-tighter uppercase uppercase-text-shadow">
+            <div className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-outfit font-black text-white leading-tight md:leading-[0.9] tracking-tighter uppercase uppercase-text-shadow">
               {story.content}
             </div>
           </div>

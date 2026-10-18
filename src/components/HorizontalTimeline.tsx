@@ -62,15 +62,15 @@ export default function HorizontalTimeline() {
 
   return (
     <section ref={sectionRef} className="h-screen w-full bg-[#0a0a0a] overflow-hidden flex flex-col justify-center relative">
-      <div className="absolute top-20 left-12 md:left-24">
-        <h2 className="text-4xl md:text-6xl font-outfit font-bold uppercase tracking-tighter text-white">
+      <div className="absolute top-12 md:top-20 left-6 md:left-24">
+        <h2 className="text-3xl md:text-6xl font-outfit font-bold uppercase tracking-tighter text-white">
           Journey
         </h2>
       </div>
 
-      <div ref={containerRef} className="flex h-1/2 items-center px-12 md:px-24 gap-12 md:gap-32 w-max mt-10">
+      <div ref={containerRef} className="flex h-1/2 items-center px-6 md:px-24 gap-8 md:gap-32 w-max mt-16 md:mt-10">
         {timelineEvents.map((event, index) => (
-          <div key={index} className="flex flex-col w-[300px] md:w-[450px] relative">
+          <div key={index} className="flex flex-col w-[260px] sm:w-[320px] md:w-[450px] relative">
             {/* Timeline line */}
             <div className="absolute top-8 left-0 w-[150%] h-[2px] bg-white/20 -z-10" />
             
