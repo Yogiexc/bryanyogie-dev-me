@@ -1,3 +1,5 @@
+"use client";
+
 import { CSSProperties, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 export interface DriftWallItem {
@@ -122,7 +124,7 @@ const DriftWall = ({
     });
   }, [columnItems, tileHeight, gap, containerHeight]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!containerRef.current) return;
     const ro = new ResizeObserver(([entry]) => {
       setContainerHeight(entry.contentRect.height || 600);
