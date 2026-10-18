@@ -12,8 +12,8 @@ interface AgentData {
   dept: string;
   status: string;
   badgeCol: string;
-  chairPos: [number, number, number]; // exact chair location
-  deskFacing: number; // Y rotation angle when seated
+  chairPos: [number, number, number];
+  deskFacing: number;
   hair: string;
   cloth: string;
 }
@@ -21,7 +21,7 @@ interface AgentData {
 export default function VirtualOffice() {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const [selectedAgent, setSelectedAgent] = useState<AgentData | null>(null);
-  const [metrics, setMetrics] = useState({ coffeeCount: 195, deploysCount: 94, packetRate: "1.4 Gbps" });
+  const [metrics, setMetrics] = useState({ coffeeCount: 210, deploysCount: 104, packetRate: "1.6 Gbps" });
 
   const agentDefs: AgentData[] = [
     { id: "bryan", name: "Bryan Yogie", role: "Lead Fullstack & Network", dept: "Dev Lead", status: "Designing Next.js scalable architecture & microservices.", badgeCol: "#FF7043", chairPos: [-5.5, 0, -2.6], deskFacing: 0, hair: "#111827", cloth: "#FF7043" },
@@ -35,99 +35,243 @@ export default function VirtualOffice() {
     { id: "barista_bot", name: "Barista Bot", role: "Executive Fuel & Pantry", dept: "Refreshment", status: "Fresh Arabica double-shot espresso brewed! ☕", badgeCol: "#E2E8F0", chairPos: [-7.5, 0, 5.2], deskFacing: 0, hair: "#3f3f46", cloth: "#FFFFFF" },
   ];
 
-  // Helper to generate procedural realistic animated screens (VS Code IDE / Matrix Terminal)
-  const createScreenCanvasTexture = (type: "code" | "terminal" | "telemetry", accentColor: string) => {
+  // Helper to generate distinct realistic animated screens
+  const createSpecializedScreenTexture = (roleType: "bryan_code" | "jarwo_ai" | "maya_figma" | "backend_sql" | "qa_mobile" | "devops_terminal") => {
     const canvas = document.createElement("canvas");
     canvas.width = 512;
     canvas.height = 320;
     const ctx = canvas.getContext("2d");
     if (!ctx) return new THREE.CanvasTexture(canvas);
 
-    // Dark IDE background (#0d1117 / VS Code style)
-    ctx.fillStyle = "#090d16";
-    ctx.fillRect(0, 0, 512, 320);
+    if (roleType === "bryan_code") {
+      // Bryan: Next.js Turbopack Fullstack IDE
+      ctx.fillStyle = "#0a0f1d";
+      ctx.fillRect(0, 0, 512, 320);
 
-    // Window top bar with 3 dots
-    ctx.fillStyle = "#161f2e";
-    ctx.fillRect(0, 0, 512, 32);
-    ctx.fillStyle = "#ff5f56";
-    ctx.beginPath();
-    ctx.arc(18, 16, 6, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = "#ffbd2e";
-    ctx.beginPath();
-    ctx.arc(36, 16, 6, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = "#27c93f";
-    ctx.beginPath();
-    ctx.arc(54, 16, 6, 0, Math.PI * 2);
-    ctx.fill();
+      ctx.fillStyle = "#162032";
+      ctx.fillRect(0, 0, 512, 32);
+      ctx.fillStyle = "#ff5f56"; ctx.beginPath(); ctx.arc(16, 16, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#ffbd2e"; ctx.beginPath(); ctx.arc(32, 16, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#27c93f"; ctx.beginPath(); ctx.arc(48, 16, 5, 0, Math.PI * 2); ctx.fill();
 
-    ctx.font = "bold 14px monospace";
-    ctx.fillStyle = "#64748b";
-    ctx.fillText(type === "code" ? "page.tsx - Next.js [Turbopack]" : "bash - edge_network.sh", 80, 21);
+      ctx.font = "bold 13px monospace";
+      ctx.fillStyle = "#94a3b8";
+      ctx.fillText("page.tsx - Bryan (Fullstack Architecture)", 70, 21);
 
-    // Left line numbers gutter
-    ctx.fillStyle = "#1e293b";
-    ctx.fillRect(0, 32, 45, 288);
-    ctx.fillStyle = "#475569";
-    ctx.font = "12px monospace";
-    for (let i = 1; i <= 14; i++) {
-      ctx.fillText(String(i).padStart(2, " "), 10, 32 + i * 19);
-    }
+      ctx.fillStyle = "#1e293b";
+      ctx.fillRect(0, 32, 40, 288);
+      ctx.font = "11px monospace";
+      ctx.fillStyle = "#475569";
+      for (let i = 1; i <= 13; i++) ctx.fillText(String(i).padStart(2, " "), 8, 35 + i * 20);
 
-    if (type === "code") {
-      // Syntax highlighted realistic code lines
-      const codeSnippets = [
-        { kw: "import", val: " { useState, useEffect } from 'react';", c1: "#f43f5e", c2: "#f8fafc" },
-        { kw: "export default", val: " function Engine() {", c1: "#38bdf8", c2: "#fbbf24" },
-        { kw: "  const", val: " [status, setStatus] = useState('LIVE');", c1: "#a78bfa", c2: "#b9f5d8" },
-        { kw: "  const", val: " latency = await Edge.ping(); // 12ms", c1: "#a78bfa", c2: "#64748b" },
-        { kw: "  return", val: " (", c1: "#f43f5e", c2: "#f8fafc" },
-        { kw: "    <Cluster", val: " nodes={9} protocol='TCP'>", c1: "#34d399", c2: "#e2e8f0" },
-        { kw: "      <Telemetry", val: " stream={liveTraffic} />", c1: "#38bdf8", c2: "#e2e8f0" },
-        { kw: "    </Cluster>", val: "", c1: "#34d399", c2: "" },
-        { kw: "  );", val: "", c1: "#f8fafc", c2: "" },
-        { kw: "}", val: " // Scalable Clean Architecture", c1: "#fbbf24", c2: "#64748b" },
+      const lines = [
+        { c: "#f43f5e", t: "import" }, { c: "#f8fafc", t: " { useState } from 'react';" },
+        { c: "#38bdf8", t: "\nexport async" }, { c: "#fbbf24", t: " function loadCluster() {" },
+        { c: "#b9f5d8", t: "\n  const nodes" }, { c: "#e2e8f0", t: " = await Edge.ping();" },
+        { c: "#ff7043", t: "\n  return" }, { c: "#f8fafc", t: " <BYSVirtualOffice nodes={9} />;" },
+        { c: "#64748b", t: "\n} // High-Scale Turbo Turbopack" },
       ];
+      let y = 60;
+      ctx.font = "bold 13px monospace";
+      ctx.fillStyle = "#f43f5e"; ctx.fillText("import", 50, y);
+      ctx.fillStyle = "#f8fafc"; ctx.fillText(" { useState } from 'react';", 105, y);
+      y += 24;
+      ctx.fillStyle = "#38bdf8"; ctx.fillText("export async", 50, y);
+      ctx.fillStyle = "#fbbf24"; ctx.fillText(" function loadCluster() {", 155, y);
+      y += 24;
+      ctx.fillStyle = "#b9f5d8"; ctx.fillText("  const nodes", 50, y);
+      ctx.fillStyle = "#e2e8f0"; ctx.fillText(" = await Edge.ping(); // 12ms", 155, y);
+      y += 24;
+      ctx.fillStyle = "#ff7043"; ctx.fillText("  return", 50, y);
+      ctx.fillStyle = "#f8fafc"; ctx.fillText(" <BYSVirtualOffice nodes={9} />;", 115, y);
+      y += 24;
+      ctx.fillStyle = "#64748b"; ctx.fillText("} // 100% Clean Architecture", 50, y);
 
-      codeSnippets.forEach((line, idx) => {
-        const y = 50 + idx * 20;
-        ctx.font = "bold 13px monospace";
-        ctx.fillStyle = line.c1;
-        ctx.fillText(line.kw, 55, y);
-        const offset = ctx.measureText(line.kw).width + 60;
-        ctx.fillStyle = line.c2;
-        ctx.fillText(line.val, offset, y);
+      ctx.fillStyle = "#ff7043";
+      ctx.fillRect(50, y + 20, 8, 16);
+    } else if (roleType === "jarwo_ai") {
+      // Jarwo: Neural Network / Agent Orchestration Dispatcher
+      ctx.fillStyle = "#0c1717";
+      ctx.fillRect(0, 0, 512, 320);
+
+      ctx.fillStyle = "#142828";
+      ctx.fillRect(0, 0, 512, 32);
+      ctx.font = "bold 13px monospace";
+      ctx.fillStyle = "#b9f5d8";
+      ctx.fillText("JARWO_AI_DISPATCHER // NEURAL_ORCHESTRATION", 20, 21);
+
+      // Node Topology Diagram
+      ctx.strokeStyle = "rgba(185, 245, 216, 0.4)";
+      ctx.lineWidth = 2;
+      const nodes = [{ x: 100, y: 100 }, { x: 250, y: 70 }, { x: 250, y: 160 }, { x: 400, y: 110 }, { x: 250, y: 250 }, { x: 400, y: 230 }];
+      ctx.beginPath();
+      ctx.moveTo(nodes[0].x, nodes[0].y); ctx.lineTo(nodes[1].x, nodes[1].y);
+      ctx.moveTo(nodes[0].x, nodes[0].y); ctx.lineTo(nodes[2].x, nodes[2].y);
+      ctx.moveTo(nodes[1].x, nodes[1].y); ctx.lineTo(nodes[3].x, nodes[3].y);
+      ctx.moveTo(nodes[2].x, nodes[2].y); ctx.lineTo(nodes[4].x, nodes[4].y);
+      ctx.moveTo(nodes[4].x, nodes[4].y); ctx.lineTo(nodes[5].x, nodes[5].y);
+      ctx.stroke();
+
+      nodes.forEach((n, idx) => {
+        ctx.fillStyle = idx === 0 ? "#ff7043" : "#b9f5d8";
+        ctx.beginPath(); ctx.arc(n.x, n.y, 10, 0, Math.PI * 2); ctx.fill();
+        ctx.font = "bold 10px monospace";
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText(`A${idx + 1}`, n.x - 7, n.y + 3);
       });
 
-      // Animated cursor blinking
-      ctx.fillStyle = accentColor;
-      ctx.fillRect(55, 260, 8, 15);
-    } else {
-      // Server telemetry / real-time terminal graphs
-      ctx.fillStyle = "#10b981";
-      ctx.font = "bold 13px monospace";
-      ctx.fillText("[OK] 100GbE Optical Core active", 55, 60);
-      ctx.fillText("[OK] Redis Cluster ping: 0.8ms", 55, 82);
-      ctx.fillStyle = "#38bdf8";
-      ctx.fillText("CPU Load: [||||||||||..........] 42%", 55, 110);
-      ctx.fillText("Memory:   [||||||||||||||......] 68%", 55, 130);
-      ctx.fillStyle = "#fbbf24";
-      ctx.fillText("BGP Peers: 14/14 Established", 55, 158);
-      ctx.fillStyle = "#e2e8f0";
-      ctx.fillText("packet_stream_rx: 1,420,850 pkts/s", 55, 185);
+      ctx.fillStyle = "#b9f5d8";
+      ctx.font = "bold 12px monospace";
+      ctx.fillText("[ACTIVE] Queue: 14 Tasks | Routing: Optimal (0ms drop)", 50, 300);
+    } else if (roleType === "maya_figma") {
+      // Maya: Figma UI / 3D Design Canvas
+      ctx.fillStyle = "#1e1e1e";
+      ctx.fillRect(0, 0, 512, 320);
 
-      // Mini bar chart
-      ctx.fillStyle = accentColor;
-      for (let bar = 0; bar < 24; bar++) {
-        const h = 20 + Math.sin(bar * 0.8) * 15 + (bar % 3) * 10;
-        ctx.fillRect(55 + bar * 17, 300 - h, 12, h);
-      }
+      ctx.fillStyle = "#2d2d2d";
+      ctx.fillRect(0, 0, 512, 32);
+      ctx.font = "bold 13px sans-serif";
+      ctx.fillStyle = "#f472b6";
+      ctx.fillText("Figma - Portfolio_Rebrand_v3.0.fig", 20, 21);
+
+      // Wireframe mobile app mockup on canvas
+      ctx.fillStyle = "#121212";
+      ctx.fillRect(60, 60, 110, 220);
+      ctx.strokeStyle = "#f472b6";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(60, 60, 110, 220);
+
+      ctx.fillStyle = "#f472b6";
+      ctx.fillRect(75, 80, 80, 20); // Header mockup
+      ctx.fillStyle = "#b9f5d8";
+      ctx.fillRect(75, 115, 80, 50); // Hero card
+      ctx.fillStyle = "#ff7043";
+      ctx.fillRect(75, 180, 80, 25); // Button
+
+      // Color Swatches on right side
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillStyle = "#ffffff";
+      ctx.fillText("PALETTE #02 (CINDER MINT)", 210, 80);
+
+      const swatches = [
+        { name: "Deep Cinder #182A2A", c: "#182a2a" },
+        { name: "Electric Mint #B9F5D8", c: "#b9f5d8" },
+        { name: "Flare Orange #FF7043", c: "#ff7043" },
+        { name: "Bone White #F4F0E8", c: "#f4f0e8" },
+      ];
+      swatches.forEach((s, idx) => {
+        ctx.fillStyle = s.c;
+        ctx.fillRect(210, 105 + idx * 40, 30, 25);
+        ctx.fillStyle = "#94a3b8";
+        ctx.font = "11px monospace";
+        ctx.fillText(s.name, 250, 122 + idx * 40);
+      });
+    } else if (roleType === "backend_sql") {
+      // Backend: PostgreSQL Queries & Tables
+      ctx.fillStyle = "#0b1320";
+      ctx.fillRect(0, 0, 512, 320);
+
+      ctx.fillStyle = "#1c2a3e";
+      ctx.fillRect(0, 0, 512, 32);
+      ctx.font = "bold 13px monospace";
+      ctx.fillStyle = "#38bdf8";
+      ctx.fillText("PostgreSQL 16 // DB_Cluster: Active (Master)", 20, 21);
+
+      ctx.font = "bold 12px monospace";
+      ctx.fillStyle = "#38bdf8"; ctx.fillText("SELECT", 30, 65);
+      ctx.fillStyle = "#f8fafc"; ctx.fillText(" id, name, latency_ms, status", 85, 65);
+      ctx.fillStyle = "#38bdf8"; ctx.fillText("FROM", 30, 85);
+      ctx.fillStyle = "#f8fafc"; ctx.fillText(" distributed_agents", 75, 85);
+      ctx.fillStyle = "#38bdf8"; ctx.fillText("WHERE", 30, 105);
+      ctx.fillStyle = "#f8fafc"; ctx.fillText(" health = 'HEALTHY' ORDER BY latency ASC;", 85, 105);
+
+      // Data table grid
+      ctx.fillStyle = "#1c2a3e";
+      ctx.fillRect(30, 130, 450, 25);
+      ctx.fillStyle = "#38bdf8";
+      ctx.fillText("ID  | AGENT_NAME       | LATENCY | MEMORY | STATUS", 40, 147);
+
+      const rows = [
+        "01  | Bryan Yogie      |  0.4ms  | 24 MB  | ACTIVE",
+        "02  | Jarwo Dispatcher |  0.7ms  | 42 MB  | RUNNING",
+        "03  | Sentinel QA      |  1.1ms  | 18 MB  | VERIFIED",
+        "04  | Cisco Gateway    |  0.2ms  | 12 MB  | ONLINE",
+      ];
+      rows.forEach((r, idx) => {
+        ctx.fillStyle = idx % 2 === 0 ? "rgba(255,255,255,0.05)" : "transparent";
+        ctx.fillRect(30, 155 + idx * 28, 450, 25);
+        ctx.fillStyle = "#e2e8f0";
+        ctx.fillText(r, 40, 172 + idx * 28);
+      });
+    } else if (roleType === "qa_mobile") {
+      // Sentinel QA: Mobile Emulator Viewport & Pass/Fail Checks
+      ctx.fillStyle = "#140e1f";
+      ctx.fillRect(0, 0, 512, 320);
+
+      ctx.fillStyle = "#271b3d";
+      ctx.fillRect(0, 0, 512, 32);
+      ctx.font = "bold 13px monospace";
+      ctx.fillStyle = "#a78bfa";
+      ctx.fillText("E2E Mobile Test Emulator (iPhone 15 - 393x852)", 20, 21);
+
+      // Mobile Device Preview
+      ctx.fillStyle = "#000000";
+      ctx.fillRect(40, 50, 120, 240);
+      ctx.strokeStyle = "#a78bfa";
+      ctx.strokeRect(40, 50, 120, 240);
+
+      ctx.fillStyle = "#ff7043"; ctx.fillRect(55, 70, 90, 15);
+      ctx.fillStyle = "#b9f5d8"; ctx.fillRect(55, 95, 90, 70);
+      ctx.fillStyle = "#38bdf8"; ctx.fillRect(55, 175, 90, 40);
+
+      // Test Suite Results
+      ctx.font = "bold 13px monospace";
+      const tests = [
+        { status: "✔ PASS", name: "375px Viewport Overflow (0px horizontal)", c: "#22c55e" },
+        { status: "✔ PASS", name: "Touch-to-Move Gesture Responsiveness", c: "#22c55e" },
+        { status: "✔ PASS", name: "Pixel Swap Tap Trigger (100% firing)", c: "#22c55e" },
+        { status: "✔ PASS", name: "DriftWall GPU Framerate (60.0 FPS)", c: "#22c55e" },
+        { status: "✔ PASS", name: "Next.js Static Turbopack SSG Build", c: "#22c55e" },
+      ];
+      tests.forEach((t, idx) => {
+        const y = 80 + idx * 36;
+        ctx.fillStyle = t.c; ctx.fillText(t.status, 180, y);
+        ctx.fillStyle = "#f8fafc"; ctx.fillText(t.name, 250, y);
+      });
+    } else {
+      // DevOps: CI/CD Pipeline & Terminal Logs
+      ctx.fillStyle = "#06130b";
+      ctx.fillRect(0, 0, 512, 320);
+
+      ctx.fillStyle = "#0e2a18";
+      ctx.fillRect(0, 0, 512, 32);
+      ctx.font = "bold 13px monospace";
+      ctx.fillStyle = "#34d399";
+      ctx.fillText("VERCEL CI/CD PIPELINE // PRODUCTION DEPLOY", 20, 21);
+
+      ctx.font = "12px monospace";
+      const logs = [
+        "[13:50:12] git push origin main (Commit: 87d52b1) ... OK",
+        "[13:50:15] Next.js Turbopack building 6 static routes ... OK",
+        "[13:50:19] Generating /icon.png, /favicon.ico ... OK",
+        "[13:50:21] Edge Lambdas deployed to 18 global regions ... OK",
+        "[13:50:23] Healthcheck URL: https://bryanyogie-dev-me.vercel.app [200]",
+        "[13:50:25] STATUS: READY (Zero Downtime Continuous Deployment)",
+      ];
+      logs.forEach((log, idx) => {
+        ctx.fillStyle = idx === 5 ? "#34d399" : "#e2e8f0";
+        ctx.fillText(log, 20, 70 + idx * 32);
+      });
+
+      // Status Bar
+      ctx.fillStyle = "#22c55e";
+      ctx.fillRect(20, 275, 472, 20);
+      ctx.fillStyle = "#000000";
+      ctx.font = "bold 11px monospace";
+      ctx.fillText("● PIPELINE SUCCESSFUL - 0 CRITICAL VULNERABILITIES", 30, 289);
     }
 
-    const texture = new THREE.CanvasTexture(canvas);
-    return texture;
+    return new THREE.CanvasTexture(canvas);
   };
 
   const createTextSprite = (text: string, color: string, subText?: string) => {
@@ -292,18 +436,21 @@ export default function VirtualOffice() {
     dataPlatform.receiveShadow = true;
     scene.add(dataPlatform);
 
-    // 4. REALISTIC WORKSTATIONS WITH HIGH-RES CODE MONITORS & ERGONOMIC CHAIRS
+    // 4. REALISTIC WORKSTATIONS WITH UNIQUE SPECIALIZED MONITORS
     const deskMat = new THREE.MeshStandardMaterial({ color: "#1e3535", roughness: 0.4, metalness: 0.3 });
     const monitorBezelMat = new THREE.MeshStandardMaterial({ color: "#050a0a", roughness: 0.1, metalness: 0.9 });
 
-    // Procedural Monitor Textures
-    const codeScreenTex = createScreenCanvasTexture("code", "#b9f5d8");
-    const terminalScreenTex = createScreenCanvasTexture("terminal", "#ff7043");
+    // Distinct textures per role
+    const bryanTex = createSpecializedScreenTexture("bryan_code");
+    const jarwoTex = createSpecializedScreenTexture("jarwo_ai");
+    const mayaTex = createSpecializedScreenTexture("maya_figma");
+    const backendTex = createSpecializedScreenTexture("backend_sql");
+    const qaTex = createSpecializedScreenTexture("qa_mobile");
+    const devopsTex = createSpecializedScreenTexture("devops_terminal");
 
-    const codeScreenMat = new THREE.MeshBasicMaterial({ map: codeScreenTex });
-    const terminalScreenMat = new THREE.MeshBasicMaterial({ map: terminalScreenTex });
+    const terminalTex = createSpecializedScreenTexture("devops_terminal");
 
-    const createRealWorkstation = (x: number, z: number) => {
+    const createRealWorkstation = (x: number, z: number, mainTex: THREE.CanvasTexture, sideTex: THREE.CanvasTexture) => {
       const g = new THREE.Group();
       g.position.set(x, 0, z);
 
@@ -323,7 +470,7 @@ export default function VirtualOffice() {
         g.add(leg);
       });
 
-      // Gaming / Dev PC Case
+      // Gaming / Dev PC Case under desk
       const tower = new THREE.Mesh(
         new THREE.BoxGeometry(0.5, 0.9, 0.9),
         new THREE.MeshStandardMaterial({ color: "#0f172a", roughness: 0.3, metalness: 0.7 })
@@ -340,47 +487,43 @@ export default function VirtualOffice() {
       fanGlow.position.set(-1.0, 0.55, 0.66);
       g.add(fanGlow);
 
-      // DUAL CURVED CODE MONITORS (REALISTIC VISUALS)
+      // DUAL CURVED SPECIALIZED MONITORS
       const scrGeo = new THREE.BoxGeometry(1.05, 0.68, 0.05);
       const faceGeo = new THREE.PlaneGeometry(0.98, 0.6);
 
-      // Left Monitor (IDE Code)
+      // Main Left Monitor (Distinct per desk!)
       const m1 = new THREE.Mesh(scrGeo, monitorBezelMat);
       m1.position.set(-0.6, 1.95, -0.2);
       m1.rotation.y = 0.18;
       g.add(m1);
 
-      const f1 = new THREE.Mesh(faceGeo, codeScreenMat);
+      const f1 = new THREE.Mesh(faceGeo, new THREE.MeshBasicMaterial({ map: mainTex }));
       f1.position.set(-0.6, 1.95, -0.17);
       f1.rotation.y = 0.18;
       g.add(f1);
 
-      // Right Monitor (Terminal / Metrics)
+      // Auxiliary Right Monitor
       const m2 = new THREE.Mesh(scrGeo, monitorBezelMat);
       m2.position.set(0.6, 1.95, -0.2);
       m2.rotation.y = -0.18;
       g.add(m2);
 
-      const f2 = new THREE.Mesh(faceGeo, terminalScreenMat);
+      const f2 = new THREE.Mesh(faceGeo, new THREE.MeshBasicMaterial({ map: sideTex }));
       f2.position.set(0.6, 1.95, -0.17);
       f2.rotation.y = -0.18;
       g.add(f2);
 
-      // Cable Tubes from Desk to Tower
-      const cableCurve = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(0.2, 1.3, -0.2),
-        new THREE.Vector3(-0.4, 0.9, 0.0),
-        new THREE.Vector3(-0.8, 0.5, 0.2),
-      ]);
-      const cableMesh = new THREE.Mesh(
-        new THREE.TubeGeometry(cableCurve, 12, 0.025, 6, false),
-        new THREE.MeshStandardMaterial({ color: "#0f172a", roughness: 0.9 })
+      // Professional Cable Bundle running down desk leg (No random messy curves!)
+      const deskCable = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.03, 0.03, 1.35),
+        new THREE.MeshStandardMaterial({ color: "#090d16", roughness: 0.9 })
       );
-      g.add(cableMesh);
+      deskCable.position.set(-1.18, 0.675, -0.58);
+      g.add(deskCable);
 
-      // ERGONOMIC SWIVEL CHAIR
+      // Ergonomic Swivel Chair
       const chairGroup = new THREE.Group();
-      chairGroup.position.set(0, 0, 0.9); // positioned comfortably behind desk
+      chairGroup.position.set(0, 0, 0.9);
 
       const seat = new THREE.Mesh(
         new THREE.BoxGeometry(0.8, 0.12, 0.8),
@@ -398,7 +541,6 @@ export default function VirtualOffice() {
       back.castShadow = true;
       chairGroup.add(back);
 
-      // Armrests
       [-0.42, 0.42].forEach((ax) => {
         const arm = new THREE.Mesh(
           new THREE.BoxGeometry(0.08, 0.42, 0.55),
@@ -408,7 +550,6 @@ export default function VirtualOffice() {
         chairGroup.add(arm);
       });
 
-      // Chair Base
       const basePillar = new THREE.Mesh(
         new THREE.CylinderGeometry(0.06, 0.06, 0.85),
         new THREE.MeshStandardMaterial({ color: "#64748b", metalness: 0.9 })
@@ -420,15 +561,15 @@ export default function VirtualOffice() {
       scene.add(g);
     };
 
-    // 6 Workstations
-    createRealWorkstation(-5.5, -3.5);
-    createRealWorkstation(-2.0, -3.5);
-    createRealWorkstation(1.5, -3.5);
-    createRealWorkstation(-5.5, 1.0);
-    createRealWorkstation(-2.0, 1.0);
-    createRealWorkstation(1.5, 1.0);
+    // 6 Workstations with CHARACTER SPECIFIC SCREENS
+    createRealWorkstation(-5.5, -3.5, bryanTex, terminalTex);    // Bryan: Next.js + Terminal
+    createRealWorkstation(-2.0, -3.5, jarwoTex, terminalTex);    // Jarwo: Neural Dispatcher + Terminal
+    createRealWorkstation(1.5, -3.5, mayaTex, bryanTex);         // Maya: Figma UI Mockup + Code
+    createRealWorkstation(-5.5, 1.0, backendTex, terminalTex);   // Backend: PostgreSQL Tables + Terminal
+    createRealWorkstation(-2.0, 1.0, qaTex, bryanTex);           // QA: Mobile Emulator + Code
+    createRealWorkstation(1.5, 1.0, devopsTex, terminalTex);     // DevOps: Vercel Pipeline + Terminal
 
-    // 5. SERVER ROOM WITH AUTHENTIC CATMULL-ROM ROUTED FIBER PATCH CORD LOOPS
+    // 5. SERVER ROOM WITH PROFESSIONAL STRUCTURED CABLE MANAGEMENT (NO MESSY FLOATING LINES)
     const rackGeo = new THREE.BoxGeometry(1.4, 4.2, 1.5);
     const rackMat = new THREE.MeshStandardMaterial({ color: "#020617", metalness: 0.8, roughness: 0.2 });
     for (let s = 0; s < 3; s++) {
@@ -446,44 +587,57 @@ export default function VirtualOffice() {
       ledFace.position.set(rx, 2.1, -4.74);
       scene.add(ledFace);
 
-      // Clean, professional network patch cords loops connecting ports
-      const patchColors = ["#ef4444", "#3b82f6", "#eab308", "#10b981", "#8b5cf6"];
-      for (let p = 0; p < 5; p++) {
-        const py = 3.3 - p * 0.45;
+      // Clean Vertical Wire Duct / Cable Organizer on side of racks
+      const duct = new THREE.Mesh(
+        new THREE.BoxGeometry(0.12, 3.8, 0.25),
+        new THREE.MeshStandardMaterial({ color: "#334155" })
+      );
+      duct.position.set(rx - 0.65, 2.1, -4.7);
+      scene.add(duct);
+
+      // U-shape Structured Patch Cords entering side duct neatly
+      const patchColors = ["#38bdf8", "#b9f5d8", "#ff7043", "#a78bfa", "#facc15"];
+      for (let p = 0; p < 4; p++) {
+        const py = 3.2 - p * 0.6;
         const cord = new THREE.CatmullRomCurve3([
-          new THREE.Vector3(rx - 0.4, py, -4.72),
-          new THREE.Vector3(rx - 0.2, py - 0.15, -4.55),
-          new THREE.Vector3(rx + 0.1, py - 0.1, -4.6),
-          new THREE.Vector3(rx + 0.35, py, -4.72),
+          new THREE.Vector3(rx - 0.2, py, -4.72),
+          new THREE.Vector3(rx - 0.45, py - 0.08, -4.68),
+          new THREE.Vector3(rx - 0.62, py - 0.04, -4.7),
         ]);
         const tube = new THREE.Mesh(
-          new THREE.TubeGeometry(cord, 16, 0.018, 6, false),
-          new THREE.MeshStandardMaterial({ color: patchColors[p % patchColors.length], roughness: 0.4 })
+          new THREE.TubeGeometry(cord, 8, 0.018, 6, false),
+          new THREE.MeshStandardMaterial({ color: patchColors[p % patchColors.length] })
         );
         scene.add(tube);
       }
     }
 
-    // Overhead Structured Cable Tray
+    // Overhead Structured Cable Tray (Mounted cleanly along back wall)
     const cableTray = new THREE.Mesh(
-      new THREE.BoxGeometry(13, 0.15, 0.6),
-      new THREE.MeshStandardMaterial({ color: "#1e293b", metalness: 0.7 })
+      new THREE.BoxGeometry(18, 0.12, 0.45),
+      new THREE.MeshStandardMaterial({ color: "#1e293b", metalness: 0.8 })
     );
-    cableTray.position.set(1.0, 5.2, -4.5);
+    cableTray.position.set(0, 5.2, -9.6);
     scene.add(cableTray);
 
-    // Main Optical Trunk Cable connecting rack to backbone
-    const mainTrunk = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(6.5, 4.2, -5.0),
-      new THREE.Vector3(2.0, 5.15, -4.5),
-      new THREE.Vector3(-4.0, 5.15, -4.5),
-      new THREE.Vector3(-5.5, 3.5, -3.5),
-    ]);
-    const trunkMesh = new THREE.Mesh(
-      new THREE.TubeGeometry(mainTrunk, 24, 0.045, 8, false),
-      new THREE.MeshStandardMaterial({ color: "#eab308", roughness: 0.6 })
+    // Neat Trunk Cable Bundles along tray (Cyan, Yellow, Orange)
+    [0.08, -0.08].forEach((offsetY, idx) => {
+      const trunkLine = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.035, 0.035, 17.5),
+        new THREE.MeshStandardMaterial({ color: idx === 0 ? "#eab308" : "#38bdf8" })
+      );
+      trunkLine.rotation.z = Math.PI / 2;
+      trunkLine.position.set(0, 5.2 + offsetY, -9.6);
+      scene.add(trunkLine);
+    });
+
+    // Vertical Riser Duct dropping cables down from tray into Server Rack
+    const riserDuct = new THREE.Mesh(
+      new THREE.BoxGeometry(0.3, 3.2, 0.3),
+      new THREE.MeshStandardMaterial({ color: "#1e293b", metalness: 0.8 })
     );
-    scene.add(trunkMesh);
+    riserDuct.position.set(5.8, 3.6, -9.6);
+    scene.add(riserDuct);
 
     // 6. EXECUTIVE CONFERENCE ROOM & PANTRY
     const confTable = new THREE.Mesh(
@@ -534,7 +688,7 @@ export default function VirtualOffice() {
       scene.add(leaf);
     });
 
-    // 7. ARTICULATED SITTING / WALKING VOXEL AGENTS (REAL ERGONOMIC SEATED POSTURE)
+    // 7. ARTICULATED SITTING / WALKING VOXEL AGENTS (TRUE 90° SITTING)
     interface AgentRuntime {
       data: AgentData;
       rootGroup: THREE.Group;
@@ -557,7 +711,6 @@ export default function VirtualOffice() {
     const buildArticulatedVoxel = (hairCol: string, clothCol: string) => {
       const root = new THREE.Group();
 
-      // Torso
       const body = new THREE.Mesh(
         new THREE.BoxGeometry(0.7, 0.8, 0.4),
         new THREE.MeshStandardMaterial({ color: clothCol, roughness: 0.4 })
@@ -565,7 +718,6 @@ export default function VirtualOffice() {
       body.castShadow = true;
       root.add(body);
 
-      // Head
       const head = new THREE.Mesh(
         new THREE.BoxGeometry(0.55, 0.55, 0.55),
         new THREE.MeshStandardMaterial({ color: "#fecdd3", roughness: 0.6 })
@@ -574,7 +726,6 @@ export default function VirtualOffice() {
       head.castShadow = true;
       body.add(head);
 
-      // Hair
       const hair = new THREE.Mesh(
         new THREE.BoxGeometry(0.6, 0.22, 0.6),
         new THREE.MeshStandardMaterial({ color: hairCol, roughness: 0.8 })
@@ -582,7 +733,6 @@ export default function VirtualOffice() {
       hair.position.y = 0.32;
       head.add(hair);
 
-      // Articulated Arms (Typing pose when sitting, swinging when walking)
       const armGeo = new THREE.BoxGeometry(0.2, 0.65, 0.2);
       const armMat = new THREE.MeshStandardMaterial({ color: clothCol });
 
@@ -594,10 +744,9 @@ export default function VirtualOffice() {
       armR.position.set(0.45, 0.1, 0);
       body.add(armR);
 
-      // TWO-SEGMENT LEGS (Thighs + Shins) for true natural 90° chair sitting!
+      // Two-segment legs
       const legMat = new THREE.MeshStandardMaterial({ color: "#0f172a" });
 
-      // Left Leg Assembly
       const thighL = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.42, 0.22), legMat);
       thighL.position.set(-0.18, -0.4, 0);
       body.add(thighL);
@@ -606,7 +755,6 @@ export default function VirtualOffice() {
       shinL.position.set(0, -0.38, 0);
       thighL.add(shinL);
 
-      // Right Leg Assembly
       const thighR = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.42, 0.22), legMat);
       thighR.position.set(0.18, -0.4, 0);
       body.add(thighR);
@@ -615,7 +763,6 @@ export default function VirtualOffice() {
       shinR.position.set(0, -0.38, 0);
       thighR.add(shinR);
 
-      // Ground Aura
       const aura = new THREE.Mesh(
         new THREE.RingGeometry(0.5, 0.65, 32),
         new THREE.MeshBasicMaterial({ color: clothCol, side: THREE.DoubleSide })
@@ -656,13 +803,12 @@ export default function VirtualOffice() {
 
     setSelectedAgent(agentDefs[0]);
 
-    // AUTONOMOUS ROUTINE: Natural transition between sitting at desk and walking
+    // AUTONOMOUS ROUTINE
     const routineTimer = setInterval(() => {
       agentsRuntime.forEach((a) => {
         if (!a.isMoving) {
           const rand = Math.random();
-          if (a.isSeated && rand < 0.28) {
-            // Stand up and walk
+          if (a.isSeated && rand < 0.25) {
             a.isSeated = false;
             a.isMoving = true;
             if (rand < 0.1) {
@@ -671,17 +817,16 @@ export default function VirtualOffice() {
               setMetrics((m) => ({ ...m, coffeeCount: m.coffeeCount + 1 }));
             } else if (rand < 0.2) {
               a.targetPos.set(7.5 + (Math.random() - 0.5) * 2, 0, -3.5 + (Math.random() - 0.5) * 1.5);
-              a.data.status = "Auditing fiber optic switch patch cords & traffic telemetry ⚡";
+              a.data.status = "Auditing structured cable ducts & fiber rack telemetry ⚡";
               setMetrics((m) => ({ ...m, deploysCount: m.deploysCount + 1 }));
             } else {
               a.targetPos.set(6.5 + (Math.random() - 0.5) * 2.5, 0, 4.5 + (Math.random() - 0.5) * 1.5);
               a.data.status = "Collaborating at glass conference table on sprint design 💡";
             }
           } else if (!a.isSeated && rand < 0.45) {
-            // Return to chair and sit down comfortably
             a.targetPos.copy(a.chairPos);
             a.isMoving = true;
-            a.data.status = `Seated at ergonomic workstation, coding Next.js ${a.data.dept} services.`;
+            a.data.status = `Seated at workstation, actively typing on ${a.data.dept} monitors.`;
           }
         }
       });
@@ -712,7 +857,6 @@ export default function VirtualOffice() {
         return;
       }
 
-      // Floor click -> direct Bryan
       const floorHits = raycaster.intersectObject(floor);
       if (floorHits.length > 0) {
         const pt = floorHits[0].point;
@@ -744,7 +888,7 @@ export default function VirtualOffice() {
 
     window.addEventListener("resize", handleResize);
 
-    // 8. RENDER LOOP WITH REALISTIC 90° SITTING KINEMATICS & TYPING ARMS
+    // 8. RENDER LOOP
     let frameId: number;
     let clock = new THREE.Clock();
 
@@ -764,7 +908,7 @@ export default function VirtualOffice() {
             const angle = Math.atan2(dir.x, dir.z);
             a.rootGroup.rotation.y = angle;
 
-            // WALKING POSE: Standing upright, natural leg & arm swing
+            // WALKING POSE
             a.bodyMesh.position.y = 1.05;
             a.thighL.rotation.x = Math.sin(time * 14) * 0.65;
             a.thighR.rotation.x = -Math.sin(time * 14) * 0.65;
@@ -781,22 +925,17 @@ export default function VirtualOffice() {
             }
           }
         } else if (a.isSeated) {
-          // NATURAL SITTING KINEMATICS:
-          // 1. Face towards workstation
+          // NATURAL SITTING KINEMATICS
           a.rootGroup.rotation.y = a.data.deskFacing;
-          // 2. Body lowered onto chair cushion (y = 0.95)
           a.bodyMesh.position.y = 0.95;
-          // 3. Thighs bent forward 90 degrees flat on seat
           a.thighL.rotation.x = Math.PI / 2;
           a.thighR.rotation.x = Math.PI / 2;
-          // 4. Shins bent downwards 90 degrees towards floor
           a.shinL.rotation.x = -Math.PI / 2;
           a.shinR.rotation.x = -Math.PI / 2;
-          // 5. Arms bent forward in keyboard typing posture with subtle breathing movement
+          // Typing movement
           a.armL.rotation.x = -Math.PI / 3 + Math.sin(time * 4) * 0.05;
           a.armR.rotation.x = -Math.PI / 3 - Math.sin(time * 4) * 0.05;
         } else {
-          // Idle standing posture
           a.bodyMesh.position.y = 1.05;
           a.thighL.rotation.x = 0;
           a.thighR.rotation.x = 0;
@@ -854,7 +993,7 @@ export default function VirtualOffice() {
               BYS <span className="text-mint">3D Virtual Office</span>
             </h2>
             <p className="text-foreground/70 font-mono text-xs md:text-sm max-w-2xl mt-2 leading-relaxed">
-              Real-time 3D metaverse powered by Three.js: 9 voxel agents naturally sitting at ergonomic workstations typing on live VS Code screens, with Catmull-Rom fiber loops & RGB rigs.
+              Real-time 3D metaverse powered by Three.js: 9 voxel agents seated at workstations with custom IDE screens (Next.js, Neural AI, Figma UI & SQL), plus structured fiber cable trays.
               <span className="text-flare font-bold block mt-1">
                 🕹️ Touch or drag to orbit in 3D • Tap any floor tile to command Bryan!
               </span>
@@ -890,7 +1029,7 @@ export default function VirtualOffice() {
               <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
               <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
               <span className="ml-3 font-mono text-[11px] md:text-xs text-foreground/70 tracking-wider">
-                bys_cyber_studio // vscode_monitors_pbr
+                bys_cyber_studio // custom_role_monitors_pbr
               </span>
             </div>
 
@@ -901,7 +1040,7 @@ export default function VirtualOffice() {
             </div>
           </div>
 
-          {/* 3D Canvas Mount (Responsive Height) */}
+          {/* 3D Canvas Mount */}
           <div 
             ref={mountRef} 
             className="w-full h-[420px] md:h-[560px] bg-[#0c1515] relative cursor-grab active:cursor-grabbing overflow-hidden"
