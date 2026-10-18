@@ -16,8 +16,19 @@ import LenisProvider from "@/components/LenisProvider";
 import CustomCursor from "@/components/CustomCursor";
 
 export const metadata: Metadata = {
-  title: "Bryan Yogie Saputra | Portfolio",
-  description: "Interactive portfolio of Bryan Yogie Saputra, Informatics Engineering Student & Aspiring Web Developer.",
+  title: "BYS | Bryan Yogie Saputra — Build Your Story",
+  description: "Personal Portfolio & Creative Space of Bryan Yogie Saputra. Informatics Engineering Student, Network & Fullstack Developer.",
+  icons: {
+    icon: [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({

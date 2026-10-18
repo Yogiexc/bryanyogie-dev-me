@@ -53,15 +53,15 @@ export default function TechMarquee() {
   }, []);
 
   return (
-    <section ref={containerRef} className="w-full overflow-hidden bg-accent text-white py-12 md:py-20 border-y border-white/20 select-none flex">
+    <section ref={containerRef} className="w-full overflow-hidden bg-[#101b1b] text-white py-12 md:py-20 border-y border-mint/20 select-none flex">
       <div ref={marqueeRef} className="flex whitespace-nowrap items-center will-change-transform">
         {/* Render the list twice for seamless loop */}
         {[...techStack, ...techStack].map((tech, index) => (
           <div key={index} className="flex items-center px-8 md:px-16">
-            <span className="text-4xl md:text-7xl font-outfit font-black tracking-tighter uppercase text-transparent" style={{ WebkitTextStroke: "2px white" }}>
+            <span className="text-4xl md:text-7xl font-outfit font-black tracking-tighter uppercase text-transparent hover:text-mint transition-colors duration-300" style={{ WebkitTextStroke: "2px #b9f5d8" }}>
               {tech}
             </span>
-            <span className="ml-8 md:ml-16 text-3xl text-white/50">*</span>
+            <span className="ml-8 md:ml-16 text-3xl text-flare">*</span>
           </div>
         ))}
       </div>

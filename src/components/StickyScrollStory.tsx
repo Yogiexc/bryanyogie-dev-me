@@ -6,15 +6,15 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 
 const Badge = ({ src, alt }: { src: string; alt: string }) => (
-  <span className="inline-block align-middle mx-2 w-20 md:w-32 aspect-[3/1] relative rounded-full overflow-hidden border-2 border-[#3b82f6] shadow-[0_0_15px_rgba(59,130,246,0.5)] hover:scale-110 transition-transform duration-300 z-50">
+  <span className="inline-block align-middle mx-2 w-20 md:w-32 aspect-[3/1] relative rounded-full overflow-hidden border-2 border-mint shadow-[0_0_15px_rgba(185,245,216,0.4)] hover:scale-110 transition-transform duration-300 z-50">
     <Image src={src} alt={alt} fill className="object-cover grayscale hover:grayscale-0 transition-all duration-300" />
   </span>
 );
 
 const FloatImg = ({ src, children }: { src: string; children: React.ReactNode }) => (
-  <span className="relative group inline-block cursor-pointer text-[#3b82f6] hover:text-white transition-colors duration-300">
+  <span className="relative group inline-block cursor-pointer text-mint hover:text-flare transition-colors duration-300">
     {children}
-    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 pointer-events-none z-[100] w-64 md:w-80 aspect-video rounded-xl overflow-hidden border-4 border-[#3b82f6] shadow-[0_0_30px_rgba(59,130,246,0.8)] mix-blend-normal">
+    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 pointer-events-none z-[100] w-64 md:w-80 aspect-video rounded-xl overflow-hidden border-4 border-mint shadow-[0_0_30px_rgba(185,245,216,0.6)] mix-blend-normal">
       <Image src={src} alt="Hover Reveal" fill className="object-cover" />
     </span>
   </span>
@@ -25,7 +25,7 @@ const stories = [
     title: "About Snapshot",
     content: (
       <>
-        <span className="text-[#3b82f6]">Informatics Engineering</span> student with a solid background in Computer & Network Engineering <Badge src="/image/pkltkj.jpg" alt="TKJ" /> (TKJ). Passionate about bridging the gap between <FloatImg src="/image/matkulJaringan.png">hardware infrastructure</FloatImg> and software engineering.
+        <span className="text-mint">Informatics Engineering</span> student with a solid background in Computer & Network Engineering <Badge src="/image/pkltkj.jpg" alt="TKJ" /> (TKJ). Passionate about bridging the gap between <FloatImg src="/image/matkulJaringan.png">hardware infrastructure</FloatImg> and software engineering.
       </>
     ),
   },
@@ -33,7 +33,7 @@ const stories = [
     title: "Philosophy",
     content: (
       <>
-        I believe in continuous learning and practical <span className="text-[#3b82f6]">problem-solving</span>. Every bug is a lesson, and every challenge is an opportunity to build something better <Badge src="/image/ngoding-diShelter_manahan.png" alt="Coding" /> and more efficient.
+        I believe in continuous learning and practical <span className="text-flare">problem-solving</span>. Every bug is a lesson, and every challenge is an opportunity to build something better <Badge src="/image/ngoding-diShelter_manahan.png" alt="Coding" /> and more efficient.
       </>
     ),
   },
@@ -41,7 +41,7 @@ const stories = [
     title: "Skills & Tools",
     content: (
       <>
-        Proficient in <span className="text-[#3b82f6]">Next.js</span>, React, Tailwind CSS, and GSAP for the frontend. Experienced with PHP, MySQL, and Java for backend and systems design <Badge src="/image/kerkom_dikampus.png" alt="Teamwork" />. <FloatImg src="/image/nyetingIOT_arduinoUNO.png">IoT enthusiast</FloatImg> and Cisco NetAcad certified in networking fundamentals.
+        Proficient in <span className="text-mint">Next.js</span>, React, Tailwind CSS, and GSAP for the frontend. Experienced with PHP, MySQL, and Java for backend and systems design <Badge src="/image/kerkom_dikampus.png" alt="Teamwork" />. <FloatImg src="/image/nyetingIOT_arduinoUNO.png">IoT enthusiast</FloatImg> and Cisco NetAcad certified in networking fundamentals.
       </>
     ),
   },
@@ -157,16 +157,14 @@ export default function StickyScrollStory() {
     <section ref={containerRef} className="relative w-full bg-black flex flex-col md:flex-row px-0 py-0" id="about">
       
       {/* Infinite Marquee Background Strip */}
-      <div className="absolute top-0 -left-[5vw] w-[110vw] h-24 bg-[#3b82f6] overflow-hidden flex items-center z-0 border-y-4 border-black origin-top-left -skew-y-2 shadow-2xl opacity-80">
-        <div className="marquee-content flex whitespace-nowrap text-black font-outfit font-black text-6xl uppercase tracking-tighter">
+      <div className="absolute top-0 -left-[5vw] w-[110vw] h-24 bg-gradient-to-r from-cinder via-[#1f3838] to-cinder overflow-hidden flex items-center z-0 border-y-4 border-mint/30 origin-top-left -skew-y-2 shadow-2xl">
+        <div className="marquee-content flex whitespace-nowrap text-mint font-outfit font-black text-6xl uppercase tracking-tighter">
+          <span className="mx-4">BUILD YOUR STORY //</span>
+          <span className="mx-4 text-flare">BRYAN YOGIE //</span>
           <span className="mx-4">BEHIND THE CODE //</span>
-          <span className="mx-4">BRYAN YOGIE //</span>
-          <span className="mx-4">BEHIND THE CODE //</span>
-          <span className="mx-4">BRYAN YOGIE //</span>
-          <span className="mx-4">BEHIND THE CODE //</span>
-          <span className="mx-4">BRYAN YOGIE //</span>
-          <span className="mx-4">BEHIND THE CODE //</span>
-          <span className="mx-4">BRYAN YOGIE //</span>
+          <span className="mx-4 text-flare">BRYAN YOGIE //</span>
+          <span className="mx-4">BUILD YOUR STORY //</span>
+          <span className="mx-4 text-flare">BRYAN YOGIE //</span>
         </div>
       </div>
 

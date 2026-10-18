@@ -63,14 +63,15 @@ export default function Hero() {
         <div className="w-full lg:w-3/5 mt-10 lg:mt-0 hero-content pointer-events-none flex flex-col justify-center h-auto lg:h-full flex-1">
           <p
             ref={subtitleRef}
-            className="text-accent font-mono text-sm md:text-base uppercase tracking-widest mb-4 opacity-0"
+            className="text-mint font-mono text-sm md:text-base uppercase tracking-widest mb-4 opacity-0 flex items-center gap-2"
           >
-            Informatics Engineering Student
+            <span className="w-2 h-2 rounded-full bg-flare animate-ping inline-block" />
+            Informatics Engineering • Network & Web Developer
           </p>
           <div className="relative">
             <h1
               ref={title1Ref}
-              className="text-5xl md:text-7xl lg:text-[5vw] xl:text-[6vw] font-outfit font-bold tracking-tighter leading-none text-white opacity-0 uppercase"
+              className="text-5xl md:text-7xl lg:text-[5vw] xl:text-[6vw] font-outfit font-black tracking-tighter leading-none text-foreground opacity-0 uppercase"
             >
               <GlitchText text="BRYAN YOGIE" />
             </h1>
@@ -78,8 +79,8 @@ export default function Hero() {
           <div className="relative mt-2">
             <h1
               ref={title2Ref}
-              className="text-5xl md:text-7xl lg:text-[5vw] xl:text-[6vw] font-outfit font-bold tracking-tighter leading-none text-[#3b82f6] opacity-0 uppercase pb-6"
-              style={{ WebkitTextStroke: "1px rgba(255,255,255,0.1)" }}
+              className="text-5xl md:text-7xl lg:text-[5vw] xl:text-[6vw] font-outfit font-black tracking-tighter leading-none text-mint opacity-0 uppercase pb-6"
+              style={{ WebkitTextStroke: "1px rgba(185,245,216,0.3)" }}
             >
               <GlitchText text="SAPUTRA" />
             </h1>

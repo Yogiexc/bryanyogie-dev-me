@@ -19,7 +19,7 @@ export default function CertificatesGallery() {
     <section className="relative w-full bg-black py-24 flex flex-col items-center justify-center overflow-hidden" id="certificates">
       <div className="z-10 mb-12 text-center pointer-events-none">
         <h2 className="text-4xl md:text-6xl font-outfit font-black uppercase text-white tracking-tighter uppercase-text-shadow">
-          My <span className="text-[#3b82f6]">Certifications</span>
+          My <span className="text-mint">Certifications</span>
         </h2>
         <p className="text-white/60 font-mono mt-4 uppercase tracking-widest text-sm">
           Drag to rotate the 3D gallery

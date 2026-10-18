@@ -57,14 +57,14 @@ export default function ProfileCard() {
         transition={{ duration: 0.3 }}
       >
         {/* Glow effect behind the card */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-accent/40 to-blue-500/40 rounded-2xl blur-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#ff7043]/40 to-[#b9f5d8]/40 rounded-2xl blur-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
         {/* Card Content */}
-        <div className="absolute inset-0 bg-secondary/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl flex flex-col items-center justify-center p-6">
+        <div className="absolute inset-0 bg-[#182a2a]/90 backdrop-blur-xl border border-[#b9f5d8]/20 rounded-2xl overflow-hidden shadow-2xl flex flex-col items-center justify-center p-6">
           
           {/* Picture Frame */}
           <div 
-            className="relative w-48 h-48 sm:w-64 sm:h-64 rounded-full border-4 border-accent/30 overflow-hidden shadow-lg mb-6"
+            className="relative w-48 h-48 sm:w-64 sm:h-64 rounded-full border-4 border-[#b9f5d8]/40 overflow-hidden shadow-[0_0_25px_rgba(185,245,216,0.2)] mb-6"
             style={{ transform: "translateZ(50px)" }} // Pop out effect
           >
             <PixelSwap 

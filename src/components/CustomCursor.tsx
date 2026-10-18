@@ -97,13 +97,13 @@ export default function CustomCursor() {
       {/* Solid dot */}
       <div 
         ref={cursorRef} 
-        className="fixed top-0 left-0 w-3 h-3 bg-[#3b82f6] rounded-full pointer-events-none z-[99999] -translate-x-1/2 -translate-y-1/2 shadow-[0_0_10px_rgba(59,130,246,0.8)]"
+        className="fixed top-0 left-0 w-3 h-3 bg-[#ff7043] rounded-full pointer-events-none z-[99999] -translate-x-1/2 -translate-y-1/2 shadow-[0_0_12px_rgba(255,112,67,0.9)]"
       />
       
       {/* Smooth follower outline */}
       <div 
         ref={followerRef} 
-        className="fixed top-0 left-0 w-10 h-10 border-2 border-[#3b82f6] rounded-full pointer-events-none z-[99998] -translate-x-1/2 -translate-y-1/2"
+        className="fixed top-0 left-0 w-10 h-10 border-2 border-[#b9f5d8] rounded-full pointer-events-none z-[99998] -translate-x-1/2 -translate-y-1/2"
       />
     </>
   );

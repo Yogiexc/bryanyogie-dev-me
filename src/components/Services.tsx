@@ -79,7 +79,7 @@ export default function Services() {
         <div className="md:w-1/2">
           <h2 ref={titleRef} className="text-5xl md:text-7xl font-outfit font-black tracking-tighter uppercase text-white leading-tight">
             Ready to Build. <br />
-            <span className="text-[#3b82f6] pb-2">
+            <span className="text-mint pb-2">
               Ready to Impact.
             </span>
           </h2>

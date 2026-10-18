@@ -38,9 +38,16 @@ export default function Navbar() {
         <Magnetic>
           <Link 
             href="/" 
-            className="text-white font-outfit font-black text-2xl tracking-widest uppercase hover:text-accent transition-colors block w-fit"
+            className="group flex items-center gap-3 text-white font-outfit font-black text-2xl tracking-widest uppercase hover:text-accent transition-colors w-fit"
           >
-            BYS.
+            <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-white/20 shadow-[0_0_15px_rgba(185,245,216,0.3)] group-hover:scale-105 transition-transform">
+              <img 
+                src="/favicon-32x32.png" 
+                alt="BYS Logo" 
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <span>BYS<span className="text-[#FF7043]">.</span></span>
           </Link>
         </Magnetic>
       </div>
