@@ -1,665 +1,528 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Play, Pause, Coffee, Server, Bot, Users, Sparkles, Compass } from "lucide-react";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { Coffee, Server, Bot, Users, RotateCcw, Eye, Sparkles } from "lucide-react";
 
-interface Agent {
+interface Agent3D {
   id: string;
   name: string;
   role: string;
-  department: "Dev" | "Ops" | "AI" | "Design" | "Growth";
-  x: number;
-  y: number;
-  targetX: number;
-  targetY: number;
-  hairColor: string;
-  clothColor: string;
-  direction: "left" | "right" | "up" | "down";
+  department: string;
+  group: THREE.Group;
+  targetPos: THREE.Vector3;
+  homePos: THREE.Vector3;
   isMoving: boolean;
-  frame: number;
-  bubble: string;
+  bubbleText: string;
   bubbleTimer: number;
-  homeDesk: { x: number; y: number };
-}
-
-interface Furniture {
-  name: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  type: "desk" | "server" | "coffee" | "meeting_table" | "plant" | "water_cooler" | "bookshelf" | "arcade";
-  zone?: string;
+  color: number;
 }
 
 export default function VirtualOffice() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
-  const [stats, setStats] = useState({ coffeeCups: 128, deployments: 46, activeAgents: 9 });
-
-  // 10 Detailed agents across distinct company divisions
-  const initialAgents: Agent[] = [
-    {
-      id: "bryan",
-      name: "Bryan Yogie",
-      role: "Lead Fullstack & Network",
-      department: "Dev",
-      x: 180,
-      y: 190,
-      targetX: 180,
-      targetY: 190,
-      hairColor: "#0f172a",
-      clothColor: "#FF7043", // Flare Orange Hero
-      direction: "down",
-      isMoving: false,
-      frame: 0,
-      bubble: "Architecting Next.js 16 & edge computing services.",
-      bubbleTimer: 180,
-      homeDesk: { x: 180, y: 190 },
-    },
-    {
-      id: "jarwo",
-      name: "Jarwo AI",
-      role: "AI Chief Dispatcher",
-      department: "AI",
-      x: 320,
-      y: 190,
-      targetX: 320,
-      targetY: 190,
-      hairColor: "#334155",
-      clothColor: "#B9F5D8", // Mint
-      direction: "down",
-      isMoving: false,
-      frame: 0,
-      bubble: "Assigning automated sprints across active agents.",
-      bubbleTimer: 200,
-      homeDesk: { x: 320, y: 190 },
-    },
-    {
-      id: "maya_ui",
-      name: "Maya UI",
-      role: "Design Systems & 3D",
-      department: "Design",
-      x: 460,
-      y: 190,
-      targetX: 460,
-      targetY: 190,
-      hairColor: "#64748b",
-      clothColor: "#F472B6", // Pink/Rose
-      direction: "down",
-      isMoving: false,
-      frame: 0,
-      bubble: "Crafting micro-interactions and smooth GSAP eases.",
-      bubbleTimer: 190,
-      homeDesk: { x: 460, y: 190 },
-    },
-    {
-      id: "dev_bot",
-      name: "Backend Bot",
-      role: "Distributed Systems & DB",
-      department: "Dev",
-      x: 180,
-      y: 310,
-      targetX: 180,
-      targetY: 310,
-      hairColor: "#1e293b",
-      clothColor: "#38BDF8", // Cyan
-      direction: "down",
-      isMoving: false,
-      frame: 0,
-      bubble: "Indexing SQL query execution plans for sub-millisecond response.",
-      bubbleTimer: 170,
-      homeDesk: { x: 180, y: 310 },
-    },
-    {
-      id: "sentinel_qa",
-      name: "Sentinel QA",
-      role: "Automated E2E Suite",
-      department: "Ops",
-      x: 320,
-      y: 310,
-      targetX: 320,
-      targetY: 310,
-      hairColor: "#475569",
-      clothColor: "#A78BFA", // Violet
-      direction: "down",
-      isMoving: false,
-      frame: 0,
-      bubble: "Simulating cross-browser touch gestures & coarse pointers.",
-      bubbleTimer: 210,
-      homeDesk: { x: 320, y: 310 },
-    },
-    {
-      id: "ops_pipeline",
-      name: "Pipeline Ops",
-      role: "CI/CD & Serverless Deploy",
-      department: "Ops",
-      x: 460,
-      y: 310,
-      targetX: 460,
-      targetY: 310,
-      hairColor: "#0f172a",
-      clothColor: "#34D399", // Emerald
-      direction: "down",
-      isMoving: false,
-      frame: 0,
-      bubble: "Vercel edge build successful. 0 errors reported.",
-      bubbleTimer: 160,
-      homeDesk: { x: 460, y: 310 },
-    },
-    {
-      id: "cisco_net",
-      name: "Cisco Agent",
-      role: "Network Security & Router",
-      department: "Ops",
-      x: 820,
-      y: 190,
-      targetX: 820,
-      targetY: 190,
-      hairColor: "#1e1e1e",
-      clothColor: "#FBBF24", // Amber
-      direction: "up",
-      isMoving: false,
-      frame: 0,
-      bubble: "VLAN trunks & BGP routing synchronized.",
-      bubbleTimer: 220,
-      homeDesk: { x: 820, y: 190 },
-    },
-    {
-      id: "seo_growth",
-      name: "Growth Agent",
-      role: "SEO & Traffic Telemetry",
-      department: "Growth",
-      x: 750,
-      y: 360,
-      targetX: 750,
-      targetY: 360,
-      hairColor: "#78350f",
-      clothColor: "#FB923C", // Tangerine
-      direction: "left",
-      isMoving: false,
-      frame: 0,
-      bubble: "Tracking global organic visitors on bryanyogie-dev-me.",
-      bubbleTimer: 230,
-      homeDesk: { x: 750, y: 360 },
-    },
-    {
-      id: "coffee_buddy",
-      name: "Pantry Bot",
-      role: "Barista & Refreshment",
-      department: "AI",
-      x: 80,
-      y: 430,
-      targetX: 80,
-      targetY: 430,
-      hairColor: "#3f3f46",
-      clothColor: "#E2E8F0", // Clean White
-      direction: "up",
-      isMoving: false,
-      frame: 0,
-      bubble: "Double-shot espresso freshly brewed! ☕",
-      bubbleTimer: 180,
-      homeDesk: { x: 80, y: 430 },
-    },
-  ];
-
-  const furnitureList: Furniture[] = [
-    // DESKS ROW 1 (Core Engineering Pod)
-    { name: "Bryan's Station", x: 130, y: 130, width: 100, height: 50, type: "desk", zone: "Engineering Pod" },
-    { name: "Jarwo AI Pod", x: 270, y: 130, width: 100, height: 50, type: "desk", zone: "Engineering Pod" },
-    { name: "Maya Design Lab", x: 410, y: 130, width: 100, height: 50, type: "desk", zone: "Engineering Pod" },
-
-    // DESKS ROW 2 (Infrastructure & QA Pod)
-    { name: "Backend Core", x: 130, y: 250, width: 100, height: 50, type: "desk", zone: "Infra Pod" },
-    { name: "QA Suite", x: 270, y: 250, width: 100, height: 50, type: "desk", zone: "Infra Pod" },
-    { name: "CI/CD Terminal", x: 410, y: 250, width: 100, height: 50, type: "desk", zone: "Infra Pod" },
-
-    // SERVER ROOM (Right Wing Top)
-    { name: "Edge Rack #01", x: 770, y: 70, width: 45, height: 95, type: "server", zone: "Data Center" },
-    { name: "Core Rack #02", x: 830, y: 70, width: 45, height: 95, type: "server", zone: "Data Center" },
-    { name: "Network Cisco #03", x: 890, y: 70, width: 45, height: 95, type: "server", zone: "Data Center" },
-
-    // EXECUTIVE CONFERENCE ROOM (Bottom Right)
-    { name: "Conference Table", x: 670, y: 320, width: 150, height: 80, type: "meeting_table", zone: "Conference Room" },
-    { name: "Arcade Machine", x: 890, y: 390, width: 40, height: 50, type: "arcade", zone: "Chill Corner" },
-
-    // PANTRY & BARISTA CAFE (Bottom Left)
-    { name: "Italian Espresso Bar", x: 50, y: 370, width: 90, height: 50, type: "coffee", zone: "Cafe Pantry" },
-    { name: "Water Cooler", x: 45, y: 320, width: 30, height: 35, type: "water_cooler", zone: "Cafe Pantry" },
-
-    // DECORATIVE GREENERY & STORAGE
-    { name: "Ficus Tree", x: 45, y: 65, width: 35, height: 45, type: "plant" },
-    { name: "Monstera Palm", x: 560, y: 65, width: 35, height: 45, type: "plant" },
-    { name: "Tech Bookshelf", x: 260, y: 60, width: 120, height: 30, type: "bookshelf" },
-  ];
-
-  const agentsRef = useRef<Agent[]>(initialAgents);
+  const mountRef = useRef<HTMLDivElement | null>(null);
+  const [selectedAgent, setSelectedAgent] = useState<{ name: string; role: string; bubble: string } | null>(null);
+  const [cameraMode, setCameraMode] = useState<"isometric" | "orbit">("isometric");
+  const [stats, setStats] = useState({ coffees: 142, deploys: 58, uptime: "99.98%" });
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const container = mountRef.current;
+    if (!container) return;
 
-    let animId: number;
-    let ticks = 0;
+    // --- 1. THREE.JS SCENE SETUP ---
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color("#090f0f");
+    scene.fog = new THREE.FogExp2("#090f0f", 0.025);
 
-    // Routine AI wandering behavior
-    const routineInterval = setInterval(() => {
-      if (isPaused) return;
+    const width = container.clientWidth || 980;
+    const height = 520;
 
-      agentsRef.current.forEach((agent) => {
-        // Chance to wander
-        if (Math.random() < 0.35 && !agent.isMoving) {
-          const rand = Math.random();
-          if (rand < 0.25) {
-            // Visit Cafe Pantry
-            agent.targetX = 110 + Math.random() * 40;
-            agent.targetY = 400 + Math.random() * 30;
-            agent.bubble = "Grabbing an espresso shot! ☕";
-            agent.bubbleTimer = 200;
-            setStats((s) => ({ ...s, coffeeCups: s.coffeeCups + 1 }));
-          } else if (rand < 0.55) {
-            // Join Conference Table
-            agent.targetX = 690 + Math.random() * 110;
-            agent.targetY = 340 + Math.random() * 40;
-            agent.bubble = "Collaborating in executive sprint sync 📊";
-            agent.bubbleTimer = 220;
-          } else if (rand < 0.75) {
-            // Check Data Center / Server Room
-            agent.targetX = 800 + Math.random() * 100;
-            agent.targetY = 175 + Math.random() * 25;
-            agent.bubble = "Auditing fiber-optic latency & SSL certificates 🔒";
-            agent.bubbleTimer = 220;
-            setStats((s) => ({ ...s, deployments: s.deployments + 1 }));
+    // Camera (Isometric angle)
+    const aspect = width / height;
+    const camera = new THREE.PerspectiveCamera(40, aspect, 0.1, 1000);
+    camera.position.set(22, 20, 26);
+    camera.lookAt(0, 0, 0);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.maxPolarAngle = Math.PI / 2.1; // Don't allow camera under floor
+    controls.minDistance = 12;
+    controls.maxDistance = 45;
+    controls.target.set(0, 1, 0);
+
+    // --- 2. LIGHTING (Cyber Cinder Mint Ambient & Spotlights) ---
+    const ambientLight = new THREE.AmbientLight("#182a2a", 1.8);
+    scene.add(ambientLight);
+
+    const dirLight = new THREE.DirectionalLight("#b9f5d8", 2.2);
+    dirLight.position.set(15, 25, 15);
+    dirLight.castShadow = true;
+    dirLight.shadow.mapSize.width = 1024;
+    dirLight.shadow.mapSize.height = 1024;
+    dirLight.shadow.camera.near = 0.5;
+    dirLight.shadow.camera.far = 60;
+    const d = 16;
+    dirLight.shadow.camera.left = -d;
+    dirLight.shadow.camera.right = d;
+    dirLight.shadow.camera.top = d;
+    dirLight.shadow.camera.bottom = -d;
+    scene.add(dirLight);
+
+    // Warm Orange Accent Light (Flare)
+    const flareLight = new THREE.PointLight("#ff7043", 3, 20);
+    flareLight.position.set(-6, 4, 6);
+    scene.add(flareLight);
+
+    // Cyan Server Room Glow
+    const serverLight = new THREE.PointLight("#38bdf8", 3.5, 18);
+    serverLight.position.set(8, 4, -6);
+    scene.add(serverLight);
+
+    // --- 3. ARCHITECTURAL OFFICE FLOOR & ZONES ---
+    // Main Floor
+    const floorGeo = new THREE.BoxGeometry(28, 0.4, 22);
+    const floorMat = new THREE.MeshStandardMaterial({
+      color: "#0c1515",
+      roughness: 0.6,
+      metalness: 0.2,
+    });
+    const floor = new THREE.Mesh(floorGeo, floorMat);
+    floor.position.y = -0.2;
+    floor.receiveShadow = true;
+    scene.add(floor);
+
+    // Cyber Grid lines on floor
+    const grid = new THREE.GridHelper(28, 28, "#b9f5d8", "#182a2a");
+    grid.position.y = 0.01;
+    (grid.material as THREE.Material).opacity = 0.15;
+    (grid.material as THREE.Material).transparent = true;
+    scene.add(grid);
+
+    // Room Inset Rugs
+    const devRugGeo = new THREE.BoxGeometry(14, 0.05, 10);
+    const devRugMat = new THREE.MeshStandardMaterial({ color: "#111f1f", roughness: 0.8 });
+    const devRug = new THREE.Mesh(devRugGeo, devRugMat);
+    devRug.position.set(-4, 0.02, -2);
+    devRug.receiveShadow = true;
+    scene.add(devRug);
+
+    // Data Center Metal Tile
+    const serverTileGeo = new THREE.BoxGeometry(8, 0.05, 8);
+    const serverTileMat = new THREE.MeshStandardMaterial({ color: "#081018", roughness: 0.3, metalness: 0.7 });
+    const serverTile = new THREE.Mesh(serverTileGeo, serverTileMat);
+    serverTile.position.set(8, 0.02, -5);
+    serverTile.receiveShadow = true;
+    scene.add(serverTile);
+
+    // Lounge Wooden Rug
+    const loungeRugGeo = new THREE.BoxGeometry(9, 0.05, 8);
+    const loungeRugMat = new THREE.MeshStandardMaterial({ color: "#181414", roughness: 0.9 });
+    const loungeRug = new THREE.Mesh(loungeRugGeo, loungeRugMat);
+    loungeRug.position.set(7, 0.02, 5);
+    loungeRug.receiveShadow = true;
+    scene.add(loungeRug);
+
+    // --- 4. 3D FURNITURE GENERATOR ---
+    const deskMat = new THREE.MeshStandardMaterial({ color: "#182a2a", roughness: 0.5, metalness: 0.4 });
+    const monitorMat = new THREE.MeshStandardMaterial({ color: "#020617", roughness: 0.2 });
+    const screenGlowMat = new THREE.MeshBasicMaterial({ color: "#b9f5d8" });
+    const flareScreenMat = new THREE.MeshBasicMaterial({ color: "#ff7043" });
+
+    const createWorkstation = (x: number, z: number, label: string) => {
+      const deskGroup = new THREE.Group();
+      deskGroup.position.set(x, 0, z);
+
+      // Desk Top
+      const topGeo = new THREE.BoxGeometry(3.2, 0.15, 1.8);
+      const top = new THREE.Mesh(topGeo, deskMat);
+      top.position.y = 1.4;
+      top.castShadow = true;
+      top.receiveShadow = true;
+      deskGroup.add(top);
+
+      // Legs
+      const legGeo = new THREE.CylinderGeometry(0.06, 0.06, 1.4);
+      const legMat = new THREE.MeshStandardMaterial({ color: "#334155", metalness: 0.8 });
+      [[-1.4, -0.7], [1.4, -0.7], [-1.4, 0.7], [1.4, 0.7]].forEach(([lx, lz]) => {
+        const leg = new THREE.Mesh(legGeo, legMat);
+        leg.position.set(lx, 0.7, lz);
+        leg.castShadow = true;
+        deskGroup.add(leg);
+      });
+
+      // Dual Monitors
+      const standGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.6);
+      const m1Stand = new THREE.Mesh(standGeo, legMat);
+      m1Stand.position.set(-0.6, 1.7, -0.2);
+      deskGroup.add(m1Stand);
+
+      const m2Stand = new THREE.Mesh(standGeo, legMat);
+      m2Stand.position.set(0.6, 1.7, -0.2);
+      deskGroup.add(m2Stand);
+
+      const screenGeo = new THREE.BoxGeometry(1.1, 0.65, 0.06);
+      const m1 = new THREE.Mesh(screenGeo, monitorMat);
+      m1.position.set(-0.6, 2.0, -0.2);
+      m1.rotation.y = 0.15;
+      m1.castShadow = true;
+      deskGroup.add(m1);
+
+      // Glowing screen face
+      const faceGeo = new THREE.PlaneGeometry(1.0, 0.55);
+      const m1Face = new THREE.Mesh(faceGeo, screenGlowMat);
+      m1Face.position.set(-0.6, 2.0, -0.16);
+      m1Face.rotation.y = 0.15;
+      deskGroup.add(m1Face);
+
+      const m2 = new THREE.Mesh(screenGeo, monitorMat);
+      m2.position.set(0.6, 2.0, -0.2);
+      m2.rotation.y = -0.15;
+      m2.castShadow = true;
+      deskGroup.add(m2);
+
+      const m2Face = new THREE.Mesh(faceGeo, flareScreenMat);
+      m2Face.position.set(0.6, 2.0, -0.16);
+      m2Face.rotation.y = -0.15;
+      deskGroup.add(m2Face);
+
+      // Ergonomic Office Chair
+      const seatGeo = new THREE.BoxGeometry(0.8, 0.1, 0.8);
+      const chairMat = new THREE.MeshStandardMaterial({ color: "#0f172a", roughness: 0.7 });
+      const seat = new THREE.Mesh(seatGeo, chairMat);
+      seat.position.set(0, 0.85, 0.7);
+      deskGroup.add(seat);
+
+      const backGeo = new THREE.BoxGeometry(0.8, 0.9, 0.1);
+      const back = new THREE.Mesh(backGeo, chairMat);
+      back.position.set(0, 1.3, 1.05);
+      deskGroup.add(back);
+
+      scene.add(deskGroup);
+    };
+
+    // 6 Workstations
+    createWorkstation(-7, -4, "Bryan's Station");
+    createWorkstation(-3, -4, "Jarwo AI Pod");
+    createWorkstation(1, -4, "Maya Design Station");
+    createWorkstation(-7, 1, "Backend Core");
+    createWorkstation(-3, 1, "Sentinel QA");
+    createWorkstation(1, 1, "Ops Pipeline");
+
+    // 3 Server Racks in Data Center
+    const serverGeo = new THREE.BoxGeometry(1.4, 4.2, 1.6);
+    const serverMat = new THREE.MeshStandardMaterial({ color: "#020617", metalness: 0.8, roughness: 0.2 });
+    for (let s = 0; s < 3; s++) {
+      const rack = new THREE.Mesh(serverGeo, serverMat);
+      rack.position.set(6.2 + s * 2.0, 2.1, -6.5);
+      rack.castShadow = true;
+      rack.receiveShadow = true;
+      scene.add(rack);
+
+      // LED Blinking light strips on rack
+      const ledGeo = new THREE.PlaneGeometry(1.1, 3.4);
+      const ledMat = new THREE.MeshBasicMaterial({ color: s % 2 === 0 ? "#38bdf8" : "#22c55e" });
+      const led = new THREE.Mesh(ledGeo, ledMat);
+      led.position.set(6.2 + s * 2.0, 2.1, -5.69);
+      scene.add(led);
+    }
+
+    // Glass Conference Table & Chairs
+    const confTableGeo = new THREE.BoxGeometry(5.5, 0.15, 3.2);
+    const glassMat = new THREE.MeshPhysicalMaterial({ color: "#1e293b", roughness: 0.1, transmission: 0.6, thickness: 0.5 });
+    const confTable = new THREE.Mesh(confTableGeo, glassMat);
+    confTable.position.set(7, 1.3, 5);
+    confTable.castShadow = true;
+    scene.add(confTable);
+
+    // Pantry Espresso Bar
+    const barGeo = new THREE.BoxGeometry(3.5, 1.6, 2.0);
+    const barMat = new THREE.MeshStandardMaterial({ color: "#3e2723", roughness: 0.6 });
+    const bar = new THREE.Mesh(barGeo, barMat);
+    bar.position.set(-8, 0.8, 6.5);
+    bar.castShadow = true;
+    scene.add(bar);
+
+    // Espresso Machine
+    const coffeeMachineGeo = new THREE.BoxGeometry(1.2, 1.0, 1.0);
+    const machineMat = new THREE.MeshStandardMaterial({ color: "#94a3b8", metalness: 0.9, roughness: 0.2 });
+    const coffeeMachine = new THREE.Mesh(coffeeMachineGeo, machineMat);
+    coffeeMachine.position.set(-8, 2.1, 6.5);
+    coffeeMachine.castShadow = true;
+    scene.add(coffeeMachine);
+
+    // Decorative Plants
+    const potGeo = new THREE.CylinderGeometry(0.4, 0.3, 0.8);
+    const potMat = new THREE.MeshStandardMaterial({ color: "#78350f" });
+    const leavesGeo = new THREE.DodecahedronGeometry(0.7);
+    const leavesMat = new THREE.MeshStandardMaterial({ color: "#16a34a", roughness: 0.9 });
+
+    [[-11, -8], [-11, 8], [11, -8], [11, 8]].forEach(([px, pz]) => {
+      const pot = new THREE.Mesh(potGeo, potMat);
+      pot.position.set(px, 0.4, pz);
+      scene.add(pot);
+      const leaves = new THREE.Mesh(leavesGeo, leavesMat);
+      leaves.position.set(px, 1.1, pz);
+      scene.add(leaves);
+    });
+
+    // --- 5. 3D VOXEL / LOW-POLY EMPLOYEES ---
+    const agents3D: Agent3D[] = [];
+
+    const createCharacterMesh = (hairCol: string, clothCol: string) => {
+      const group = new THREE.Group();
+
+      // Body (Torso)
+      const bodyGeo = new THREE.BoxGeometry(0.7, 0.9, 0.45);
+      const bodyMat = new THREE.MeshStandardMaterial({ color: clothCol, roughness: 0.5 });
+      const body = new THREE.Mesh(bodyGeo, bodyMat);
+      body.position.y = 1.05;
+      body.castShadow = true;
+      group.add(body);
+
+      // Head
+      const headGeo = new THREE.BoxGeometry(0.55, 0.55, 0.55);
+      const headMat = new THREE.MeshStandardMaterial({ color: "#fed7aa", roughness: 0.6 });
+      const head = new THREE.Mesh(headGeo, headMat);
+      head.position.y = 1.8;
+      head.castShadow = true;
+      group.add(head);
+
+      // Hair
+      const hairGeo = new THREE.BoxGeometry(0.6, 0.25, 0.6);
+      const hairMat = new THREE.MeshStandardMaterial({ color: hairCol, roughness: 0.8 });
+      const hair = new THREE.Mesh(hairGeo, hairMat);
+      hair.position.y = 2.1;
+      group.add(hair);
+
+      // Limbs (Legs)
+      const legGeo = new THREE.BoxGeometry(0.24, 0.7, 0.24);
+      const legMat = new THREE.MeshStandardMaterial({ color: "#0f172a" });
+
+      const legL = new THREE.Mesh(legGeo, legMat);
+      legL.position.set(-0.2, 0.35, 0);
+      legL.castShadow = true;
+      legL.name = "legL";
+      group.add(legL);
+
+      const legR = new THREE.Mesh(legGeo, legMat);
+      legR.position.set(0.2, 0.35, 0);
+      legR.castShadow = true;
+      legR.name = "legR";
+      group.add(legR);
+
+      // Floating Aura Indicator (Cinder Mint / Flare Ring)
+      const ringGeo = new THREE.RingGeometry(0.5, 0.6, 24);
+      const ringMat = new THREE.MeshBasicMaterial({ color: clothCol, side: THREE.DoubleSide });
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.rotation.x = Math.PI / 2;
+      ring.position.y = 0.05;
+      group.add(ring);
+
+      return group;
+    };
+
+    const rawAgentDefs = [
+      { id: "bryan", name: "Bryan Yogie", role: "Lead Fullstack & Network", dept: "Dev", x: -7, z: -3.2, hair: "#000000", cloth: "#FF7043", bubble: "Crafting real-time 3D Three.js Virtual Office engine!" },
+      { id: "jarwo", name: "Jarwo AI", role: "AI Chief Dispatcher", dept: "AI", x: -3, z: -3.2, hair: "#334155", cloth: "#B9F5D8", bubble: "Balancing compute tasks between serverless edge nodes." },
+      { id: "maya", name: "Maya UI", role: "Design Systems & 3D", dept: "Design", x: 1, z: -3.2, hair: "#64748b", cloth: "#F472B6", bubble: "Tuning ambient occlusion & PBR material shaders." },
+      { id: "backend", name: "Backend Bot", role: "Distributed DB & API", dept: "Dev", x: -7, z: 1.8, hair: "#1e293b", cloth: "#38BDF8", bubble: "PostgreSQL query execution under 2 milliseconds." },
+      { id: "qa", name: "Sentinel QA", role: "E2E Mobile Tester", dept: "QA", x: -3, z: 1.8, hair: "#475569", cloth: "#A78BFA", bubble: "Validating 60FPS mobile WebGL render stability." },
+      { id: "ops", name: "Pipeline Ops", role: "CI/CD & Serverless Deploy", dept: "Ops", x: 1, z: 1.8, hair: "#0f172a", cloth: "#34D399", bubble: "Vercel edge build successfully deployed worldwide." },
+      { id: "cisco", name: "Cisco Agent", role: "Network Security & Router", dept: "Network", x: 8, z: -4.5, hair: "#1e1e1e", cloth: "#FBBF24", bubble: "Optical fiber trunking & packet firewall clean." },
+      { id: "growth", name: "Growth Agent", role: "Global Traffic & SEO", dept: "Growth", x: 7, z: 3.5, hair: "#78350f", cloth: "#FB923C", bubble: "Worldwide visitors spiking across tech portfolio." },
+      { id: "barista", name: "Barista Bot", role: "Espresso & Fuel", dept: "Pantry", x: -8, z: 5.2, hair: "#3f3f46", cloth: "#E2E8F0", bubble: "Pouring double-ristretto for the engineering team! ☕" },
+    ];
+
+    rawAgentDefs.forEach((d) => {
+      const charGroup = createCharacterMesh(d.hair, d.cloth);
+      charGroup.position.set(d.x, 0, d.z);
+      scene.add(charGroup);
+
+      agents3D.push({
+        id: d.id,
+        name: d.name,
+        role: d.role,
+        department: d.dept,
+        group: charGroup,
+        targetPos: new THREE.Vector3(d.x, 0, d.z),
+        homePos: new THREE.Vector3(d.x, 0, d.z),
+        isMoving: false,
+        bubbleText: d.bubble,
+        bubbleTimer: 200,
+        color: parseInt(d.cloth.replace("#", "0x")),
+      });
+    });
+
+    // Default focus to Bryan
+    setSelectedAgent({ name: agents3D[0].name, role: agents3D[0].role, bubble: agents3D[0].bubbleText });
+
+    // Autonomous 3D Walking Routine
+    const routineTimer = setInterval(() => {
+      agents3D.forEach((a) => {
+        if (Math.random() < 0.35 && !a.isMoving) {
+          const choice = Math.random();
+          if (choice < 0.3) {
+            // Walk to Cafe Pantry
+            a.targetPos.set(-7 + (Math.random() - 0.5) * 3, 0, 5 + (Math.random() - 0.5) * 2);
+            a.bubbleText = "Stopping by the espresso bar for coffee ☕";
+            setStats(s => ({ ...s, coffees: s.coffees + 1 }));
+          } else if (choice < 0.6) {
+            // Walk to Conference Lounge
+            a.targetPos.set(7 + (Math.random() - 0.5) * 3, 0, 4 + (Math.random() - 0.5) * 2);
+            a.bubbleText = "Brainstorming AI system architecture at conference table 💡";
+          } else if (choice < 0.8) {
+            // Walk to Server Farm
+            a.targetPos.set(8 + (Math.random() - 0.5) * 2, 0, -4 + (Math.random() - 0.5) * 2);
+            a.bubbleText = "Inspecting Tier-3 edge server rack telemetry ⚡";
+            setStats(s => ({ ...s, deploys: s.deploys + 1 }));
           } else {
-            // Head back to Assigned Desk
-            agent.targetX = agent.homeDesk.x;
-            agent.targetY = agent.homeDesk.y;
-            agent.bubble = `Writing high-performance ${agent.department} code 💻`;
-            agent.bubbleTimer = 190;
+            // Return to Home Station
+            a.targetPos.copy(a.homePos);
+            a.bubbleText = `Back at workstation writing clean ${a.department} code.`;
           }
-          agent.isMoving = true;
+          a.isMoving = true;
+          a.bubbleTimer = 220;
         }
       });
-    }, 3800);
+    }, 4200);
 
-    // Interactive Click-To-Move
-    const handleCanvasClick = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
-      const clickX = (e.clientX - rect.left) * scaleX;
-      const clickY = (e.clientY - rect.top) * scaleY;
+    // Interactive Raycaster (Click to move Bryan or select Agent)
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
 
-      // Check agent click
-      let clicked: Agent | null = null;
-      agentsRef.current.forEach((a) => {
-        if (Math.hypot(a.x - clickX, a.y - clickY) < 25) {
-          clicked = a;
+    const handlePointerDown = (event: MouseEvent) => {
+      const rect = renderer.domElement.getBoundingClientRect();
+      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+
+      // Check agent hit
+      let hitAgent: Agent3D | null = null;
+      for (const a of agents3D) {
+        const intersects = raycaster.intersectObjects(a.group.children, true);
+        if (intersects.length > 0) {
+          hitAgent = a;
+          break;
         }
-      });
+      }
 
-      if (clicked) {
-        setSelectedAgent(clicked);
-        (clicked as Agent).bubble = `Hi! I'm ${(clicked as Agent).name} (${(clicked as Agent).role}). How can I assist you?`;
-        (clicked as Agent).bubbleTimer = 240;
-      } else {
-        // Command Bryan
-        const bryan = agentsRef.current.find((a) => a.id === "bryan");
+      if (hitAgent) {
+        setSelectedAgent({ name: (hitAgent as Agent3D).name, role: (hitAgent as Agent3D).role, bubble: (hitAgent as Agent3D).bubbleText });
+        (hitAgent as Agent3D).bubbleTimer = 300;
+        return;
+      }
+
+      // Check Floor hit -> Walk Bryan to point!
+      const floorIntersects = raycaster.intersectObject(floor);
+      if (floorIntersects.length > 0) {
+        const pt = floorIntersects[0].point;
+        const bryan = agents3D.find(a => a.id === "bryan");
         if (bryan) {
-          bryan.targetX = Math.max(50, Math.min(canvas.width - 50, clickX));
-          bryan.targetY = Math.max(60, Math.min(canvas.height - 50, clickY));
+          bryan.targetPos.set(Math.max(-12, Math.min(12, pt.x)), 0, Math.max(-9, Math.min(9, pt.z)));
           bryan.isMoving = true;
-          bryan.bubble = "Heading over to inspected station... 🚶‍♂️";
-          bryan.bubbleTimer = 160;
-          setSelectedAgent(bryan);
+          bryan.bubbleText = "Walking to selected office coordinates! 🚶‍♂️";
+          bryan.bubbleTimer = 200;
+          setSelectedAgent({ name: bryan.name, role: bryan.role, bubble: bryan.bubbleText });
         }
       }
     };
 
-    canvas.addEventListener("click", handleCanvasClick);
+    renderer.domElement.addEventListener("pointerdown", handlePointerDown);
 
-    // Render 60 FPS Loop
-    const render = () => {
-      ticks++;
+    // Responsive Resize
+    const handleResize = () => {
+      if (!container) return;
+      const w = container.clientWidth || 980;
+      camera.aspect = w / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, height);
+    };
 
-      // 1. FLOOR PLAN - Multi-Zone Modern Architectural Layout
-      ctx.fillStyle = "#0a1313"; // Deep Slate base
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    window.addEventListener("resize", handleResize);
 
-      // Parquet & Carpet zone dividing
-      // Main Engineering Bay (Dark Cinder Slate)
-      ctx.fillStyle = "#111f1f";
-      ctx.fillRect(110, 50, 440, 275);
-      ctx.strokeStyle = "rgba(185, 245, 216, 0.2)";
-      ctx.lineWidth = 1.5;
-      ctx.strokeRect(110, 50, 440, 275);
+    // --- 6. RENDER LOOP WITH WALKING SINE ANIMATION ---
+    let frameId: number;
+    let clock = new THREE.Clock();
 
-      // Server Data Center (Cold Metal Floor)
-      ctx.fillStyle = "#0d1b2a";
-      ctx.fillRect(730, 40, 225, 185);
-      ctx.strokeStyle = "rgba(56, 189, 248, 0.3)";
-      ctx.strokeRect(730, 40, 225, 185);
+    const animate = () => {
+      const delta = clock.getDelta();
+      const time = clock.getElapsedTime();
 
-      // Conference Lounge (Wood Inlay)
-      ctx.fillStyle = "#1e1e24";
-      ctx.fillRect(630, 270, 325, 195);
-      ctx.strokeStyle = "rgba(255, 112, 67, 0.25)";
-      ctx.strokeRect(630, 270, 325, 195);
+      // Update 3D Character Walking Mechanics
+      agents3D.forEach((a) => {
+        if (a.isMoving) {
+          const dir = new THREE.Vector3().subVectors(a.targetPos, a.group.position);
+          const dist = dir.length();
 
-      // Pantry & Barista Cafe
-      ctx.fillStyle = "#1a1615";
-      ctx.fillRect(25, 290, 155, 175);
-      ctx.strokeStyle = "rgba(251, 146, 60, 0.25)";
-      ctx.strokeRect(25, 290, 155, 175);
+          if (dist > 0.15) {
+            dir.normalize();
+            a.group.position.addScaledVector(dir, delta * 3.6);
 
-      // Grid line textures across walkway
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.03)";
-      ctx.lineWidth = 1;
-      const step = 28;
-      for (let x = 0; x < canvas.width; x += step) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, canvas.height);
-        ctx.stroke();
-      }
-      for (let y = 0; y < canvas.height; y += step) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(canvas.width, y);
-        ctx.stroke();
-      }
+            // Rotate character to face target
+            const angle = Math.atan2(dir.x, dir.z);
+            a.group.rotation.y = angle;
 
-      // Room Headers / Architectural Signage
-      ctx.font = "bold 9px monospace";
-      ctx.fillStyle = "#b9f5d8";
-      ctx.fillText("ZONE 01 // CORE ENGINEERING POD", 125, 45);
-
-      ctx.fillStyle = "#38bdf8";
-      ctx.fillText("ZONE 02 // TIER-3 EDGE DATA CENTER", 745, 35);
-
-      ctx.fillStyle = "#ff7043";
-      ctx.fillText("ZONE 03 // EXECUTIVE BRIEFING ROOM", 645, 265);
-
-      ctx.fillStyle = "#fb923c";
-      ctx.fillText("ZONE 04 // ESPRESSO PANTRY & BREAK", 35, 285);
-
-      // 2. FURNITURE & PROPS
-      furnitureList.forEach((f) => {
-        if (f.type === "desk") {
-          // Industrial Tech Desk
-          ctx.fillStyle = "#182a2a";
-          ctx.fillRect(f.x, f.y, f.width, f.height);
-          ctx.strokeStyle = "#2e4848";
-          ctx.lineWidth = 1;
-          ctx.strokeRect(f.x, f.y, f.width, f.height);
-
-          // Dual curved monitors
-          ctx.fillStyle = "#020617";
-          ctx.fillRect(f.x + 10, f.y + 6, 36, 20);
-          ctx.fillRect(f.x + 54, f.y + 6, 36, 20);
-
-          // Glowing IDE syntax highlights
-          const isFlicker = (ticks + f.x) % 60 < 30;
-          ctx.fillStyle = isFlicker ? "#b9f5d8" : "#ff7043";
-          ctx.fillRect(f.x + 14, f.y + 10, 18, 2);
-          ctx.fillRect(f.x + 14, f.y + 14, 28, 2);
-          ctx.fillRect(f.x + 14, f.y + 18, 22, 2);
-
-          ctx.fillStyle = "#38bdf8";
-          ctx.fillRect(f.x + 58, f.y + 10, 24, 2);
-          ctx.fillRect(f.x + 58, f.y + 14, 16, 2);
-
-          // Keyboard & Mousepad
-          ctx.fillStyle = "#0f172a";
-          ctx.fillRect(f.x + 32, f.y + 32, 36, 12);
-          ctx.fillStyle = "#475569";
-          ctx.fillRect(f.x + 36, f.y + 34, 20, 8);
-
-          // Label
-          ctx.font = "9px sans-serif";
-          ctx.fillStyle = "#94a3b8";
-          ctx.fillText(f.name, f.x + 8, f.y + 46);
-        } else if (f.type === "server") {
-          // Server Tall Rack
-          ctx.fillStyle = "#020617";
-          ctx.fillRect(f.x, f.y, f.width, f.height);
-          ctx.strokeStyle = "#38bdf8";
-          ctx.lineWidth = 1.5;
-          ctx.strokeRect(f.x, f.y, f.width, f.height);
-
-          // Server Blades & Blinking LEDs
-          for (let b = 0; b < 7; b++) {
-            const by = f.y + 8 + b * 12;
-            ctx.fillStyle = "#1e293b";
-            ctx.fillRect(f.x + 4, by, f.width - 8, 8);
-
-            // Blinking Lights
-            const isGreen = (ticks + b * 10) % 36 > 16;
-            ctx.fillStyle = isGreen ? "#22c55e" : "#ef4444";
-            ctx.fillRect(f.x + 8, by + 2.5, 3, 3);
-
-            ctx.fillStyle = "#38bdf8";
-            ctx.fillRect(f.x + 14, by + 2.5, 3, 3);
-          }
-        } else if (f.type === "meeting_table") {
-          // Glass Conference Table
-          ctx.fillStyle = "rgba(30, 41, 59, 0.85)";
-          ctx.fillRect(f.x, f.y, f.width, f.height);
-          ctx.strokeStyle = "#94a3b8";
-          ctx.lineWidth = 2;
-          ctx.strokeRect(f.x, f.y, f.width, f.height);
-
-          // Conference Laptops
-          ctx.fillStyle = "#cbd5e1";
-          ctx.fillRect(f.x + 25, f.y + 25, 20, 15);
-          ctx.fillRect(f.x + 70, f.y + 25, 20, 15);
-          ctx.fillRect(f.x + 115, f.y + 25, 20, 15);
-
-          ctx.font = "bold 10px monospace";
-          ctx.fillStyle = "#f8fafc";
-          ctx.fillText("AI SPRINT BOARD", f.x + 30, f.y + 65);
-        } else if (f.type === "coffee") {
-          // Modern Espresso Counter
-          ctx.fillStyle = "#451a03";
-          ctx.fillRect(f.x, f.y, f.width, f.height);
-          ctx.strokeStyle = "#fb923c";
-          ctx.lineWidth = 1.5;
-          ctx.strokeRect(f.x, f.y, f.width, f.height);
-
-          // Coffee Machine Body
-          ctx.fillStyle = "#94a3b8";
-          ctx.fillRect(f.x + 25, f.y + 8, 40, 25);
-          ctx.fillStyle = "#0f172a";
-          ctx.fillRect(f.x + 35, f.y + 22, 12, 10);
-
-          // Steam Animation
-          if (ticks % 30 < 15) {
-            ctx.strokeStyle = "rgba(255,255,255,0.7)";
-            ctx.beginPath();
-            ctx.moveTo(f.x + 40, f.y + 6);
-            ctx.lineTo(f.x + 40, f.y);
-            ctx.stroke();
-          }
-
-          ctx.font = "bold 9px sans-serif";
-          ctx.fillStyle = "#ffedd5";
-          ctx.fillText("BYS CAFE", f.x + 22, f.y + 44);
-        } else if (f.type === "arcade") {
-          // Retro Arcade Machine
-          ctx.fillStyle = "#7c3aed";
-          ctx.fillRect(f.x, f.y, f.width, f.height);
-          ctx.strokeStyle = "#c084fc";
-          ctx.strokeRect(f.x, f.y, f.width, f.height);
-
-          // Screen
-          ctx.fillStyle = "#000000";
-          ctx.fillRect(f.x + 6, f.y + 8, f.width - 12, 20);
-          ctx.fillStyle = (ticks % 40 < 20) ? "#38bdf8" : "#f43f5e";
-          ctx.fillRect(f.x + 12, f.y + 14, 10, 8);
-        } else if (f.type === "plant") {
-          // Designer Potted Indoor Tree
-          ctx.fillStyle = "#78350f";
-          ctx.beginPath();
-          ctx.arc(f.x + f.width / 2, f.y + f.height / 2 + 5, 10, 0, Math.PI * 2);
-          ctx.fill();
-
-          ctx.fillStyle = "#16a34a";
-          ctx.beginPath();
-          ctx.arc(f.x + f.width / 2, f.y + f.height / 2 - 4, 15, 0, Math.PI * 2);
-          ctx.fill();
-        } else if (f.type === "bookshelf") {
-          ctx.fillStyle = "#334155";
-          ctx.fillRect(f.x, f.y, f.width, f.height);
-          ctx.strokeStyle = "#475569";
-          ctx.strokeRect(f.x, f.y, f.width, f.height);
-          // Colorful books
-          const colors = ["#ef4444", "#3b82f6", "#10b981", "#f59e0b", "#8b5cf6"];
-          for (let i = 0; i < 9; i++) {
-            ctx.fillStyle = colors[i % colors.length];
-            ctx.fillRect(f.x + 6 + i * 12, f.y + 6, 8, f.height - 12);
-          }
-        }
-      });
-
-      // 3. AGENTS ANIMATION & RENDERING
-      agentsRef.current.forEach((agent) => {
-        // Walking physics
-        if (agent.isMoving && !isPaused) {
-          const dx = agent.targetX - agent.x;
-          const dy = agent.targetY - agent.y;
-          const dist = Math.hypot(dx, dy);
-
-          if (dist > 3) {
-            const speed = 2.4;
-            agent.x += (dx / dist) * speed;
-            agent.y += (dy / dist) * speed;
-
-            if (Math.abs(dx) > Math.abs(dy)) {
-              agent.direction = dx > 0 ? "right" : "left";
-            } else {
-              agent.direction = dy > 0 ? "down" : "up";
-            }
-
-            if (ticks % 8 === 0) {
-              agent.frame = (agent.frame + 1) % 4;
+            // Leg stride animation
+            const legL = a.group.getObjectByName("legL");
+            const legR = a.group.getObjectByName("legR");
+            if (legL && legR) {
+              legL.rotation.x = Math.sin(time * 12) * 0.6;
+              legR.rotation.x = -Math.sin(time * 12) * 0.6;
             }
           } else {
-            agent.x = agent.targetX;
-            agent.y = agent.targetY;
-            agent.isMoving = false;
-            agent.frame = 0;
+            a.group.position.copy(a.targetPos);
+            a.isMoving = false;
+
+            const legL = a.group.getObjectByName("legL");
+            const legR = a.group.getObjectByName("legR");
+            if (legL && legR) {
+              legL.rotation.x = 0;
+              legR.rotation.x = 0;
+            }
           }
-        }
-
-        const cx = agent.x;
-        const cy = agent.y;
-
-        // Shadow
-        ctx.fillStyle = "rgba(0, 0, 0, 0.45)";
-        ctx.beginPath();
-        ctx.ellipse(cx, cy + 9, 12, 6, 0, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Legs with gait cycle
-        ctx.fillStyle = "#0f172a";
-        const stepOffset = agent.isMoving ? Math.sin(ticks * 0.45) * 4 : 0;
-        ctx.fillRect(cx - 6, cy + 3 + stepOffset, 5, 8);
-        ctx.fillRect(cx + 1, cy + 3 - stepOffset, 5, 8);
-
-        // Body / Shirt
-        ctx.fillStyle = agent.clothColor;
-        ctx.fillRect(cx - 8, cy - 11, 16, 14);
-        ctx.strokeStyle = "#000000";
-        ctx.lineWidth = 1;
-        ctx.strokeRect(cx - 8, cy - 11, 16, 14);
-
-        // Head
-        ctx.fillStyle = "#fecdd3"; // Neutral skin
-        ctx.beginPath();
-        ctx.arc(cx, cy - 19, 8, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
-
-        // Hair
-        ctx.fillStyle = agent.hairColor;
-        ctx.beginPath();
-        ctx.arc(cx, cy - 23, 8, Math.PI, Math.PI * 2);
-        ctx.fill();
-
-        // Eyes
-        ctx.fillStyle = "#000000";
-        if (agent.direction === "right") {
-          ctx.fillRect(cx + 2, cy - 20, 2, 2.5);
-          ctx.fillRect(cx + 5, cy - 20, 2, 2.5);
-        } else if (agent.direction === "left") {
-          ctx.fillRect(cx - 7, cy - 20, 2, 2.5);
-          ctx.fillRect(cx - 4, cy - 20, 2, 2.5);
-        } else if (agent.direction === "down") {
-          ctx.fillRect(cx - 3, cy - 19, 2, 2.5);
-          ctx.fillRect(cx + 2, cy - 19, 2, 2.5);
-        }
-
-        // Name & Role Tag
-        ctx.font = "bold 9.5px sans-serif";
-        const nameW = ctx.measureText(agent.name).width;
-        ctx.fillStyle = "rgba(0,0,0,0.85)";
-        ctx.fillRect(cx - nameW / 2 - 4, cy - 38, nameW + 8, 14);
-        ctx.fillStyle = agent.clothColor;
-        ctx.fillText(agent.name, cx - nameW / 2, cy - 27);
-
-        // Speech Bubble
-        if (agent.bubble && agent.bubbleTimer > 0) {
-          agent.bubbleTimer--;
-          ctx.font = "11px monospace";
-          const bubbleW = ctx.measureText(agent.bubble).width + 16;
-          const bubbleX = cx - bubbleW / 2;
-          const bubbleY = cy - 60;
-
-          ctx.fillStyle = "#ffffff";
-          ctx.strokeStyle = "#182a2a";
-          ctx.lineWidth = 1.5;
-
-          ctx.beginPath();
-          ctx.roundRect(bubbleX, bubbleY, bubbleW, 22, 6);
-          ctx.fill();
-          ctx.stroke();
-
-          // Tail
-          ctx.beginPath();
-          ctx.moveTo(cx - 4, bubbleY + 22);
-          ctx.lineTo(cx, bubbleY + 28);
-          ctx.lineTo(cx + 4, bubbleY + 22);
-          ctx.fill();
-          ctx.stroke();
-
-          ctx.fillStyle = "#0f172a";
-          ctx.fillText(agent.bubble, bubbleX + 8, bubbleY + 15);
         }
       });
 
-      animId = requestAnimationFrame(render);
+      // Subtle light pulsation
+      flareLight.intensity = 2.5 + Math.sin(time * 3) * 0.8;
+      serverLight.intensity = 3.0 + Math.cos(time * 4) * 0.7;
+
+      controls.update();
+      renderer.render(scene, camera);
+      frameId = requestAnimationFrame(animate);
     };
 
-    render();
+    animate();
 
     return () => {
-      cancelAnimationFrame(animId);
-      clearInterval(routineInterval);
-      canvas.removeEventListener("click", handleCanvasClick);
+      cancelAnimationFrame(frameId);
+      clearInterval(routineTimer);
+      window.removeEventListener("resize", handleResize);
+      renderer.domElement.removeEventListener("pointerdown", handlePointerDown);
+      renderer.dispose();
+      if (renderer.domElement.parentNode) {
+        renderer.domElement.parentNode.removeChild(renderer.domElement);
+      }
     };
-  }, [isPaused]);
+  }, []);
 
   return (
     <section className="relative w-full py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-[#090f0f] border-t border-mint/20 overflow-hidden" id="virtual-office">
-      {/* Background Ambience */}
+      {/* Background Cyber Grid */}
       <div 
         className="absolute inset-0 opacity-15 pointer-events-none"
         style={{
           backgroundImage: "radial-gradient(#b9f5d8 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
+          backgroundSize: "28px 28px",
         }}
       />
 
@@ -672,86 +535,83 @@ export default function VirtualOffice() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mint opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-mint"></span>
               </span>
-              <span className="font-mono text-xs uppercase tracking-widest text-mint font-semibold">
-                Autonomous 2D RPG Office Simulation
+              <span className="font-mono text-xs uppercase tracking-widest text-mint font-semibold flex items-center gap-1.5">
+                <Sparkles size={13} className="text-flare" /> Real-time 3D WebGL Metaverse
               </span>
             </div>
             <h2 className="text-4xl md:text-6xl font-outfit font-black uppercase text-foreground tracking-tighter">
-              BYS <span className="text-mint">Virtual Office</span>
+              BYS <span className="text-mint">3D Virtual Office</span>
             </h2>
             <p className="text-foreground/70 font-mono text-xs md:text-sm max-w-2xl mt-2 leading-relaxed">
-              Explore my digital company workspace inspired by Gather Town: 9 autonomous AI agents collaborating across engineering, edge serverless, design, and growth.
-              <span className="text-flare font-bold block mt-1">💡 Click or tap anywhere on the office floor to guide Bryan around!</span>
+              Step inside my interactive 3D digital headquarters powered by Three.js: 9 autonomous voxel agents walking across engineering pods, conference rooms, and edge data centers.
+              <span className="text-flare font-bold block mt-1">
+                🕹️ Drag to orbit camera in 3D space • Click anywhere on the floor to direct Bryan!
+              </span>
             </p>
           </div>
 
-          {/* Realtime Telemetry Dashboard */}
+          {/* Quick Metrics */}
           <div className="flex items-center gap-4 bg-[#121f1f] p-3 rounded-2xl border border-mint/20 text-xs font-mono">
             <div className="flex items-center gap-1.5 text-mint">
               <Coffee size={15} className="text-flare" />
-              <span>{stats.coffeeCups} Coffees</span>
+              <span>{stats.coffees} Coffees</span>
             </div>
             <div className="w-[1px] h-4 bg-white/20" />
             <div className="flex items-center gap-1.5 text-mint">
               <Server size={15} className="text-mint" />
-              <span>{stats.deployments} Deploys</span>
+              <span>{stats.deploys} Deploys</span>
             </div>
             <div className="w-[1px] h-4 bg-white/20" />
             <div className="flex items-center gap-1.5 text-white">
               <Users size={15} className="text-flare" />
-              <span>9 Employees Active</span>
+              <span>9 Voxel Employees</span>
             </div>
           </div>
         </div>
 
-        {/* 2D CANVAS STAGE CONTAINER */}
-        <div className="w-full bg-[#101b1b] rounded-3xl border-2 border-mint/30 shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden relative">
+        {/* 3D WEBGL STAGE */}
+        <div className="w-full bg-[#101b1b] rounded-3xl border-2 border-mint/30 shadow-[0_25px_70px_rgba(0,0,0,0.85)] overflow-hidden relative">
           
-          {/* Top Canvas Controls Bar */}
+          {/* Top Control Bar */}
           <div className="bg-[#142323] px-6 py-3.5 flex items-center justify-between border-b border-mint/20">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
               <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
               <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
               <span className="ml-3 font-mono text-xs text-foreground/60 tracking-wider hidden sm:inline">
-                interactive_office_engine.canvas // 60fps
+                three_js_pbr_engine // 60fps_webgl
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setIsPaused(!isPaused)}
-                className="px-3 py-1.5 rounded-lg bg-[#0c1515] hover:bg-mint hover:text-cinder text-foreground font-mono text-xs transition-colors flex items-center gap-1.5 border border-white/10"
-              >
-                {isPaused ? <Play size={12} /> : <Pause size={12} />}
-                <span>{isPaused ? "Resume Agents" : "Pause Simulation"}</span>
-              </button>
+            <div className="flex items-center gap-3 text-xs font-mono text-foreground/70">
+              <span className="flex items-center gap-1.5 text-mint">
+                <Eye size={13} /> Left Click + Drag to Orbit • Right Click to Pan
+              </span>
             </div>
           </div>
 
-          {/* Interactive HTML5 Canvas (Responsive High-Res) */}
-          <div className="w-full overflow-x-auto relative flex justify-center bg-[#0a1313] p-2 md:p-4">
-            <canvas
-              ref={canvasRef}
-              width={980}
-              height={490}
-              className="rounded-2xl cursor-crosshair shadow-2xl max-w-full h-auto border border-mint/20"
-            />
-          </div>
+          {/* 3D Canvas Mount Point */}
+          <div 
+            ref={mountRef} 
+            className="w-full h-[520px] bg-[#090f0f] relative cursor-grab active:cursor-grabbing overflow-hidden"
+          />
 
-          {/* Active Agent Status Bar */}
+          {/* Agent Focus HUD */}
           <div className="bg-[#121f1f] p-4 md:px-8 border-t border-mint/20 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
             <div className="flex items-center gap-3">
               <div className="w-3 h-3 rounded-full bg-flare animate-ping" />
-              <span className="text-foreground/80">
-                Active Selection: <strong className="text-mint">{selectedAgent ? selectedAgent.name : "Bryan Yogie"}</strong> — {selectedAgent ? selectedAgent.role : "Lead Fullstack & Network Engineer"}
-              </span>
+              <div className="text-foreground/90">
+                <span>Active 3D Agent: </span>
+                <strong className="text-mint">{selectedAgent ? selectedAgent.name : "Bryan Yogie"}</strong>
+                <span className="text-foreground/50"> ({selectedAgent ? selectedAgent.role : "Lead Engineer"})</span>
+              </div>
             </div>
 
-            <div className="text-foreground/60 text-[11px] flex items-center gap-1.5">
-              <Compass size={13} className="text-mint" />
-              <span>Click any floor tile to walk. Click an employee to initiate conversation.</span>
-            </div>
+            {selectedAgent && (
+              <div className="text-xs text-mint bg-[#0a1414] px-3.5 py-1.5 rounded-full border border-mint/30 max-w-md truncate">
+                💬 &quot;{selectedAgent.bubble}&quot;
+              </div>
+            )}
           </div>
         </div>
 
