@@ -171,8 +171,8 @@ export default function StickyScrollStory() {
       {/* Left Column - Sticky Title & Canvas (Sticky on mobile using CSS, Pin on Desktop via GSAP) */}
       <div className="w-full md:w-1/2 h-screen sticky top-0 flex items-center justify-center p-6 md:p-12 lg:p-24 z-10" ref={leftColumnRef}>
         <div className="w-full max-w-xl relative mt-24 md:mt-0">
-          <h2 className="text-5xl md:text-8xl lg:text-9xl font-outfit font-black tracking-tighter uppercase mb-6 text-white leading-[0.8] mix-blend-difference z-20 relative drop-shadow-[0_0_10px_rgba(59,130,246,0.5)] pt-24 md:pt-12">
-            BEHIND <br /> <span className="text-[#3b82f6]">THE</span> <br /> CODE
+          <h2 className="text-5xl md:text-8xl lg:text-9xl font-outfit font-black tracking-tighter uppercase mb-6 text-white leading-[0.8] mix-blend-difference z-20 relative drop-shadow-[0_0_15px_rgba(185,245,216,0.4)] pt-24 md:pt-12">
+            BEHIND <br /> <span className="text-mint">THE</span> <br /> CODE
           </h2>
           <p className="text-white/80 font-mono text-xs md:text-sm uppercase tracking-widest leading-loose mb-12 mix-blend-difference">
             My journey from hardware networking to full-stack web development.
@@ -185,7 +185,7 @@ export default function StickyScrollStory() {
               className="absolute inset-0 w-full h-full object-cover"
             />
             {/* Dark/Neon gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-black/80 to-[#3b82f6]/20 pointer-events-none mix-blend-overlay" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-black/80 to-mint/20 pointer-events-none mix-blend-overlay" />
           </div>
         </div>
       </div>
@@ -194,7 +194,7 @@ export default function StickyScrollStory() {
       <div className="w-full md:w-1/2 flex flex-col pt-[30vh] pb-[30vh] md:pt-[50vh] md:pb-[50vh] gap-32 px-6 md:px-12 lg:px-24 z-30 relative bg-black/60 md:bg-transparent backdrop-blur-md md:backdrop-blur-none">
         {stories.map((story, index) => (
           <div key={index} className="story-card flex flex-col gap-4">
-            <span className="text-[#3b82f6] font-mono text-sm tracking-widest uppercase border border-[#3b82f6] self-start px-3 py-1 rounded-full">
+            <span className="text-mint font-mono text-sm tracking-widest uppercase border border-mint/40 bg-mint/5 self-start px-3 py-1 rounded-full">
               0{index + 1} // {story.title}
             </span>
             <div className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-outfit font-black text-white leading-tight md:leading-[0.9] tracking-tighter uppercase uppercase-text-shadow">

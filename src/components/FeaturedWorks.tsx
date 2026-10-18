@@ -12,7 +12,7 @@ const curatedProjects = [
     subtitle: "Sistem Pintar Ekosistem Desa",
     category: "Fullstack Development",
     description: "A comprehensive smart ecosystem platform for village administration and services, built with modern web technologies.",
-    color: "#3b82f6",
+    color: "#b9f5d8",
     url: "https://github.com/Yogiexc/SIPANDAI---Sistem-Pintar-Ekosistem-Desa",
   },
   {
