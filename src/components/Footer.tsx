@@ -36,8 +36,8 @@ export default function Footer() {
       <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-white/50 font-mono text-sm">
         <div className="flex items-center gap-6">
           <a href="https://github.com/Yogiexc" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">GitHub</a>
-          <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-          <a href="#" className="hover:text-white transition-colors">Instagram</a>
+          <a href="https://www.linkedin.com/in/bryan-yogie-saputra-264306270" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
+          <a href="https://instagram.com/yogiexct" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Instagram</a>
         </div>
         
         <div className="flex items-center gap-2">

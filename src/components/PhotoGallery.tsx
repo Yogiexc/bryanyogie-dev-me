@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Stack from "@/components/Stack";
+import DriftWall from "@/components/DriftWall";
 import ImageTrail from "@/components/ImageTrail";
 
 const photos = [
@@ -46,21 +46,32 @@ export default function PhotoGallery() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-24 bg-background w-full relative min-h-screen">
+    <section ref={containerRef} className="bg-background w-full relative h-[100vh] md:h-[120vh] overflow-hidden">
+      
+      {/* Background DriftWall */}
+      <div className="absolute inset-0 z-0 pointer-events-auto">
+        <DriftWall 
+          items={photos.map((p) => ({ image: p.src }))} 
+          overlayColor="#050505"
+          grayscale={true}
+          speed={18}
+          columns={4}
+          tileWidth={160}
+          tileHeight={110}
+          gap={12}
+        />
+      </div>
+
       <ImageTrail images={photos.map((p) => p.src)}>
-        <div className="gallery-content flex flex-col items-center justify-center h-full px-6 md:px-12 lg:px-24 pointer-events-auto">
+        <div className="gallery-content flex flex-col items-center justify-center h-full px-6 md:px-12 lg:px-24 pointer-events-none relative z-10 pt-24">
           
-          <div className="text-center mb-16 z-10">
+          <div className="text-center bg-[#050505]/70 backdrop-blur-md p-8 rounded-3xl border border-white/10 shadow-2xl pointer-events-auto">
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-outfit font-black tracking-tighter uppercase text-white mb-4">
               Behind The Scenes
             </h2>
             <p className="text-white/60 font-mono text-sm md:text-base max-w-lg mx-auto">
               A glimpse into my daily life, late-night coding sessions, and random moments caught on camera.
             </p>
-          </div>
-
-          <div className="w-full z-10 pointer-events-auto">
-            <Stack images={photos} />
           </div>
           
         </div>

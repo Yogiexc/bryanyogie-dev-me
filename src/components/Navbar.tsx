@@ -72,7 +72,7 @@ export default function Navbar() {
 
         <Magnetic>
           <a 
-            href="www.linkedin.com/in/bryan-yogie-saputra-264306270" 
+            href="https://www.linkedin.com/in/bryan-yogie-saputra-264306270" 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-white hover:text-accent transition-colors block"

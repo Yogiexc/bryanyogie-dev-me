@@ -3,6 +3,7 @@
 import React, { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
+import PixelSwap from "@/components/PixelSwap";
 
 export default function ProfileCard() {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -66,12 +67,28 @@ export default function ProfileCard() {
             className="relative w-48 h-48 sm:w-64 sm:h-64 rounded-full border-4 border-accent/30 overflow-hidden shadow-lg mb-6"
             style={{ transform: "translateZ(50px)" }} // Pop out effect
           >
-            {/* Ganti src ini dengan gambar kamu (misal: /profile.jpg) */}
-            <Image
-              src="/image/profil.jpg"
-              alt="Profile Picture"
-              fill
-              className="object-cover"
+            <PixelSwap 
+              className="w-full h-full aspect-square cursor-pointer"
+              trigger="click"
+              pixelSize={32}
+              duration={900}
+              pixelDuration={350}
+              firstContent={
+                <Image
+                  src="/image/profil.jpg"
+                  alt="Profile Picture"
+                  fill
+                  className="object-cover"
+                />
+              }
+              secondContent={
+                <Image
+                  src="/image/aku_dipantai.png"
+                  alt="Profile Picture Alternate"
+                  fill
+                  className="object-cover"
+                />
+              }
             />
           </div>
 
