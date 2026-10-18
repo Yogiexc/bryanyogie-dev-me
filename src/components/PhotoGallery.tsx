@@ -48,29 +48,36 @@ export default function PhotoGallery() {
   return (
     <section ref={containerRef} className="bg-background w-full relative h-[100vh] md:h-[120vh] overflow-hidden">
       
-      {/* Background DriftWall */}
+      {/* DriftWall 3D Wall */}
       <div className="absolute inset-0 z-0 pointer-events-auto">
         <DriftWall 
-          items={photos.map((p) => ({ image: p.src }))} 
-          overlayColor="#050505"
-          grayscale={true}
-          speed={18}
-          columns={4}
-          tileWidth={160}
-          tileHeight={110}
-          gap={12}
+          items={photos.map((p) => ({ image: p.src, title: p.title }))} 
+          overlayColor="#0a0a0a"
+          grayscale={false}
+          dim={0.75}
+          fade={0.3}
+          speed={22}
+          columns={5}
+          tileWidth={220}
+          tileHeight={150}
+          gap={16}
+          tilt={12}
+          turn={-8}
         />
       </div>
 
       <ImageTrail images={photos.map((p) => p.src)}>
-        <div className="gallery-content flex flex-col items-center justify-center h-full px-6 md:px-12 lg:px-24 pointer-events-none relative z-10 pt-24">
+        <div className="gallery-content flex flex-col items-center justify-center h-full px-6 md:px-12 lg:px-24 pointer-events-none relative z-10 pt-20">
           
-          <div className="text-center bg-[#050505]/70 backdrop-blur-md p-8 rounded-3xl border border-white/10 shadow-2xl pointer-events-auto">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-outfit font-black tracking-tighter uppercase text-white mb-4">
+          <div className="text-center bg-[#050505]/80 backdrop-blur-xl p-6 md:p-8 rounded-3xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.8)] pointer-events-auto max-w-xl">
+            <span className="text-accent font-mono text-xs uppercase tracking-widest px-3 py-1 rounded-full border border-accent/40 bg-accent/10 inline-block mb-3">
+              Interactive 3D Canvas
+            </span>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-outfit font-black tracking-tighter uppercase text-white mb-3">
               Behind The Scenes
             </h2>
-            <p className="text-white/60 font-mono text-sm md:text-base max-w-lg mx-auto">
-              A glimpse into my daily life, late-night coding sessions, and random moments caught on camera.
+            <p className="text-white/70 font-mono text-xs md:text-sm leading-relaxed">
+              Hover & explore the moving memory wall. A glimpse into my daily life, coding sessions, and college journey.
             </p>
           </div>
           
