@@ -159,7 +159,22 @@ const DriftWall = ({
   );
 
   useEffect(() => {
+    let isVisible = true;
+    const container = containerRef.current;
+    let observer: IntersectionObserver | null = null;
+
+    if (container) {
+      observer = new IntersectionObserver(([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) lastTsRef.current = null;
+      }, { threshold: 0.05 });
+      observer.observe(container);
+    }
+
     const animate = (ts: number) => {
+      rafRef.current = requestAnimationFrame(animate);
+      if (!isVisible) return; // Don't burn CPU when scrolled away!
+
       if (lastTsRef.current === null) lastTsRef.current = ts;
       const dt = Math.min(0.05, Math.max(0, ts - lastTsRef.current) / 1000);
       lastTsRef.current = ts;
@@ -196,13 +211,12 @@ const DriftWall = ({
           if (el && meta) el.style.transform = `translate3d(0, ${-(offsetsRef.current[c] ?? 0)}px, 0)`;
         }
       }
-
-      rafRef.current = requestAnimationFrame(animate);
     };
 
     rafRef.current = requestAnimationFrame(animate);
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (observer) observer.disconnect();
       rafRef.current = null;
       lastTsRef.current = null;
     };

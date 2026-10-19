@@ -329,48 +329,50 @@ export default function VirtualOffice() {
     }
     camera.lookAt(0, 1.2, 0);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+    const renderer = new THREE.WebGLRenderer({ antialias: !isMobile, powerPreference: "high-performance" });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
+    renderer.shadowMap.enabled = !isMobile;
+    renderer.shadowMap.type = THREE.BasicShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.35;
     container.appendChild(renderer.domElement);
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
+    controls.dampingFactor = 0.08;
     controls.maxPolarAngle = Math.PI / 2.15;
     controls.minDistance = 9;
     controls.maxDistance = 45;
     controls.target.set(0, 1.2, 0);
 
-    // 2. STUDIO LIGHTING
+    // 2. STUDIO LIGHTING (Optimized)
     const hemiLight = new THREE.HemisphereLight("#b9f5d8", "#111827", 2.2);
     scene.add(hemiLight);
 
     const mainSun = new THREE.DirectionalLight("#ffffff", 2.8);
     mainSun.position.set(16, 28, 16);
-    mainSun.castShadow = true;
-    mainSun.shadow.mapSize.width = 2048;
-    mainSun.shadow.mapSize.height = 2048;
-    const d = 18;
-    mainSun.shadow.camera.left = -d;
-    mainSun.shadow.camera.right = d;
-    mainSun.shadow.camera.top = d;
-    mainSun.shadow.camera.bottom = -d;
+    if (!isMobile) {
+      mainSun.castShadow = true;
+      mainSun.shadow.mapSize.width = 1024;
+      mainSun.shadow.mapSize.height = 1024;
+      const d = 18;
+      mainSun.shadow.camera.left = -d;
+      mainSun.shadow.camera.right = d;
+      mainSun.shadow.camera.top = d;
+      mainSun.shadow.camera.bottom = -d;
+    }
     scene.add(mainSun);
 
-    const flareKey = new THREE.PointLight("#ff7043", 4.5, 25);
+    const flareKey = new THREE.PointLight("#ff7043", 3.0, 20);
     flareKey.position.set(-6, 6, 4);
     scene.add(flareKey);
 
-    const mintKey = new THREE.PointLight("#b9f5d8", 4.0, 25);
+    const mintKey = new THREE.PointLight("#b9f5d8", 3.0, 20);
     mintKey.position.set(2, 6, -4);
     scene.add(mintKey);
 
-    const serverGlow = new THREE.PointLight("#38bdf8", 5.5, 22);
+    const serverGlow = new THREE.PointLight("#38bdf8", 4.0, 18);
     serverGlow.position.set(7.5, 5, -4);
     scene.add(serverGlow);
 
@@ -642,7 +644,7 @@ export default function VirtualOffice() {
     // 6. EXECUTIVE CONFERENCE ROOM & PANTRY
     const confTable = new THREE.Mesh(
       new THREE.BoxGeometry(5.0, 0.15, 3.0),
-      new THREE.MeshPhysicalMaterial({ color: "#1e293b", roughness: 0.1, transmission: 0.5, thickness: 0.4 })
+      new THREE.MeshStandardMaterial({ color: "#1e293b", roughness: 0.2, metalness: 0.8 })
     );
     confTable.position.set(6.5, 1.3, 4.5);
     confTable.castShadow = true;
@@ -888,12 +890,24 @@ export default function VirtualOffice() {
 
     window.addEventListener("resize", handleResize);
 
-    // 8. RENDER LOOP
+    // 8. RENDER LOOP WITH INTERSECTION OBSERVER (Offscreen throttle)
     let frameId: number;
     let clock = new THREE.Clock();
+    let isVisible = true;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible) {
+        clock.getDelta(); // reset delta so no sudden jumps
+      }
+    }, { threshold: 0.05 });
+    observer.observe(container);
 
     const animate = () => {
-      const delta = clock.getDelta();
+      frameId = requestAnimationFrame(animate);
+      if (!isVisible) return; // Don't burn GPU cycles when user is reading other sections!
+
+      const delta = Math.min(clock.getDelta(), 0.1);
       const time = clock.getElapsedTime();
 
       agentsRuntime.forEach((a) => {
@@ -948,13 +962,13 @@ export default function VirtualOffice() {
 
       controls.update();
       renderer.render(scene, camera);
-      frameId = requestAnimationFrame(animate);
     };
 
     animate();
 
     return () => {
       cancelAnimationFrame(frameId);
+      observer.disconnect();
       clearInterval(routineTimer);
       window.removeEventListener("resize", handleResize);
       renderer.domElement.removeEventListener("pointerdown", handlePointerDown);
