@@ -1,240 +1,229 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Terminal, Cpu, Network, ShieldCheck, Sparkles, Layers, ArrowUpRight, Compass, Code2 } from "lucide-react";
 import Image from "next/image";
-
-const Badge = ({ src, alt }: { src: string; alt: string }) => (
-  <span className="inline-block align-middle mx-2 w-20 md:w-32 aspect-[3/1] relative rounded-full overflow-hidden border-2 border-mint shadow-[0_0_15px_rgba(185,245,216,0.4)] hover:scale-110 transition-transform duration-300 z-50">
-    <Image src={src} alt={alt} fill className="object-cover grayscale hover:grayscale-0 transition-all duration-300" />
-  </span>
-);
-
-const FloatImg = ({ src, children }: { src: string; children: React.ReactNode }) => (
-  <span className="relative group inline-block cursor-pointer text-mint hover:text-flare transition-colors duration-300">
-    {children}
-    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 pointer-events-none z-[100] w-64 md:w-80 aspect-video rounded-xl overflow-hidden border-4 border-mint shadow-[0_0_30px_rgba(185,245,216,0.6)] mix-blend-normal">
-      <Image src={src} alt="Hover Reveal" fill className="object-cover" />
-    </span>
-  </span>
-);
-
-const stories = [
-  {
-    title: "About Snapshot",
-    content: (
-      <>
-        <span className="text-mint">Informatics Engineering</span> student with a solid background in Computer & Network Engineering <Badge src="/image/pkltkj.jpg" alt="TKJ" /> (TKJ). Passionate about bridging the gap between <FloatImg src="/image/matkulJaringan.png">hardware infrastructure</FloatImg> and software engineering.
-      </>
-    ),
-  },
-  {
-    title: "Philosophy",
-    content: (
-      <>
-        I believe in continuous learning and practical <span className="text-flare">problem-solving</span>. Every bug is a lesson, and every challenge is an opportunity to build something better <Badge src="/image/ngoding-diShelter_manahan.png" alt="Coding" /> and more efficient.
-      </>
-    ),
-  },
-  {
-    title: "Skills & Tools",
-    content: (
-      <>
-        Proficient in <span className="text-mint">Next.js</span>, React, Tailwind CSS, and GSAP for the frontend. Experienced with PHP, MySQL, and Java for backend and systems design <Badge src="/image/kerkom_dikampus.png" alt="Teamwork" />. <FloatImg src="/image/nyetingIOT_arduinoUNO.png">IoT enthusiast</FloatImg> and Cisco NetAcad certified in networking fundamentals.
-      </>
-    ),
-  },
-];
 
 export default function StickyScrollStory() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const leftColumnRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d");
-    if (!context) return;
-
-    // Set canvas to 16:9 ratio
-    canvas.width = 1920;
-    canvas.height = 1080;
-
-    // Optimized On-Demand Frame Cache (prevents downloading 14MB / 240 images simultaneously at startup)
-    const frameCount = 240;
-    const currentFrame = (index: number) => 
-      `/Secuence-BYS/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
-
-    const imageCache: Map<number, HTMLImageElement> = new Map();
-    const seq = { frame: 0 };
-
-    const loadFrame = (idx: number, onLoaded?: () => void) => {
-      const clamped = Math.max(0, Math.min(frameCount - 1, idx));
-      if (imageCache.has(clamped)) return imageCache.get(clamped)!;
-      const img = new window.Image();
-      img.src = currentFrame(clamped);
-      if (onLoaded) img.onload = onLoaded;
-      imageCache.set(clamped, img);
-      return img;
-    };
-
-    // Preload initial frame + small buffer
-    loadFrame(0, render);
-    for (let i = 1; i < 8; i++) {
-      loadFrame(i);
-    }
-
-    function render() {
-      const img = loadFrame(seq.frame);
-      if (img && img.complete && img.naturalWidth > 0) {
-        context!.clearRect(0, 0, canvas!.width, canvas!.height);
-        context!.filter = 'grayscale(100%) contrast(1.2)';
-        context!.drawImage(img, 0, 0, canvas!.width, canvas!.height);
-      } else if (img) {
-        img.onload = () => {
-          context!.clearRect(0, 0, canvas!.width, canvas!.height);
-          context!.filter = 'grayscale(100%) contrast(1.2)';
-          context!.drawImage(img, 0, 0, canvas!.width, canvas!.height);
-        };
-      }
-
-      // Prefetch next 8 frames ahead of scroll
-      for (let offset = 1; offset <= 8; offset++) {
-        if (seq.frame + offset < frameCount) {
-          loadFrame(seq.frame + offset);
+    const ctx = gsap.context(() => {
+      // Header entrance animation
+      gsap.fromTo(
+        ".story-header",
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 80%",
+          },
         }
-      }
-    }
+      );
 
-    const mm = gsap.matchMedia();
+      // Bento cards staggered entrance
+      gsap.fromTo(
+        ".bento-card",
+        { opacity: 0, y: 50, scale: 0.98 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.9,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".bento-grid",
+            start: "top 75%",
+          },
+        }
+      );
+    }, containerRef);
 
-    if (containerRef.current && leftColumnRef.current) {
-      
-      mm.add("(min-width: 768px)", () => {
-        ScrollTrigger.create({
-          trigger: containerRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          pin: leftColumnRef.current,
-          id: "story-pin-desktop",
-        });
-      });
-
-      // Animate the image sequence on scroll
-      gsap.to(seq, {
-        frame: frameCount - 1,
-        snap: "frame",
-        ease: "none",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.5,
-        },
-        onUpdate: render,
-      });
-
-      // Animate the story cards
-      const cards = gsap.utils.toArray<HTMLElement>(".story-card");
-      cards.forEach((card) => {
-        gsap.fromTo(
-          card,
-          { opacity: 0.1, scale: 0.95 },
-          {
-            opacity: 1,
-            scale: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 80%",
-              end: "center center",
-              scrub: true,
-            },
-          }
-        );
-      });
-    }
-
-    return () => {
-      mm.revert();
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.vars.id?.startsWith('story-pin') || (t.vars.trigger instanceof Element && t.vars.trigger.classList.contains('story-card'))) t.kill();
-      });
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full bg-[#090f0f] border-t border-mint/20 flex flex-col md:flex-row px-0 py-0" id="about">
-      {/* Subtle Ambient Background Glow */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-mint/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-flare/5 rounded-full blur-[140px] pointer-events-none" />
+    <section 
+      ref={containerRef} 
+      className="relative w-full bg-[#090f0f] py-28 md:py-36 px-6 md:px-12 lg:px-24 border-t border-mint/20 overflow-hidden" 
+      id="about"
+    >
+      {/* Subtle Background Glows */}
+      <div className="absolute top-1/4 -left-40 w-96 h-96 bg-mint/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-40 w-96 h-96 bg-flare/5 rounded-full blur-[140px] pointer-events-none" />
+      <div 
+        className="absolute inset-0 opacity-10 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(#b9f5d8 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
 
-      {/* Left Column - Sticky Title & Cinematic Canvas Viewfinder (Pinned on Desktop) */}
-      <div className="w-full md:w-1/2 h-screen sticky top-0 flex items-center justify-center p-6 md:p-12 lg:p-16 z-20" ref={leftColumnRef}>
-        <div className="w-full max-w-xl relative flex flex-col justify-center">
-          
-          <div className="flex items-center gap-2 mb-3">
-            <span className="w-2.5 h-2.5 rounded-full bg-flare animate-ping" />
-            <span className="font-mono text-xs text-mint uppercase tracking-widest font-semibold">
-              Visual Chronicle // BYS Sequence
-            </span>
+      <div className="max-w-7xl mx-auto relative z-10">
+        
+        {/* Section Header */}
+        <div className="story-header mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-mint/20 pb-8">
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-2.5 h-2.5 rounded-full bg-flare animate-ping" />
+              <span className="font-mono text-xs uppercase tracking-widest text-mint font-semibold flex items-center gap-1.5">
+                <Sparkles size={13} className="text-flare" /> Engineering Biography & Philosophy
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-7xl font-outfit font-black uppercase text-[#f4f0e8] tracking-tighter leading-[0.9]">
+              BEHIND <span className="text-mint">THE</span> CODE
+            </h2>
           </div>
-
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-outfit font-black tracking-tighter uppercase mb-4 text-[#f4f0e8] leading-[0.9]">
-            BEHIND <span className="text-mint">THE</span> CODE
-          </h2>
-          <p className="text-[#f4f0e8]/70 font-mono text-xs md:text-sm uppercase tracking-widest leading-relaxed mb-6">
-            Scrub or scroll down to playback the visual narrative from hardware networking to fullstack engineering.
+          <p className="text-[#f4f0e8]/70 font-mono text-xs md:text-sm max-w-md leading-relaxed">
+            Bridging hardware network infrastructure with high-scale fullstack web architectures and quantitative systems.
           </p>
-          
-          {/* Tech Viewfinder Canvas Frame */}
-          <div className="relative w-full aspect-video rounded-2xl overflow-hidden border-2 border-mint/30 shadow-[0_20px_50px_rgba(0,0,0,0.8)] bg-[#0d1717]">
-            {/* Viewfinder corner brackets */}
-            <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-mint z-20" />
-            <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-mint z-20" />
-            <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-mint z-20" />
-            <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-mint z-20" />
-
-            {/* Live Sequence Canvas */}
-            <canvas 
-              ref={canvasRef} 
-              className="absolute inset-0 w-full h-full object-cover filter contrast-125"
-            />
-            
-            {/* HUD Status Bar */}
-            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-3 flex items-center justify-between z-20 text-[11px] font-mono text-white/80">
-              <span className="flex items-center gap-1.5 text-mint font-semibold">
-                <span className="w-2 h-2 rounded-full bg-mint animate-pulse" />
-                FRAME STREAM: 240 FPS SYNC
-              </span>
-              <span className="text-flare font-bold">SCRUB TO PLAY ▶</span>
-            </div>
-          </div>
         </div>
-      </div>
 
-      {/* Right Column - Scrolling Story Cards */}
-      <div className="w-full md:w-1/2 flex flex-col pt-[20vh] pb-[40vh] md:pt-[35vh] md:pb-[45vh] gap-32 md:gap-48 px-6 md:px-12 lg:px-20 z-30 relative">
-        {stories.map((story, index) => (
-          <div 
-            key={index} 
-            className="story-card flex flex-col gap-5 p-8 md:p-10 rounded-3xl bg-[#142424]/80 backdrop-blur-xl border border-mint/20 shadow-[0_25px_60px_rgba(0,0,0,0.6)] hover:border-mint/50 transition-all duration-500"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-mint font-mono text-xs tracking-widest uppercase border border-mint/40 bg-mint/10 px-3 py-1 rounded-full font-bold">
-                0{index + 1} // {story.title}
-              </span>
-              <span className="text-flare/80 font-mono text-xs font-bold">STORY PHASE</span>
+        {/* High-End Bento Architecture Grid */}
+        <div className="bento-grid grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+          {/* 1. Main Manifesto Hero Card (Large 2-col) */}
+          <div className="bento-card md:col-span-2 lg:col-span-2 bg-[#121f1f] rounded-3xl border border-mint/25 p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-mint/50 transition-all duration-500 shadow-xl">
+            <div className="absolute -right-12 -bottom-12 w-64 h-64 bg-mint/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700" />
+            
+            <div>
+              <div className="flex items-center justify-between mb-6">
+                <span className="font-mono text-xs text-mint uppercase tracking-widest font-bold px-3 py-1 rounded-full bg-mint/10 border border-mint/30">
+                  01 // ORIGIN & SNAPSHOT
+                </span>
+                <span className="text-xs font-mono text-flare font-bold">UNS SURAKARTA</span>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-outfit font-black text-[#f4f0e8] mb-4 tracking-tight leading-snug">
+                Where Hardware Meets Modern Distributed Software.
+              </h3>
+              <p className="text-[#f4f0e8]/75 font-sans text-sm md:text-base leading-relaxed mb-6">
+                Currently pursuing <strong className="text-mint font-semibold">Informatics Engineering</strong> at Universitas Sebelas Maret (UNS). My journey started deep in Computer & Network Engineering (TKJ), configuring physical routers, crimping cables, and designing topology before writing my first line of production code.
+              </p>
             </div>
-            <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-outfit font-bold text-[#f4f0e8] leading-snug md:leading-tight tracking-tight">
-              {story.content}
+
+            <div className="pt-6 border-t border-white/10 flex flex-wrap items-center gap-4 text-xs font-mono text-[#f4f0e8]/70">
+              <span className="flex items-center gap-1.5 text-mint">
+                <ShieldCheck size={16} /> Cisco NetAcad Certified
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5 text-flare">
+                <Cpu size={16} /> IoT & Embedded Systems
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5 text-[#f4f0e8]">
+                <Layers size={16} /> Monorepo Architectures
+              </span>
             </div>
           </div>
-        ))}
+
+          {/* 2. Visual Photo Feature Card (TKJ Hardware Roots) */}
+          <div className="bento-card md:col-span-1 lg:col-span-2 bg-[#142424] rounded-3xl border border-mint/20 overflow-hidden relative group hover:border-mint/50 transition-all duration-500 min-h-[300px] shadow-xl">
+            <Image 
+              src="/image/pkltkj.jpg" 
+              alt="Hardware Networking Roots" 
+              fill 
+              className="object-cover filter brightness-70 group-hover:brightness-90 group-hover:scale-105 transition-all duration-700" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#090f0f] via-[#090f0f]/40 to-transparent" />
+            
+            <div className="absolute inset-0 p-8 flex flex-col justify-end">
+              <span className="font-mono text-xs text-mint uppercase tracking-widest font-semibold mb-2">
+                Field Experience // PKL TKJ
+              </span>
+              <h4 className="text-xl md:text-2xl font-outfit font-black text-[#f4f0e8] mb-2 leading-tight">
+                Hands-On Infrastructure Grounding
+              </h4>
+              <p className="text-[#f4f0e8]/80 text-xs md:text-sm font-sans line-clamp-2">
+                Real-world server racks, fiber deployment, and enterprise networking hardware created the foundation for scalable serverless and cloud design.
+              </p>
+            </div>
+          </div>
+
+          {/* 3. Engineering Philosophy & Execution */}
+          <div className="bento-card md:col-span-1 lg:col-span-1 bg-[#121f1f] rounded-3xl border border-mint/20 p-8 flex flex-col justify-between group hover:border-mint/50 transition-all duration-500 shadow-xl">
+            <div>
+              <div className="p-3 w-fit rounded-2xl bg-flare/10 border border-flare/30 text-flare mb-6">
+                <Terminal size={24} />
+              </div>
+              <span className="font-mono text-xs text-mint uppercase tracking-widest font-bold block mb-2">
+                02 // PHILOSOPHY
+              </span>
+              <h4 className="text-xl font-outfit font-black text-[#f4f0e8] mb-3">
+                Relentless Problem Solving
+              </h4>
+              <p className="text-[#f4f0e8]/70 text-xs md:text-sm leading-relaxed font-sans">
+                Every bug is a diagnostic signal; every constraint is an optimization opportunity. Clean syntax, strict typing, and zero downtime.
+              </p>
+            </div>
+            <div className="mt-6 pt-4 border-t border-white/10 font-mono text-[11px] text-flare">
+              // Continuous Growth Mindset
+            </div>
+          </div>
+
+          {/* 4. Fullstack Mastery Stack */}
+          <div className="bento-card md:col-span-2 lg:col-span-2 bg-[#121f1f] rounded-3xl border border-mint/20 p-8 flex flex-col justify-between group hover:border-mint/50 transition-all duration-500 shadow-xl">
+            <div>
+              <div className="flex items-center justify-between mb-6">
+                <span className="font-mono text-xs text-mint uppercase tracking-widest font-bold px-3 py-1 rounded-full bg-mint/10 border border-mint/30">
+                  03 // CORE TECHNICAL STACK
+                </span>
+                <Code2 size={20} className="text-mint" />
+              </div>
+              <h4 className="text-xl md:text-2xl font-outfit font-black text-[#f4f0e8] mb-3">
+                Production-Ready Fullstack Tooling
+              </h4>
+              <p className="text-[#f4f0e8]/75 text-xs md:text-sm leading-relaxed mb-6 font-sans">
+                Specialized in rapid, modern web development with Next.js App Router, TypeScript, and Tailwind CSS on frontend; complemented by robust backend engines in NestJS, PHP, Java, and MySQL/PostgreSQL databases.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-white/10">
+              {[
+                { name: "Next.js App Router", type: "Frontend" },
+                { name: "TypeScript & React", type: "Logic" },
+                { name: "NestJS / Prisma", type: "Backend" },
+                { name: "Tailwind CSS & GSAP", type: "UI / Motion" },
+              ].map((tech, idx) => (
+                <div key={idx} className="bg-[#182a2a] p-3 rounded-xl border border-mint/15">
+                  <span className="text-[10px] font-mono text-mint uppercase block">{tech.type}</span>
+                  <span className="text-xs font-outfit font-bold text-[#f4f0e8]">{tech.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 5. Quantitative Systems & IoT Spotlight */}
+          <div className="bento-card md:col-span-1 lg:col-span-1 bg-[#121f1f] rounded-3xl border border-mint/20 p-8 flex flex-col justify-between group hover:border-mint/50 transition-all duration-500 shadow-xl">
+            <div>
+              <div className="p-3 w-fit rounded-2xl bg-mint/10 border border-mint/30 text-mint mb-6">
+                <Compass size={24} />
+              </div>
+              <span className="font-mono text-xs text-flare uppercase tracking-widest font-bold block mb-2">
+                04 // INNOVATION
+              </span>
+              <h4 className="text-xl font-outfit font-black text-[#f4f0e8] mb-3">
+                Quant Algorithms & IoT
+              </h4>
+              <p className="text-[#f4f0e8]/70 text-xs md:text-sm leading-relaxed font-sans">
+                Extending code into automated financial quantitative bots (Python MT5 sniper algorithms) and embedded hardware microcontrollers.
+              </p>
+            </div>
+            <div className="mt-6 pt-4 border-t border-white/10 font-mono text-[11px] text-mint">
+              // Beyond Standard Web Apps
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </section>
   );
