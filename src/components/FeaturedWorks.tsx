@@ -15,7 +15,7 @@ const curatedProjects = [
     color: "#b9f5d8",
     badge: "Public Sector Tech",
     tags: ["Next.js", "Fullstack", "PostgreSQL", "Tailwind CSS"],
-    image: "/image/ditempatPBL_kodegiri.png",
+    image: "/image/projek/SiPandai.png",
     url: "https://github.com/Yogiexc/SIPANDAI---Sistem-Pintar-Ekosistem-Desa",
   },
   {
@@ -27,7 +27,7 @@ const curatedProjects = [
     color: "#ff7043",
     badge: "Production Monorepo",
     tags: ["Next.js App Router", "NestJS API", "Prisma", "TypeScript"],
-    image: "/image/ngoding+zoom.png",
+    image: "/image/projek/Journova.png",
     url: "https://github.com/Yogiexc/Journova",
   },
   {
@@ -39,7 +39,7 @@ const curatedProjects = [
     color: "#b9f5d8",
     badge: "Quant Automation",
     tags: ["Python 3", "MetaTrader 5", "Algorithmic Trading", "Telegram Bot API"],
-    image: "/image/malam.png",
+    image: "/image/projek/botTrading.png",
     url: "https://github.com/Yogiexc/SemiAutoTrade_byBYS",
   },
   {
@@ -51,7 +51,7 @@ const curatedProjects = [
     color: "#ff7043",
     badge: "Client Service",
     tags: ["Next.js", "React", "Mobile First", "Vercel"],
-    image: "/image/bordir.jpg",
+    image: "/image/projek/Iky-Barber.png",
     url: "https://github.com/Yogiexc/iky_barbershop",
   },
 ];
