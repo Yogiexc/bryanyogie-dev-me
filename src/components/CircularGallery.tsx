@@ -509,6 +509,8 @@ class App {
 
   isDown: boolean = false;
   start: number = 0;
+  isVisible: boolean = true;
+  observer!: IntersectionObserver;
 
   constructor(
     container: HTMLElement,
@@ -533,15 +535,23 @@ class App {
     this.onResize();
     this.createGeometry();
     this.createMedias(items, bend, textColor, borderRadius, font);
+    this.setupObserver();
     this.update();
     this.addEventListeners();
+  }
+
+  setupObserver() {
+    this.observer = new IntersectionObserver(([entry]) => {
+      this.isVisible = entry.isIntersecting;
+    }, { threshold: 0.05 });
+    this.observer.observe(this.container);
   }
 
   createRenderer() {
     this.renderer = new Renderer({
       alpha: true,
       antialias: true,
-      dpr: Math.min(window.devicePixelRatio || 1, 2)
+      dpr: Math.min(window.devicePixelRatio || 1, 1.5)
     });
     this.gl = this.renderer.gl;
     this.gl.clearColor(0, 0, 0, 0);
@@ -712,6 +722,9 @@ class App {
   }
 
   update() {
+    this.raf = window.requestAnimationFrame(this.update.bind(this));
+    if (!this.isVisible) return; // Don't run OGL shaders when user is looking at other sections!
+
     this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
     const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
     if (this.medias) {
@@ -719,7 +732,6 @@ class App {
     }
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
-    this.raf = window.requestAnimationFrame(this.update.bind(this));
   }
 
   addEventListeners() {
@@ -749,6 +761,7 @@ class App {
 
   destroy() {
     window.cancelAnimationFrame(this.raf);
+    if (this.observer) this.observer.disconnect();
     window.removeEventListener('resize', this.boundOnResize);
     window.removeEventListener('mousewheel', this.boundOnWheel);
     window.removeEventListener('wheel', this.boundOnWheel);

@@ -43,20 +43,20 @@ export default function AuroraBackground() {
   }, []);
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 mix-blend-screen opacity-60">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 mix-blend-screen opacity-50">
       <div 
         ref={blob1Ref}
-        className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-600/30 blur-[120px]"
+        className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-[#182a2a]/60 blur-[120px]"
       />
       <div 
         ref={blob2Ref}
-        className="absolute top-[20%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-purple-600/30 blur-[150px]"
+        className="absolute top-[20%] right-[-10%] w-[55vw] h-[55vw] rounded-full bg-[#b9f5d8]/25 blur-[140px]"
       />
       <div 
         ref={blob3Ref}
-        className="absolute bottom-[-20%] left-[20%] w-[70vw] h-[70vw] rounded-full bg-emerald-500/20 blur-[130px]"
+        className="absolute bottom-[-20%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-[#ff7043]/20 blur-[130px]"
       />
-      <div className="absolute inset-0 bg-background/50 backdrop-blur-[50px]" />
+      <div className="absolute inset-0 bg-background/60 backdrop-blur-[40px]" />
     </div>
   );
 }

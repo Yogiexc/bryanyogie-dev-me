@@ -61,10 +61,10 @@ export default function HorizontalTimeline() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="h-screen w-full bg-[#0a0a0a] overflow-hidden flex flex-col justify-center relative">
+    <section ref={sectionRef} className="h-screen w-full bg-[#090f0f] border-t border-mint/15 overflow-hidden flex flex-col justify-center relative">
       <div className="absolute top-12 md:top-20 left-6 md:left-24">
-        <h2 className="text-3xl md:text-6xl font-outfit font-bold uppercase tracking-tighter text-white">
-          Journey
+        <h2 className="text-3xl md:text-6xl font-outfit font-black uppercase tracking-tighter text-[#f4f0e8]">
+          My <span className="text-mint">Journey</span>
         </h2>
       </div>
 
@@ -72,20 +72,20 @@ export default function HorizontalTimeline() {
         {timelineEvents.map((event, index) => (
           <div key={index} className="flex flex-col w-[260px] sm:w-[320px] md:w-[450px] relative">
             {/* Timeline line */}
-            <div className="absolute top-8 left-0 w-[150%] h-[2px] bg-white/20 -z-10" />
+            <div className="absolute top-8 left-0 w-[150%] h-[2px] bg-mint/30 -z-10" />
             
             <div className="flex items-center gap-4 mb-8">
-              <div className="w-4 h-4 rounded-full bg-accent relative">
-                <div className="absolute inset-0 bg-accent rounded-full animate-ping opacity-50" />
+              <div className="w-4 h-4 rounded-full bg-flare relative shadow-[0_0_12px_rgba(255,112,67,0.8)]">
+                <div className="absolute inset-0 bg-flare rounded-full animate-ping opacity-75" />
               </div>
-              <span className="text-accent font-mono text-xl">{event.year}</span>
+              <span className="text-flare font-mono text-xl font-bold">{event.year}</span>
             </div>
             
-            <h3 className="text-2xl md:text-4xl font-outfit font-bold text-white mb-4">
+            <h3 className="text-2xl md:text-4xl font-outfit font-black text-[#f4f0e8] mb-4">
               {event.title}
             </h3>
             
-            <p className="text-white/60 text-base md:text-lg">
+            <p className="text-[#f4f0e8]/70 text-base md:text-lg leading-relaxed font-sans">
               {event.description}
             </p>
           </div>
@@ -95,7 +95,7 @@ export default function HorizontalTimeline() {
       </div>
       
       {/* Decorative large background text */}
-      <div className="absolute -bottom-10 left-0 text-[15vw] font-outfit font-black text-white/5 whitespace-nowrap pointer-events-none select-none">
+      <div className="absolute -bottom-10 left-0 text-[15vw] font-outfit font-black text-mint/5 whitespace-nowrap pointer-events-none select-none">
         TIMELINE
       </div>
     </section>

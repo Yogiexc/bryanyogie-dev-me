@@ -7,25 +7,25 @@ import { Code2, Database, Network } from "lucide-react";
 
 const services = [
   {
-    icon: <Code2 size={40} className="text-blue-400 mb-6" />,
+    icon: <Code2 size={40} className="text-mint mb-6" />,
     title: "Frontend Engineering",
     description: "Transforming Figma designs into interactive, accessible, and highly performant web applications using Next.js, React, and Tailwind CSS. Focus on flawless user experiences.",
-    color: "from-blue-500/10 to-transparent",
-    borderColor: "group-hover:border-blue-500/50"
+    color: "from-mint/10 to-transparent",
+    borderColor: "group-hover:border-mint/50"
   },
   {
-    icon: <Database size={40} className="text-purple-400 mb-6" />,
+    icon: <Database size={40} className="text-flare mb-6" />,
     title: "Backend Development",
     description: "Architecting robust and secure server-side logic and database structures with PHP, Java, and MySQL. Building APIs that scale and handle complex data workflows.",
-    color: "from-purple-500/10 to-transparent",
-    borderColor: "group-hover:border-purple-500/50"
+    color: "from-flare/10 to-transparent",
+    borderColor: "group-hover:border-flare/50"
   },
   {
-    icon: <Network size={40} className="text-emerald-400 mb-6" />,
+    icon: <Network size={40} className="text-mint mb-6" />,
     title: "Network & Systems",
     description: "Solid foundation in Computer & Network Engineering (TKJ). Proficient in networking fundamentals, server deployment, and ensuring infrastructure runs smoothly and securely.",
-    color: "from-emerald-500/10 to-transparent",
-    borderColor: "group-hover:border-emerald-500/50"
+    color: "from-mint/10 to-transparent",
+    borderColor: "group-hover:border-mint/50"
   },
 ];
 

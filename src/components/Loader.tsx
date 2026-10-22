@@ -54,20 +54,20 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
   return (
     <div
       ref={loaderRef}
-      className="fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center text-white"
+      className="fixed inset-0 z-[9999] bg-[#090f0f] flex flex-col items-center justify-center text-[#f4f0e8]"
     >
       <div className="flex flex-col items-center gap-6" ref={textRef}>
-        <h1 className="text-4xl md:text-6xl font-outfit font-bold tracking-tighter">
+        <h1 className="text-4xl md:text-6xl font-outfit font-black tracking-tighter text-[#f4f0e8]">
           BRYAN YOGIE SAPUTRA
         </h1>
         <div className="flex flex-col items-center w-64 gap-2">
-          <div className="w-full h-[2px] bg-white/20 relative overflow-hidden">
+          <div className="w-full h-[3px] bg-mint/20 relative overflow-hidden rounded-full">
             <div
               ref={progressBarRef}
-              className="absolute top-0 left-0 h-full bg-accent w-0"
+              className="absolute top-0 left-0 h-full bg-gradient-to-r from-mint to-flare w-0 rounded-full"
             />
           </div>
-          <div ref={progressRef} className="text-sm font-mono tracking-widest text-white/50">
+          <div ref={progressRef} className="text-xs font-mono tracking-widest text-mint font-semibold">
             0%
           </div>
         </div>

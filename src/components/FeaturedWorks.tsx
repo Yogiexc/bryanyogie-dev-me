@@ -21,7 +21,7 @@ const curatedProjects = [
     subtitle: "Business Booking Platform",
     category: "Web Application",
     description: "A digital booking and management system designed for barbershops, streamlining the appointment process.",
-    color: "#8b5cf6",
+    color: "#ff7043",
     url: "https://github.com/Yogiexc/iky_barbershop",
   },
   {
@@ -30,7 +30,7 @@ const curatedProjects = [
     subtitle: "Corporate Profile",
     category: "Frontend Development",
     description: "A highly responsive, cinematic corporate profile website with engaging animations.",
-    color: "#10b981",
+    color: "#b9f5d8",
     url: "https://github.com/Yogiexc", // General fallback link
   },
   {
@@ -39,7 +39,7 @@ const curatedProjects = [
     subtitle: "Java Application",
     category: "Software Engineering",
     description: "A console-based parking management simulation handling vehicle entry, exit, and automated payments.",
-    color: "#f59e0b",
+    color: "#ff7043",
     url: "https://github.com/Yogiexc",
   },
 ];

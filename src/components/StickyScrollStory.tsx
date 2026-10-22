@@ -64,27 +64,49 @@ export default function StickyScrollStory() {
     canvas.width = 1920;
     canvas.height = 1080;
 
+    // Optimized On-Demand Frame Cache (prevents downloading 14MB / 240 images simultaneously at startup)
     const frameCount = 240;
     const currentFrame = (index: number) => 
       `/Secuence-BYS/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
 
-    const images: HTMLImageElement[] = [];
+    const imageCache: Map<number, HTMLImageElement> = new Map();
     const seq = { frame: 0 };
 
-    for (let i = 0; i < frameCount; i++) {
+    const loadFrame = (idx: number, onLoaded?: () => void) => {
+      const clamped = Math.max(0, Math.min(frameCount - 1, idx));
+      if (imageCache.has(clamped)) return imageCache.get(clamped)!;
       const img = new window.Image();
-      img.src = currentFrame(i);
-      images.push(img);
+      img.src = currentFrame(clamped);
+      if (onLoaded) img.onload = onLoaded;
+      imageCache.set(clamped, img);
+      return img;
+    };
+
+    // Preload initial frame + small buffer
+    loadFrame(0, render);
+    for (let i = 1; i < 8; i++) {
+      loadFrame(i);
     }
 
-    images[0].onload = render;
-
     function render() {
-      if (images[seq.frame]) {
+      const img = loadFrame(seq.frame);
+      if (img && img.complete && img.naturalWidth > 0) {
         context!.clearRect(0, 0, canvas!.width, canvas!.height);
-        // Add a grayscale & high contrast filter to match Lando Norris style
         context!.filter = 'grayscale(100%) contrast(1.2)';
-        context!.drawImage(images[seq.frame], 0, 0, canvas!.width, canvas!.height);
+        context!.drawImage(img, 0, 0, canvas!.width, canvas!.height);
+      } else if (img) {
+        img.onload = () => {
+          context!.clearRect(0, 0, canvas!.width, canvas!.height);
+          context!.filter = 'grayscale(100%) contrast(1.2)';
+          context!.drawImage(img, 0, 0, canvas!.width, canvas!.height);
+        };
+      }
+
+      // Prefetch next 8 frames ahead of scroll
+      for (let offset = 1; offset <= 8; offset++) {
+        if (seq.frame + offset < frameCount) {
+          loadFrame(seq.frame + offset);
+        }
       }
     }
 

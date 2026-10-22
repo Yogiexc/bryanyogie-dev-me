@@ -54,7 +54,7 @@ export default function CustomCursor() {
 
       const onMouseEnterLink = () => {
         gsap.to(cursor, { scale: 0, duration: 0.3 });
-        gsap.to(follower, { scale: 1.5, backgroundColor: "rgba(59,130,246,0.3)", duration: 0.3 });
+        gsap.to(follower, { scale: 1.5, backgroundColor: "rgba(185,245,216,0.25)", duration: 0.3 });
       };
 
       const onMouseLeaveLink = () => {
