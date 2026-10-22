@@ -10,37 +10,49 @@ const curatedProjects = [
     id: "01",
     title: "SIPANDAI",
     subtitle: "Sistem Pintar Ekosistem Desa",
-    category: "Fullstack Development",
-    description: "A comprehensive smart ecosystem platform for village administration and services, built with modern web technologies.",
+    category: "Fullstack Architecture",
+    description: "Digital governance and administrative ecosystem for smart villages, empowering regional public services with modern web technologies.",
     color: "#b9f5d8",
+    badge: "Public Sector Tech",
+    tags: ["Next.js", "Fullstack", "PostgreSQL", "Tailwind CSS"],
+    image: "/image/ditempatPBL_kodegiri.png",
     url: "https://github.com/Yogiexc/SIPANDAI---Sistem-Pintar-Ekosistem-Desa",
   },
   {
     id: "02",
-    title: "Iky Barbershop",
-    subtitle: "Business Booking Platform",
-    category: "Web Application",
-    description: "A digital booking and management system designed for barbershops, streamlining the appointment process.",
+    title: "Journova",
+    subtitle: "Academic Journal Publishing Platform",
+    category: "Monorepo Fullstack Platform",
+    description: "Enterprise-grade academic journal management platform built as an NPM workspaces monorepo with Next.js App Router, NestJS REST API, and Prisma ORM.",
     color: "#ff7043",
-    url: "https://github.com/Yogiexc/iky_barbershop",
+    badge: "Production Monorepo",
+    tags: ["Next.js App Router", "NestJS API", "Prisma", "TypeScript"],
+    image: "/image/ngoding+zoom.png",
+    url: "https://github.com/Yogiexc/Journova",
   },
   {
     id: "03",
-    title: "Company Landing Page",
-    subtitle: "Corporate Profile",
-    category: "Frontend Development",
-    description: "A highly responsive, cinematic corporate profile website with engaging animations.",
+    title: "SemiAutoTrade by BYS",
+    subtitle: "Hedge Fund Sniper Quantitative Algo",
+    category: "Algorithmic Finance & Python",
+    description: "Institutional-grade quantitative algorithmic trading engine integrated with MetaTrader 5 (MT5), real-time scoring filters, strict risk management, and automated Telegram telemetry.",
     color: "#b9f5d8",
-    url: "https://github.com/Yogiexc", // General fallback link
+    badge: "Quant Automation",
+    tags: ["Python 3", "MetaTrader 5", "Algorithmic Trading", "Telegram Bot API"],
+    image: "/image/malam.png",
+    url: "https://github.com/Yogiexc/SemiAutoTrade_byBYS",
   },
   {
     id: "04",
-    title: "Parking System",
-    subtitle: "Java Application",
-    category: "Software Engineering",
-    description: "A console-based parking management simulation handling vehicle entry, exit, and automated payments.",
+    title: "Iky Barbershop",
+    subtitle: "Digital Booking & Slot Reservation",
+    category: "Modern Web App",
+    description: "Fast-loading appointment scheduling and customer queue reservation web application with responsive mobile-first UI.",
     color: "#ff7043",
-    url: "https://github.com/Yogiexc",
+    badge: "Client Service",
+    tags: ["Next.js", "React", "Mobile First", "Vercel"],
+    image: "/image/bordir.jpg",
+    url: "https://github.com/Yogiexc/iky_barbershop",
   },
 ];
 
@@ -98,33 +110,48 @@ export default function FeaturedWorks() {
             />
 
             <div className="flex flex-col md:w-1/2">
-              <span className="text-accent font-mono text-sm tracking-widest mb-4">
-                {project.id} // {project.category}
-              </span>
-              <h3 className="text-4xl md:text-6xl font-outfit font-bold mb-2 group-hover:pl-4 transition-all duration-500">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-accent font-mono text-xs tracking-widest uppercase">
+                  {project.id} // {project.category}
+                </span>
+                <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full border border-mint/40 bg-mint/10 text-mint font-semibold">
+                  {project.badge}
+                </span>
+              </div>
+              <h3 className="text-3xl md:text-5xl lg:text-6xl font-outfit font-black mb-2 group-hover:pl-3 group-hover:text-mint transition-all duration-300">
                 {project.title}
               </h3>
-              <h4 className="text-xl md:text-2xl font-outfit text-white/80 mb-6 group-hover:pl-4 transition-all duration-500 delay-75">
+              <h4 className="text-lg md:text-xl font-outfit text-white/80 mb-4 group-hover:pl-3 transition-all duration-300">
                 {project.subtitle}
               </h4>
-              <p className="text-white/60 md:w-4/5 text-lg leading-relaxed">
+              <p className="text-[#f4f0e8]/70 md:w-4/5 text-base md:text-lg leading-relaxed mb-6 font-sans">
                 {project.description}
               </p>
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag, tIdx) => (
+                  <span key={tIdx} className="text-xs font-mono text-[#f4f0e8]/60 bg-[#142424] px-3 py-1 rounded-lg border border-mint/15">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
             </div>
 
-            <div className="md:w-5/12 h-[250px] md:h-[400px] w-full mt-8 md:mt-0 bg-white/5 rounded-2xl overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-700 flex items-center justify-center border border-white/10">
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white/40 font-mono gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-                 <ArrowUpRight size={48} className="group-hover:rotate-45 transition-transform duration-500 text-white" />
-                 <span className="text-white">View Project</span>
+            <div className="md:w-5/12 h-[260px] md:h-[380px] w-full mt-8 md:mt-0 bg-[#142424] rounded-2xl overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500 flex items-center justify-center border border-mint/25 shadow-xl">
+              <img 
+                src={project.image} 
+                alt={project.title} 
+                className="absolute inset-0 w-full h-full object-cover filter brightness-75 group-hover:brightness-95 group-hover:scale-105 transition-all duration-700" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#090f0f] via-transparent to-transparent opacity-80" />
+              
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-white font-mono gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 bg-black/50 backdrop-blur-sm">
+                 <div className="p-4 rounded-full bg-mint text-cinder shadow-[0_0_25px_rgba(185,245,216,0.6)]">
+                   <ArrowUpRight size={32} className="group-hover:rotate-45 transition-transform duration-300" />
+                 </div>
+                 <span className="text-white font-outfit font-bold tracking-wider uppercase text-sm">Explore Repository & Demo</span>
               </div>
               
-              {/* Image hover overlay effect */}
-              <div 
-                className="absolute inset-0 mix-blend-overlay transition-opacity duration-700 opacity-20 group-hover:opacity-60"
-                style={{ backgroundColor: project.color }}
-              />
-              
-              <div className="text-white/20 font-outfit font-black text-6xl md:text-8xl tracking-tighter absolute -bottom-4 -right-4 opacity-50 group-hover:opacity-10 transition-opacity duration-500">
+              <div className="text-white/20 font-outfit font-black text-6xl md:text-8xl tracking-tighter absolute -bottom-4 -right-4 opacity-40 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none select-none">
                 {project.id}
               </div>
             </div>
