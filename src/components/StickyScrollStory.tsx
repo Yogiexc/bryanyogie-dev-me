@@ -157,14 +157,6 @@ export default function StickyScrollStory() {
           }
         );
       });
-
-      // Infinite Marquee animation
-      gsap.to(".marquee-content", {
-        xPercent: -50,
-        repeat: -1,
-        duration: 10,
-        ease: "linear",
-      });
     }
 
     return () => {
@@ -176,19 +168,10 @@ export default function StickyScrollStory() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full bg-[#090f0f] border-t border-mint/20 flex flex-col md:flex-row px-0 py-0 overflow-hidden" id="about">
-      
-      {/* Infinite Marquee Background Strip */}
-      <div className="absolute top-0 -left-[5vw] w-[110vw] h-20 bg-gradient-to-r from-cinder via-[#152727] to-cinder overflow-hidden flex items-center z-0 border-y-2 border-mint/30 origin-top-left -skew-y-2 shadow-2xl opacity-60 pointer-events-none">
-        <div className="marquee-content flex whitespace-nowrap text-mint/40 font-outfit font-black text-5xl uppercase tracking-tighter">
-          <span className="mx-4">BUILD YOUR STORY //</span>
-          <span className="mx-4 text-flare/50">BRYAN YOGIE //</span>
-          <span className="mx-4">BEHIND THE CODE //</span>
-          <span className="mx-4 text-flare/50">BRYAN YOGIE //</span>
-          <span className="mx-4">BUILD YOUR STORY //</span>
-          <span className="mx-4 text-flare/50">BRYAN YOGIE //</span>
-        </div>
-      </div>
+    <section ref={containerRef} className="relative w-full bg-[#090f0f] border-t border-mint/20 flex flex-col md:flex-row px-0 py-0" id="about">
+      {/* Subtle Ambient Background Glow */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-mint/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-flare/5 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Left Column - Sticky Title & Cinematic Canvas Viewfinder (Pinned on Desktop) */}
       <div className="w-full md:w-1/2 h-screen sticky top-0 flex items-center justify-center p-6 md:p-12 lg:p-16 z-20" ref={leftColumnRef}>
