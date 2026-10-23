@@ -444,67 +444,242 @@ export default function VirtualOffice() {
     serverGlow.position.set(7.5, 5, -4);
     scene.add(serverGlow);
 
-    // 3. ARCHITECTURAL FLOORS & WALLS
-    const floorGeo = new THREE.BoxGeometry(26, 0.4, 20);
+    // 3. CYBERPUNK HIGH-TECH GLASS HQ ARCHITECTURE
+    // High-Gloss Reflective Cyber Grid Floor
+    const floorCanvas = document.createElement("canvas");
+    floorCanvas.width = 1024;
+    floorCanvas.height = 1024;
+    const floorCtx = floorCanvas.getContext("2d");
+    if (floorCtx) {
+      // Dark cyber metallic base
+      floorCtx.fillStyle = "#0a1313";
+      floorCtx.fillRect(0, 0, 1024, 1024);
+
+      // Hexagonal / Grid Matrix with glowing circuits
+      floorCtx.strokeStyle = "rgba(185, 245, 216, 0.12)";
+      floorCtx.lineWidth = 2;
+      const step = 64;
+      for (let x = 0; x <= 1024; x += step) {
+        floorCtx.beginPath();
+        floorCtx.moveTo(x, 0);
+        floorCtx.lineTo(x, 1024);
+        floorCtx.stroke();
+      }
+      for (let y = 0; y <= 1024; y += step) {
+        floorCtx.beginPath();
+        floorCtx.moveTo(0, y);
+        floorCtx.lineTo(1024, y);
+        floorCtx.stroke();
+      }
+
+      // Circuit Pathway Highlights (Flare & Mint)
+      floorCtx.strokeStyle = "rgba(185, 245, 216, 0.35)";
+      floorCtx.lineWidth = 4;
+      floorCtx.strokeRect(128, 128, 768, 768);
+      floorCtx.strokeStyle = "rgba(255, 112, 67, 0.4)";
+      floorCtx.strokeRect(256, 256, 512, 512);
+
+      // Micro LED Nodes on floor junctions
+      floorCtx.fillStyle = "#b9f5d8";
+      for (let x = 128; x <= 896; x += 128) {
+        for (let y = 128; y <= 896; y += 128) {
+          floorCtx.beginPath();
+          floorCtx.arc(x, y, 4, 0, Math.PI * 2);
+          floorCtx.fill();
+        }
+      }
+    }
+    const floorTex = new THREE.CanvasTexture(floorCanvas);
+    floorTex.wrapS = THREE.RepeatWrapping;
+    floorTex.wrapT = THREE.RepeatWrapping;
+    floorTex.repeat.set(2, 2);
+
+    const floorGeo = new THREE.BoxGeometry(28, 0.4, 22);
     const floorMat = new THREE.MeshStandardMaterial({
-      color: "#142424",
-      roughness: 0.35,
-      metalness: 0.15,
+      map: floorTex,
+      roughness: 0.15, // High-gloss wet cyberpunk reflection
+      metalness: 0.75,
     });
     const floor = new THREE.Mesh(floorGeo, floorMat);
     floor.position.y = -0.2;
     floor.receiveShadow = true;
     scene.add(floor);
 
-    // Back & Left Walls
-    const wallMat = new THREE.MeshStandardMaterial({ color: "#0e1a1a", roughness: 0.8 });
-    const backWall = new THREE.Mesh(new THREE.BoxGeometry(26, 7, 0.5), wallMat);
-    backWall.position.set(0, 3.3, -10);
-    backWall.receiveShadow = true;
-    scene.add(backWall);
+    // Glowing Floor Perimeter Neon Rails
+    const railMat = new THREE.MeshBasicMaterial({ color: "#b9f5d8" });
+    const railL = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.15, 22), railMat);
+    railL.position.set(-14, 0.05, 0);
+    scene.add(railL);
+    const railR = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.15, 22), railMat);
+    railR.position.set(14, 0.05, 0);
+    scene.add(railR);
 
-    const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.5, 7, 20), wallMat);
-    leftWall.position.set(-13, 3.3, 0);
+    // PANORAMIC PENTHOUSE GLASS WINDOW WITH NIGHT CYBER SKYLINE BACKDROP
+    // City Skyline Canvas Texture
+    const cityCanvas = document.createElement("canvas");
+    cityCanvas.width = 1024;
+    cityCanvas.height = 512;
+    const cityCtx = cityCanvas.getContext("2d");
+    if (cityCtx) {
+      // Midnight gradient
+      const skyGrad = cityCtx.createLinearGradient(0, 0, 0, 512);
+      skyGrad.addColorStop(0, "#04070a");
+      skyGrad.addColorStop(0.7, "#08151c");
+      skyGrad.addColorStop(1, "#122a2e");
+      cityCtx.fillStyle = skyGrad;
+      cityCtx.fillRect(0, 0, 1024, 512);
+
+      // Distant Skyscrapers Silhouettes with glowing windows
+      const buildings = [
+        { x: 20, w: 70, h: 320 }, { x: 100, w: 90, h: 420 }, { x: 200, w: 60, h: 260 },
+        { x: 270, w: 110, h: 460 }, { x: 390, w: 80, h: 350 }, { x: 480, w: 130, h: 490 },
+        { x: 620, w: 75, h: 290 }, { x: 710, w: 100, h: 440 }, { x: 820, w: 85, h: 370 },
+        { x: 915, w: 90, h: 430 }
+      ];
+
+      buildings.forEach((b) => {
+        cityCtx.fillStyle = "#081017";
+        cityCtx.fillRect(b.x, 512 - b.h, b.w, b.h);
+
+        // Neon roof beacons
+        cityCtx.fillStyle = Math.random() > 0.5 ? "#ff7043" : "#38bdf8";
+        cityCtx.fillRect(b.x + b.w / 2 - 3, 512 - b.h - 8, 6, 8);
+
+        // Glowing window matrix
+        for (let wy = 512 - b.h + 20; wy < 490; wy += 22) {
+          for (let wx = b.x + 8; wx < b.x + b.w - 8; wx += 16) {
+            if (Math.random() > 0.3) {
+              cityCtx.fillStyle = Math.random() > 0.7 ? "#b9f5d8" : "rgba(56, 189, 248, 0.75)";
+              cityCtx.fillRect(wx, wy, 8, 12);
+            }
+          }
+        }
+      });
+    }
+    const cityTex = new THREE.CanvasTexture(cityCanvas);
+
+    // City Backdrop Plane behind windows
+    const cityBackdrop = new THREE.Mesh(
+      new THREE.PlaneGeometry(38, 16),
+      new THREE.MeshBasicMaterial({ map: cityTex })
+    );
+    cityBackdrop.position.set(0, 6.5, -12.5);
+    scene.add(cityBackdrop);
+
+    // Floor-to-Ceiling Glass Penthouse Window Panels (Back wall replacement)
+    const glassMat = new THREE.MeshPhysicalMaterial({
+      color: "#b9f5d8",
+      metalness: 0.1,
+      roughness: 0.05,
+      transmission: 0.88,
+      thickness: 0.4,
+      transparent: true,
+      opacity: 0.45,
+    });
+    const backWindow = new THREE.Mesh(new THREE.BoxGeometry(28, 8, 0.2), glassMat);
+    backWindow.position.set(0, 4.0, -10.5);
+    scene.add(backWindow);
+
+    // Modern Window Mullions / Metallic Pillars (Matte dark titanium)
+    const mullionMat = new THREE.MeshStandardMaterial({ color: "#111c24", metalness: 0.85, roughness: 0.25 });
+    [-13.8, -9.2, -4.6, 0, 4.6, 9.2, 13.8].forEach((mx) => {
+      const mullion = new THREE.Mesh(new THREE.BoxGeometry(0.35, 8.2, 0.4), mullionMat);
+      mullion.position.set(mx, 4.0, -10.45);
+      scene.add(mullion);
+    });
+    // Horizontal transom beam
+    const transom = new THREE.Mesh(new THREE.BoxGeometry(28, 0.35, 0.4), mullionMat);
+    transom.position.set(0, 5.0, -10.45);
+    scene.add(transom);
+
+    // Sleek Left High-Tech Accent Wall with Cyber Slits
+    const leftWallMat = new THREE.MeshStandardMaterial({ color: "#0c171a", roughness: 0.4, metalness: 0.6 });
+    const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.5, 8, 22), leftWallMat);
+    leftWall.position.set(-14, 4.0, 0);
     leftWall.receiveShadow = true;
     scene.add(leftWall);
 
-    // Neon Wall Sign
-    const signGeo = new THREE.PlaneGeometry(8, 1.4);
+    // Vertical Neon Light Slits on Left Wall
+    [-6, -2, 2, 6].forEach((lz, idx) => {
+      const slit = new THREE.Mesh(
+        new THREE.BoxGeometry(0.55, 5.5, 0.15),
+        new THREE.MeshBasicMaterial({ color: idx % 2 === 0 ? "#b9f5d8" : "#ff7043" })
+      );
+      slit.position.set(-13.95, 3.8, lz);
+      scene.add(slit);
+    });
+
+    // Holographic Futuristic BYS Brand Sign (Glass Prism Plaque with Neon Text)
+    const signGeo = new THREE.PlaneGeometry(8.5, 1.6);
     const signCanvas = document.createElement("canvas");
-    signCanvas.width = 400;
-    signCanvas.height = 70;
+    signCanvas.width = 512;
+    signCanvas.height = 96;
     const signCtx = signCanvas.getContext("2d");
     if (signCtx) {
-      signCtx.fillStyle = "#162828";
-      signCtx.fillRect(0, 0, 400, 70);
+      signCtx.fillStyle = "rgba(10, 24, 24, 0.9)";
+      signCtx.fillRect(0, 0, 512, 96);
       signCtx.strokeStyle = "#b9f5d8";
       signCtx.lineWidth = 4;
-      signCtx.strokeRect(4, 4, 392, 62);
-      signCtx.font = "bold 26px monospace";
+      signCtx.strokeRect(4, 4, 504, 88);
+      signCtx.font = "900 28px monospace";
       signCtx.fillStyle = "#b9f5d8";
-      signCtx.fillText("BYS LAB // DEV METAVERSE", 24, 44);
+      signCtx.fillText("BYS LAB // QUANTUM STUDIO", 32, 45);
+      signCtx.font = "bold 13px monospace";
+      signCtx.fillStyle = "#ff7043";
+      signCtx.fillText("AUTONOMOUS AGENT ORCHESTRATION • 60 FPS", 34, 72);
     }
     const signTex = new THREE.CanvasTexture(signCanvas);
-    const signMesh = new THREE.Mesh(signGeo, new THREE.MeshBasicMaterial({ map: signTex }));
-    signMesh.position.set(-4, 5.0, -9.7);
+    const signMesh = new THREE.Mesh(signGeo, new THREE.MeshBasicMaterial({ map: signTex, transparent: true, opacity: 0.95 }));
+    signMesh.position.set(0, 6.2, -10.3);
     scene.add(signMesh);
 
-    // Floor Inset Rugs
-    const engRug = new THREE.Mesh(
-      new THREE.BoxGeometry(13.5, 0.04, 9.5),
-      new THREE.MeshStandardMaterial({ color: "#182c2c", roughness: 0.7 })
-    );
-    engRug.position.set(-2, 0.02, -0.5);
-    engRug.receiveShadow = true;
-    scene.add(engRug);
+    // FLOATING HOLOGRAPHIC CENTRAL CORE (High-Tech centerpiece)
+    const holoCoreGroup = new THREE.Group();
+    holoCoreGroup.position.set(-2, 3.8, -0.5);
 
-    const dataPlatform = new THREE.Mesh(
-      new THREE.BoxGeometry(7.5, 0.08, 7.5),
-      new THREE.MeshStandardMaterial({ color: "#0c1824", roughness: 0.2, metalness: 0.8 })
+    const octGeo = new THREE.OctahedronGeometry(0.7, 0);
+    const octMat = new THREE.MeshBasicMaterial({ color: "#b9f5d8", wireframe: true });
+    const octMesh = new THREE.Mesh(octGeo, octMat);
+    holoCoreGroup.add(octMesh);
+
+    const ringGeo = new THREE.TorusGeometry(1.2, 0.03, 16, 50);
+    const ringMat = new THREE.MeshBasicMaterial({ color: "#38bdf8" });
+    const ringMesh1 = new THREE.Mesh(ringGeo, ringMat);
+    ringMesh1.rotation.x = Math.PI / 3;
+    holoCoreGroup.add(ringMesh1);
+
+    const ringMesh2 = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({ color: "#ff7043" }));
+    ringMesh2.rotation.y = Math.PI / 4;
+    holoCoreGroup.add(ringMesh2);
+
+    // Pedestal for Hologram Core
+    const pedestal = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.6, 0.8, 1.2, 8),
+      new THREE.MeshStandardMaterial({ color: "#091216", metalness: 0.9, roughness: 0.2 })
     );
-    dataPlatform.position.set(7.5, 0.04, -4.5);
-    dataPlatform.receiveShadow = true;
-    scene.add(dataPlatform);
+    pedestal.position.set(-2, 0.6, -0.5);
+    scene.add(pedestal);
+    scene.add(holoCoreGroup);
+
+    // FLOATING CYBER DUST PARTICLES (Ambient living atmosphere)
+    const particleCount = isMobile ? 60 : 160;
+    const particleGeo = new THREE.BufferGeometry();
+    const particlePositions = new Float32Array(particleCount * 3);
+    for (let p = 0; p < particleCount * 3; p += 3) {
+      particlePositions[p] = (Math.random() - 0.5) * 24;
+      particlePositions[p + 1] = Math.random() * 6 + 0.5;
+      particlePositions[p + 2] = (Math.random() - 0.5) * 18;
+    }
+    particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
+    const particleMat = new THREE.PointsMaterial({
+      color: "#b9f5d8",
+      size: isMobile ? 0.08 : 0.12,
+      transparent: true,
+      opacity: 0.6,
+      blending: THREE.AdditiveBlending,
+    });
+    const cyberParticles = new THREE.Points(particleGeo, particleMat);
+    scene.add(cyberParticles);
 
     // 4. REALISTIC WORKSTATIONS WITH UNIQUE SPECIALIZED MONITORS
     const deskMat = new THREE.MeshStandardMaterial({ color: "#1e3535", roughness: 0.4, metalness: 0.3 });
@@ -1027,6 +1202,16 @@ export default function VirtualOffice() {
           a.armR.rotation.x = 0;
         }
       });
+
+      // Animate Floating Holographic Central Core
+      holoCoreGroup.rotation.y = time * 0.8;
+      octMesh.rotation.x = time * 0.5;
+      octMesh.rotation.z = time * 0.6;
+      ringMesh1.rotation.z = time * 0.4;
+      ringMesh2.rotation.x = -time * 0.4;
+
+      // Animate Cyber Dust Particles gentle drift
+      cyberParticles.rotation.y = time * 0.04;
 
       controls.update();
       renderer.render(scene, camera);
