@@ -46,11 +46,12 @@ export default function VirtualOffice() {
     ]);
   };
 
-  const handleSendMessage = async (e?: React.FormEvent) => {
+  const handleSendMessage = async (e?: React.FormEvent, directText?: string) => {
     if (e) e.preventDefault();
-    if (!userInput.trim() || isTyping || !selectedAgent) return;
+    const textToSend = directText || userInput;
+    if (!textToSend.trim() || isTyping || !selectedAgent) return;
 
-    const userText = userInput.trim();
+    const userText = textToSend.trim();
     setUserInput("");
     setChatMessages((prev) => [...prev, { sender: "user", text: userText }]);
     setIsTyping(true);
@@ -1245,9 +1246,10 @@ export default function VirtualOffice() {
                   <button
                     key={sIdx}
                     onClick={() => {
-                      setUserInput(sug);
+                      handleSendMessage(undefined, sug);
                     }}
-                    className="whitespace-nowrap px-2.5 py-1 rounded-lg bg-[#182e2e] text-mint hover:bg-mint hover:text-cinder transition-colors border border-mint/20 cursor-pointer"
+                    disabled={isTyping}
+                    className="whitespace-nowrap px-2.5 py-1 rounded-lg bg-[#182e2e] text-mint hover:bg-mint hover:text-cinder transition-colors border border-mint/20 cursor-pointer disabled:opacity-50"
                   >
                     {sug}
                   </button>
