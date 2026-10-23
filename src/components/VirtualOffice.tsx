@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { Coffee, Server, Users, Eye, Sparkles, Activity, ShieldCheck, Zap } from "lucide-react";
+import { Coffee, Server, Users, Eye, Sparkles, Activity, ShieldCheck, Zap, MessageSquare, Send, X, Bot, Loader2 } from "lucide-react";
 
 interface AgentData {
   id: string;
@@ -18,10 +18,77 @@ interface AgentData {
   cloth: string;
 }
 
+interface ChatMessage {
+  sender: "user" | "agent";
+  text: string;
+}
+
 export default function VirtualOffice() {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const [selectedAgent, setSelectedAgent] = useState<AgentData | null>(null);
   const [metrics, setMetrics] = useState({ coffeeCount: 210, deploysCount: 104, packetRate: "1.6 Gbps" });
+  
+  // LIVE INTERACTIVE AGENT CHAT STATE
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [userInput, setUserInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  const handleOpenChat = (agent: AgentData) => {
+    setSelectedAgent(agent);
+    setIsChatOpen(true);
+    setChatMessages([
+      {
+        sender: "agent",
+        text: `Halo! Aku ${agent.name} (${agent.role}). Ada yang bisa kubantu seputar pekerjaanku di virtual office atau proyek Bryan?`,
+      },
+    ]);
+  };
+
+  const handleSendMessage = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!userInput.trim() || isTyping || !selectedAgent) return;
+
+    const userText = userInput.trim();
+    setUserInput("");
+    setChatMessages((prev) => [...prev, { sender: "user", text: userText }]);
+    setIsTyping(true);
+
+    try {
+      const res = await fetch("/api/agent-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          agentId: selectedAgent.id,
+          message: userText,
+        }),
+      });
+
+      const data = await res.json();
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          sender: "agent",
+          text: data.reply || "Sinyal terputus sebentar, silakan coba lagi!",
+        },
+      ]);
+    } catch {
+      setChatMessages((prev) => [
+        ...prev,
+        {
+          sender: "agent",
+          text: "Gagal terhubung ke neural grid. Coba lagi dalam beberapa detik!",
+        },
+      ]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatMessages, isTyping]);
 
   const agentDefs: AgentData[] = [
     { id: "bryan", name: "Bryan Yogie", role: "Lead Fullstack & Network", dept: "Dev Lead", status: "Designing Next.js scalable architecture & microservices.", badgeCol: "#FF7043", chairPos: [-5.5, 0, -2.6], deskFacing: 0, hair: "#111827", cloth: "#FF7043" },
@@ -1076,14 +1143,138 @@ export default function VirtualOffice() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-foreground/80 bg-[#090f0f] px-3.5 py-2 rounded-xl border border-white/10 max-w-xl w-full md:w-auto">
-              <span className="text-flare font-bold text-[11px]">STATUS:</span>
-              <span className="text-mint font-sans text-xs truncate">
-                &quot;{selectedAgent?.status}&quot;
-              </span>
+            <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+              <div className="flex items-center gap-2 text-foreground/80 bg-[#090f0f] px-3.5 py-2 rounded-xl border border-white/10 max-w-md w-full md:w-auto truncate">
+                <span className="text-flare font-bold text-[11px]">STATUS:</span>
+                <span className="text-mint font-sans text-xs truncate">
+                  &quot;{selectedAgent?.status}&quot;
+                </span>
+              </div>
+
+              {selectedAgent && (
+                <button
+                  onClick={() => handleOpenChat(selectedAgent)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-mint text-cinder font-outfit font-black text-xs hover:bg-flare hover:text-white transition-all shadow-[0_0_20px_rgba(185,245,216,0.4)] whitespace-nowrap active:scale-95 cursor-pointer"
+                >
+                  <MessageSquare size={14} />
+                  <span>Chat AI</span>
+                </button>
+              )}
             </div>
           </div>
         </div>
+
+        {/* INTERACTIVE CYBER TERMINAL AI CHAT MODAL */}
+        {isChatOpen && selectedAgent && (
+          <div className="fixed inset-0 z-[99999] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
+            <div className="w-full max-w-lg bg-[#0e1a1a] border-2 border-mint/40 rounded-3xl shadow-[0_25px_80px_rgba(0,0,0,0.95)] overflow-hidden flex flex-col h-[520px] font-mono">
+              
+              {/* Modal Header */}
+              <div className="bg-[#142626] px-5 py-4 border-b border-mint/20 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-3.5 h-3.5 rounded-full animate-ping"
+                    style={{ backgroundColor: selectedAgent.badgeCol }}
+                  />
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-outfit font-black text-white text-base tracking-wide">
+                        {selectedAgent.name}
+                      </h3>
+                      <span className="text-[10px] text-mint bg-mint/10 px-2 py-0.5 rounded-md border border-mint/30">
+                        {selectedAgent.dept}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[#f4f0e8]/60">{selectedAgent.role}</p>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => setIsChatOpen(false)}
+                  className="p-1.5 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Chat Messages Log */}
+              <div className="flex-1 p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 text-xs">
+                {chatMessages.map((msg, idx) => (
+                  <div
+                    key={idx}
+                    className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
+                  >
+                    <div className="flex items-center gap-1.5 mb-1 text-[10px] text-[#f4f0e8]/40">
+                      {msg.sender === "agent" ? (
+                        <>
+                          <Bot size={12} className="text-mint" />
+                          <span>{selectedAgent.name}</span>
+                        </>
+                      ) : (
+                        <span>You (Visitor)</span>
+                      )}
+                    </div>
+                    <div
+                      className={`p-3.5 rounded-2xl max-w-[85%] leading-relaxed ${
+                        msg.sender === "user"
+                          ? "bg-flare text-white rounded-br-xs font-sans text-[13px] shadow-md"
+                          : "bg-[#162a2a] text-[#f4f0e8] border border-mint/20 rounded-bl-xs font-sans text-[13px]"
+                      }`}
+                    >
+                      {msg.text}
+                    </div>
+                  </div>
+                ))}
+
+                {isTyping && (
+                  <div className="flex items-center gap-2 text-mint text-xs font-mono p-2">
+                    <Loader2 size={14} className="animate-spin text-mint" />
+                    <span>{selectedAgent.name} is thinking...</span>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+
+              {/* Quick Prompt Suggestions */}
+              <div className="px-4 py-2 bg-[#122222] border-t border-mint/10 flex items-center gap-2 overflow-x-auto text-[11px]">
+                {[
+                  selectedAgent.id === "bryan" ? "Apa proyek andalanmu?" : "Bagaimana caramu bekerja?",
+                  selectedAgent.id === "bryan" ? "Bisa ceritakan latar belakangmu?" : "Apa status infrastruktur saat ini?",
+                  "Siapa Bryan Yogie?",
+                ].map((sug, sIdx) => (
+                  <button
+                    key={sIdx}
+                    onClick={() => {
+                      setUserInput(sug);
+                    }}
+                    className="whitespace-nowrap px-2.5 py-1 rounded-lg bg-[#182e2e] text-mint hover:bg-mint hover:text-cinder transition-colors border border-mint/20 cursor-pointer"
+                  >
+                    {sug}
+                  </button>
+                ))}
+              </div>
+
+              {/* Chat Input Field */}
+              <form onSubmit={handleSendMessage} className="p-3.5 bg-[#142626] border-t border-mint/20 flex items-center gap-2">
+                <input
+                  type="text"
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
+                  placeholder={`Tanya ${selectedAgent.name}...`}
+                  className="flex-1 bg-[#0b1414] border border-mint/20 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-[#f4f0e8]/40 focus:outline-none focus:border-mint transition-colors"
+                />
+                <button
+                  type="submit"
+                  disabled={!userInput.trim() || isTyping}
+                  className="p-2.5 rounded-xl bg-mint text-cinder hover:bg-flare hover:text-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  <Send size={15} />
+                </button>
+              </form>
+
+            </div>
+          </div>
+        )}
 
       </div>
     </section>
