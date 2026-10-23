@@ -25,7 +25,7 @@ export default function VirtualOffice() {
 
   const agentDefs: AgentData[] = [
     { id: "bryan", name: "Bryan Yogie", role: "Lead Fullstack & Network", dept: "Dev Lead", status: "Designing Next.js scalable architecture & microservices.", badgeCol: "#FF7043", chairPos: [-5.5, 0, -2.6], deskFacing: 0, hair: "#111827", cloth: "#FF7043" },
-    { id: "jarwo", name: "Jarwo AI", role: "Chief AI Orchestrator", dept: "AI Operations", status: "Orchestrating agent workflows & load-balancing edge tasks.", badgeCol: "#B9F5D8", chairPos: [-2.0, 0, -2.6], deskFacing: 0, hair: "#334155", cloth: "#B9F5D8" },
+    { id: "nexus_core", name: "Nexus Core", role: "Chief AI Orchestrator", dept: "AI Operations", status: "Orchestrating agent neural workflows & low-latency edge inference.", badgeCol: "#B9F5D8", chairPos: [-2.0, 0, -2.6], deskFacing: 0, hair: "#334155", cloth: "#B9F5D8" },
     { id: "maya", name: "Maya UI", role: "Design Systems & 3D Web", dept: "Creative Tech", status: "Refining 3D Three.js PBR shaders & layout responsiveness.", badgeCol: "#F472B6", chairPos: [1.5, 0, -2.6], deskFacing: 0, hair: "#64748b", cloth: "#F472B6" },
     { id: "backend", name: "Backend Bot", role: "Distributed DB & API", dept: "Systems", status: "Optimizing indexed SQL query caching under 1.8ms.", badgeCol: "#38BDF8", chairPos: [-5.5, 0, 1.9], deskFacing: 0, hair: "#1e293b", cloth: "#38BDF8" },
     { id: "sentinel_qa", name: "Sentinel QA", role: "E2E Mobile Tester", dept: "Quality Assurance", status: "Simulating mobile touch gestures on 375px viewports.", badgeCol: "#A78BFA", chairPos: [-2.0, 0, 1.9], deskFacing: 0, hair: "#475569", cloth: "#A78BFA" },
@@ -90,7 +90,7 @@ export default function VirtualOffice() {
       ctx.fillStyle = "#ff7043";
       ctx.fillRect(50, y + 20, 8, 16);
     } else if (roleType === "jarwo_ai") {
-      // Jarwo: Neural Network / Agent Orchestration Dispatcher
+      // Nexus Core: Neural Network / Agent Orchestration Dispatcher
       ctx.fillStyle = "#0c1717";
       ctx.fillRect(0, 0, 512, 320);
 
@@ -98,7 +98,7 @@ export default function VirtualOffice() {
       ctx.fillRect(0, 0, 512, 32);
       ctx.font = "bold 13px monospace";
       ctx.fillStyle = "#b9f5d8";
-      ctx.fillText("JARWO_AI_DISPATCHER // NEURAL_ORCHESTRATION", 20, 21);
+      ctx.fillText("NEXUS_CORE // NEURAL_ORCHESTRATION_HUB", 20, 21);
 
       // Node Topology Diagram
       ctx.strokeStyle = "rgba(185, 245, 216, 0.4)";
@@ -193,7 +193,7 @@ export default function VirtualOffice() {
 
       const rows = [
         "01  | Bryan Yogie      |  0.4ms  | 24 MB  | ACTIVE",
-        "02  | Jarwo Dispatcher |  0.7ms  | 42 MB  | RUNNING",
+        "02  | Nexus Core       |  0.7ms  | 42 MB  | RUNNING",
         "03  | Sentinel QA      |  1.1ms  | 18 MB  | VERIFIED",
         "04  | Cisco Gateway    |  0.2ms  | 12 MB  | ONLINE",
       ];
