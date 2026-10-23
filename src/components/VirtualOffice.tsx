@@ -92,15 +92,15 @@ export default function VirtualOffice() {
   }, [chatMessages, isTyping]);
 
   const agentDefs: AgentData[] = [
-    { id: "bryan", name: "Bryan Yogie", role: "Lead Fullstack & Network", dept: "Dev Lead", status: "Designing Next.js scalable architecture & microservices.", badgeCol: "#FF7043", chairPos: [-5.5, 0, -2.6], deskFacing: 0, hair: "#111827", cloth: "#FF7043" },
-    { id: "nexus_core", name: "Nexus Core", role: "Chief AI Orchestrator", dept: "AI Operations", status: "Orchestrating agent neural workflows & low-latency edge inference.", badgeCol: "#B9F5D8", chairPos: [-2.0, 0, -2.6], deskFacing: 0, hair: "#334155", cloth: "#B9F5D8" },
-    { id: "maya", name: "Aura Nova", role: "Creative Director & Spatial UX", dept: "Creative Tech", status: "Refining 3D Three.js PBR shaders & layout responsiveness.", badgeCol: "#F472B6", chairPos: [1.5, 0, -2.6], deskFacing: 0, hair: "#64748b", cloth: "#F472B6" },
-    { id: "backend", name: "Backend Bot", role: "Distributed DB & API", dept: "Systems", status: "Optimizing indexed SQL query caching under 1.8ms.", badgeCol: "#38BDF8", chairPos: [-5.5, 0, 1.9], deskFacing: 0, hair: "#1e293b", cloth: "#38BDF8" },
-    { id: "sentinel_qa", name: "Sentinel QA", role: "E2E Mobile Tester", dept: "Quality Assurance", status: "Simulating mobile touch gestures on 375px viewports.", badgeCol: "#A78BFA", chairPos: [-2.0, 0, 1.9], deskFacing: 0, hair: "#475569", cloth: "#A78BFA" },
-    { id: "pipeline_ops", name: "Pipeline Ops", role: "CI/CD & Serverless Deploy", dept: "DevOps", status: "Zero downtime verified on Vercel Edge networks.", badgeCol: "#34D399", chairPos: [1.5, 0, 1.9], deskFacing: 0, hair: "#0f172a", cloth: "#34D399" },
-    { id: "cisco_net", name: "Cisco Agent", role: "Network Security & Router", dept: "Infrastructure", status: "Monitoring patch cables, fiber switches & VLAN tunnels.", badgeCol: "#FBBF24", chairPos: [7.2, 0, -3.5], deskFacing: Math.PI, hair: "#1e1e1e", cloth: "#FBBF24" },
-    { id: "growth_agent", name: "Growth Agent", role: "Global Traffic & Telemetry", dept: "Analytics", status: "Streaming real-time global visitor analytics.", badgeCol: "#FB923C", chairPos: [6.8, 0, 4.0], deskFacing: -Math.PI / 2, hair: "#78350f", cloth: "#FB923C" },
-    { id: "barista_bot", name: "Barista Bot", role: "Executive Fuel & Pantry", dept: "Refreshment", status: "Fresh Arabica double-shot espresso brewed! ☕", badgeCol: "#E2E8F0", chairPos: [-7.5, 0, 5.2], deskFacing: 0, hair: "#3f3f46", cloth: "#FFFFFF" },
+    { id: "bryan", name: "Bryan Yogie", role: "Lead Fullstack & Network", dept: "Dev Lead", status: "Designing Next.js scalable architecture & microservices.", badgeCol: "#FF7043", chairPos: [-5.0, 0, -2.6], deskFacing: 0, hair: "#111827", cloth: "#FF7043" },
+    { id: "nexus_core", name: "Nexus Core", role: "Chief AI Orchestrator", dept: "AI Operations", status: "Orchestrating agent neural workflows & low-latency edge inference.", badgeCol: "#B9F5D8", chairPos: [-1.8, 0, -2.6], deskFacing: 0, hair: "#334155", cloth: "#B9F5D8" },
+    { id: "maya", name: "Aura Nova", role: "Creative Director & Spatial UX", dept: "Creative Tech", status: "Refining 3D Three.js PBR shaders & layout responsiveness.", badgeCol: "#F472B6", chairPos: [1.4, 0, -2.6], deskFacing: 0, hair: "#64748b", cloth: "#F472B6" },
+    { id: "backend", name: "Backend Bot", role: "Distributed DB & API", dept: "Systems", status: "Optimizing indexed SQL query caching under 1.8ms.", badgeCol: "#38BDF8", chairPos: [-5.0, 0, 1.4], deskFacing: 0, hair: "#1e293b", cloth: "#38BDF8" },
+    { id: "sentinel_qa", name: "Sentinel QA", role: "E2E Mobile Tester", dept: "Quality Assurance", status: "Simulating mobile touch gestures on 375px viewports.", badgeCol: "#A78BFA", chairPos: [-1.8, 0, 1.4], deskFacing: 0, hair: "#475569", cloth: "#A78BFA" },
+    { id: "pipeline_ops", name: "Pipeline Ops", role: "CI/CD & Serverless Deploy", dept: "DevOps", status: "Zero downtime verified on Vercel Edge networks.", badgeCol: "#34D399", chairPos: [1.4, 0, 1.4], deskFacing: 0, hair: "#0f172a", cloth: "#34D399" },
+    { id: "cisco_net", name: "Cisco Agent", role: "Network Security & Router", dept: "Infrastructure", status: "Monitoring patch cables, fiber switches & VLAN tunnels.", badgeCol: "#FBBF24", chairPos: [6.8, 0, -3.2], deskFacing: Math.PI, hair: "#1e1e1e", cloth: "#FBBF24" },
+    { id: "growth_agent", name: "Growth Agent", role: "Global Traffic & Telemetry", dept: "Analytics", status: "Streaming real-time global visitor analytics.", badgeCol: "#FB923C", chairPos: [6.5, 0, 3.8], deskFacing: -Math.PI / 2, hair: "#78350f", cloth: "#FB923C" },
+    { id: "barista_bot", name: "Barista Bot", role: "Executive Fuel & Pantry", dept: "Refreshment", status: "Fresh Arabica double-shot espresso brewed! ☕", badgeCol: "#E2E8F0", chairPos: [-8.2, 0, 5.0], deskFacing: 0, hair: "#3f3f46", cloth: "#FFFFFF" },
   ];
 
   // Helper to generate distinct realistic animated screens
@@ -344,34 +344,43 @@ export default function VirtualOffice() {
 
   const createTextSprite = (text: string, color: string, subText?: string) => {
     const canvas = document.createElement("canvas");
-    canvas.width = 340;
-    canvas.height = 110;
+    canvas.width = 256;
+    canvas.height = 72;
     const ctx = canvas.getContext("2d");
     if (ctx) {
-      ctx.fillStyle = "rgba(10, 20, 20, 0.94)";
+      // Sleek glass pill container
+      ctx.fillStyle = "rgba(12, 22, 22, 0.88)";
       ctx.strokeStyle = color;
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 2.5;
       ctx.beginPath();
-      ctx.roundRect(10, 10, 320, 90, 18);
+      ctx.roundRect(6, 6, 244, 60, 30);
       ctx.fill();
       ctx.stroke();
 
-      ctx.font = "bold 30px sans-serif";
-      ctx.fillStyle = "#ffffff";
-      ctx.textAlign = "center";
-      ctx.fillText(text, 170, 50);
+      // Glowing status dot
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(28, 36, 6, 0, Math.PI * 2);
+      ctx.fill();
 
+      // Name
+      ctx.font = "bold 20px -apple-system, BlinkMacSystemFont, sans-serif";
+      ctx.fillStyle = "#ffffff";
+      ctx.textAlign = "left";
+      ctx.fillText(text, 44, 34);
+
+      // Subtext / Dept
       if (subText) {
-        ctx.font = "bold 20px monospace";
+        ctx.font = "bold 12px monospace";
         ctx.fillStyle = color;
-        ctx.fillText(subText, 170, 80);
+        ctx.fillText(subText.toUpperCase(), 44, 52);
       }
     }
 
-    const texture = new THREE.CanvasTexture(canvas);
-    const spriteMat = new THREE.SpriteMaterial({ map: texture, depthTest: false });
+    const tex = new THREE.CanvasTexture(canvas);
+    const spriteMat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false });
     const sprite = new THREE.Sprite(spriteMat);
-    sprite.scale.set(3.0, 1.05, 1);
+    sprite.scale.set(1.9, 0.55, 1);
     return sprite;
   };
 
@@ -444,242 +453,181 @@ export default function VirtualOffice() {
     serverGlow.position.set(7.5, 5, -4);
     scene.add(serverGlow);
 
-    // 3. CYBERPUNK HIGH-TECH GLASS HQ ARCHITECTURE
-    // High-Gloss Reflective Cyber Grid Floor
-    const floorCanvas = document.createElement("canvas");
-    floorCanvas.width = 1024;
-    floorCanvas.height = 1024;
-    const floorCtx = floorCanvas.getContext("2d");
-    if (floorCtx) {
-      // Dark cyber metallic base
-      floorCtx.fillStyle = "#0a1313";
-      floorCtx.fillRect(0, 0, 1024, 1024);
-
-      // Hexagonal / Grid Matrix with glowing circuits
-      floorCtx.strokeStyle = "rgba(185, 245, 216, 0.12)";
-      floorCtx.lineWidth = 2;
-      const step = 64;
-      for (let x = 0; x <= 1024; x += step) {
-        floorCtx.beginPath();
-        floorCtx.moveTo(x, 0);
-        floorCtx.lineTo(x, 1024);
-        floorCtx.stroke();
-      }
-      for (let y = 0; y <= 1024; y += step) {
-        floorCtx.beginPath();
-        floorCtx.moveTo(0, y);
-        floorCtx.lineTo(1024, y);
-        floorCtx.stroke();
-      }
-
-      // Circuit Pathway Highlights (Flare & Mint)
-      floorCtx.strokeStyle = "rgba(185, 245, 216, 0.35)";
-      floorCtx.lineWidth = 4;
-      floorCtx.strokeRect(128, 128, 768, 768);
-      floorCtx.strokeStyle = "rgba(255, 112, 67, 0.4)";
-      floorCtx.strokeRect(256, 256, 512, 512);
-
-      // Micro LED Nodes on floor junctions
-      floorCtx.fillStyle = "#b9f5d8";
-      for (let x = 128; x <= 896; x += 128) {
-        for (let y = 128; y <= 896; y += 128) {
-          floorCtx.beginPath();
-          floorCtx.arc(x, y, 4, 0, Math.PI * 2);
-          floorCtx.fill();
-        }
-      }
-    }
-    const floorTex = new THREE.CanvasTexture(floorCanvas);
-    floorTex.wrapS = THREE.RepeatWrapping;
-    floorTex.wrapT = THREE.RepeatWrapping;
-    floorTex.repeat.set(2, 2);
-
-    const floorGeo = new THREE.BoxGeometry(28, 0.4, 22);
+    // 3. ARCHITECTURAL STUDIO INTERIOR (CLEAN, SOPHISTICATED TECH STUDIO)
+    // Warm Premium Dark Parquet / Slate Matte Floor
+    const floorGeo = new THREE.BoxGeometry(26, 0.4, 20);
     const floorMat = new THREE.MeshStandardMaterial({
-      map: floorTex,
-      roughness: 0.15, // High-gloss wet cyberpunk reflection
-      metalness: 0.75,
+      color: "#121e1e",
+      roughness: 0.45,
+      metalness: 0.1,
     });
     const floor = new THREE.Mesh(floorGeo, floorMat);
     floor.position.y = -0.2;
     floor.receiveShadow = true;
     scene.add(floor);
 
-    // Glowing Floor Perimeter Neon Rails
-    const railMat = new THREE.MeshBasicMaterial({ color: "#b9f5d8" });
-    const railL = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.15, 22), railMat);
-    railL.position.set(-14, 0.05, 0);
-    scene.add(railL);
-    const railR = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.15, 22), railMat);
-    railR.position.set(14, 0.05, 0);
-    scene.add(railR);
-
-    // PANORAMIC PENTHOUSE GLASS WINDOW WITH NIGHT CYBER SKYLINE BACKDROP
-    // City Skyline Canvas Texture
-    const cityCanvas = document.createElement("canvas");
-    cityCanvas.width = 1024;
-    cityCanvas.height = 512;
-    const cityCtx = cityCanvas.getContext("2d");
-    if (cityCtx) {
-      // Midnight gradient
-      const skyGrad = cityCtx.createLinearGradient(0, 0, 0, 512);
-      skyGrad.addColorStop(0, "#04070a");
-      skyGrad.addColorStop(0.7, "#08151c");
-      skyGrad.addColorStop(1, "#122a2e");
-      cityCtx.fillStyle = skyGrad;
-      cityCtx.fillRect(0, 0, 1024, 512);
-
-      // Distant Skyscrapers Silhouettes with glowing windows
-      const buildings = [
-        { x: 20, w: 70, h: 320 }, { x: 100, w: 90, h: 420 }, { x: 200, w: 60, h: 260 },
-        { x: 270, w: 110, h: 460 }, { x: 390, w: 80, h: 350 }, { x: 480, w: 130, h: 490 },
-        { x: 620, w: 75, h: 290 }, { x: 710, w: 100, h: 440 }, { x: 820, w: 85, h: 370 },
-        { x: 915, w: 90, h: 430 }
-      ];
-
-      buildings.forEach((b) => {
-        cityCtx.fillStyle = "#081017";
-        cityCtx.fillRect(b.x, 512 - b.h, b.w, b.h);
-
-        // Neon roof beacons
-        cityCtx.fillStyle = Math.random() > 0.5 ? "#ff7043" : "#38bdf8";
-        cityCtx.fillRect(b.x + b.w / 2 - 3, 512 - b.h - 8, 6, 8);
-
-        // Glowing window matrix
-        for (let wy = 512 - b.h + 20; wy < 490; wy += 22) {
-          for (let wx = b.x + 8; wx < b.x + b.w - 8; wx += 16) {
-            if (Math.random() > 0.3) {
-              cityCtx.fillStyle = Math.random() > 0.7 ? "#b9f5d8" : "rgba(56, 189, 248, 0.75)";
-              cityCtx.fillRect(wx, wy, 8, 12);
-            }
-          }
-        }
-      });
-    }
-    const cityTex = new THREE.CanvasTexture(cityCanvas);
-
-    // City Backdrop Plane behind windows
-    const cityBackdrop = new THREE.Mesh(
-      new THREE.PlaneGeometry(38, 16),
-      new THREE.MeshBasicMaterial({ map: cityTex })
-    );
-    cityBackdrop.position.set(0, 6.5, -12.5);
-    scene.add(cityBackdrop);
-
-    // Floor-to-Ceiling Glass Penthouse Window Panels (Back wall replacement)
-    const glassMat = new THREE.MeshPhysicalMaterial({
-      color: "#b9f5d8",
-      metalness: 0.1,
-      roughness: 0.05,
-      transmission: 0.88,
-      thickness: 0.4,
-      transparent: true,
-      opacity: 0.45,
+    // Warm Herringbone Engineering Carpet Runner under developer desks
+    const carpetGeo = new THREE.BoxGeometry(11.5, 0.03, 8.5);
+    const carpetMat = new THREE.MeshStandardMaterial({
+      color: "#182c2c",
+      roughness: 0.85,
     });
-    const backWindow = new THREE.Mesh(new THREE.BoxGeometry(28, 8, 0.2), glassMat);
-    backWindow.position.set(0, 4.0, -10.5);
-    scene.add(backWindow);
+    const engCarpet = new THREE.Mesh(carpetGeo, carpetMat);
+    engCarpet.position.set(-1.8, 0.015, -0.6);
+    engCarpet.receiveShadow = true;
+    scene.add(engCarpet);
 
-    // Modern Window Mullions / Metallic Pillars (Matte dark titanium)
-    const mullionMat = new THREE.MeshStandardMaterial({ color: "#111c24", metalness: 0.85, roughness: 0.25 });
-    [-13.8, -9.2, -4.6, 0, 4.6, 9.2, 13.8].forEach((mx) => {
-      const mullion = new THREE.Mesh(new THREE.BoxGeometry(0.35, 8.2, 0.4), mullionMat);
-      mullion.position.set(mx, 4.0, -10.45);
-      scene.add(mullion);
+    // Back Main Architectural Wall (Modern Architectural Charcoal Concrete)
+    const backWallMat = new THREE.MeshStandardMaterial({
+      color: "#0d1717",
+      roughness: 0.8,
     });
-    // Horizontal transom beam
-    const transom = new THREE.Mesh(new THREE.BoxGeometry(28, 0.35, 0.4), mullionMat);
-    transom.position.set(0, 5.0, -10.45);
-    scene.add(transom);
+    const backWall = new THREE.Mesh(new THREE.BoxGeometry(26, 7.5, 0.5), backWallMat);
+    backWall.position.set(0, 3.5, -9.8);
+    backWall.receiveShadow = true;
+    scene.add(backWall);
 
-    // Sleek Left High-Tech Accent Wall with Cyber Slits
-    const leftWallMat = new THREE.MeshStandardMaterial({ color: "#0c171a", roughness: 0.4, metalness: 0.6 });
-    const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.5, 8, 22), leftWallMat);
-    leftWall.position.set(-14, 4.0, 0);
+    // Left Architectural Wall
+    const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.5, 7.5, 20), backWallMat);
+    leftWall.position.set(-12.8, 3.5, 0);
     leftWall.receiveShadow = true;
     scene.add(leftWall);
 
-    // Vertical Neon Light Slits on Left Wall
-    [-6, -2, 2, 6].forEach((lz, idx) => {
-      const slit = new THREE.Mesh(
-        new THREE.BoxGeometry(0.55, 5.5, 0.15),
-        new THREE.MeshBasicMaterial({ color: idx % 2 === 0 ? "#b9f5d8" : "#ff7043" })
-      );
-      slit.position.set(-13.95, 3.8, lz);
-      scene.add(slit);
+    // Wooden Acoustic Slat Accent Panels (Warm walnut vertical wooden slats)
+    const slatWoodMat = new THREE.MeshStandardMaterial({
+      color: "#854d0e",
+      roughness: 0.6,
     });
+    for (let sl = -12; sl < -5; sl += 0.4) {
+      const slat = new THREE.Mesh(new THREE.BoxGeometry(0.18, 6.0, 0.12), slatWoodMat);
+      slat.position.set(sl, 3.3, -9.5);
+      scene.add(slat);
+    }
 
-    // Holographic Futuristic BYS Brand Sign (Glass Prism Plaque with Neon Text)
-    const signGeo = new THREE.PlaneGeometry(8.5, 1.6);
+    // Elegant Minimalist Studio Neon Logo on Wall
+    const signGeo = new THREE.PlaneGeometry(6.5, 1.2);
     const signCanvas = document.createElement("canvas");
-    signCanvas.width = 512;
-    signCanvas.height = 96;
+    signCanvas.width = 400;
+    signCanvas.height = 75;
     const signCtx = signCanvas.getContext("2d");
     if (signCtx) {
-      signCtx.fillStyle = "rgba(10, 24, 24, 0.9)";
-      signCtx.fillRect(0, 0, 512, 96);
+      signCtx.fillStyle = "#122020";
+      signCtx.fillRect(0, 0, 400, 75);
       signCtx.strokeStyle = "#b9f5d8";
-      signCtx.lineWidth = 4;
-      signCtx.strokeRect(4, 4, 504, 88);
-      signCtx.font = "900 28px monospace";
-      signCtx.fillStyle = "#b9f5d8";
-      signCtx.fillText("BYS LAB // QUANTUM STUDIO", 32, 45);
-      signCtx.font = "bold 13px monospace";
-      signCtx.fillStyle = "#ff7043";
-      signCtx.fillText("AUTONOMOUS AGENT ORCHESTRATION • 60 FPS", 34, 72);
+      signCtx.lineWidth = 3;
+      signCtx.strokeRect(3, 3, 394, 69);
+      signCtx.font = "900 24px -apple-system, BlinkMacSystemFont, sans-serif";
+      signCtx.fillStyle = "#ffffff";
+      signCtx.fillText("BYS CYBER STUDIO", 28, 46);
     }
     const signTex = new THREE.CanvasTexture(signCanvas);
-    const signMesh = new THREE.Mesh(signGeo, new THREE.MeshBasicMaterial({ map: signTex, transparent: true, opacity: 0.95 }));
-    signMesh.position.set(0, 6.2, -10.3);
+    const signMesh = new THREE.Mesh(signGeo, new THREE.MeshBasicMaterial({ map: signTex }));
+    signMesh.position.set(2.5, 5.2, -9.5);
     scene.add(signMesh);
 
-    // FLOATING HOLOGRAPHIC CENTRAL CORE (High-Tech centerpiece)
-    const holoCoreGroup = new THREE.Group();
-    holoCoreGroup.position.set(-2, 3.8, -0.5);
-
-    const octGeo = new THREE.OctahedronGeometry(0.7, 0);
-    const octMat = new THREE.MeshBasicMaterial({ color: "#b9f5d8", wireframe: true });
-    const octMesh = new THREE.Mesh(octGeo, octMat);
-    holoCoreGroup.add(octMesh);
-
-    const ringGeo = new THREE.TorusGeometry(1.2, 0.03, 16, 50);
-    const ringMat = new THREE.MeshBasicMaterial({ color: "#38bdf8" });
-    const ringMesh1 = new THREE.Mesh(ringGeo, ringMat);
-    ringMesh1.rotation.x = Math.PI / 3;
-    holoCoreGroup.add(ringMesh1);
-
-    const ringMesh2 = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({ color: "#ff7043" }));
-    ringMesh2.rotation.y = Math.PI / 4;
-    holoCoreGroup.add(ringMesh2);
-
-    // Pedestal for Hologram Core
-    const pedestal = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.6, 0.8, 1.2, 8),
-      new THREE.MeshStandardMaterial({ color: "#091216", metalness: 0.9, roughness: 0.2 })
-    );
-    pedestal.position.set(-2, 0.6, -0.5);
-    scene.add(pedestal);
-    scene.add(holoCoreGroup);
-
-    // FLOATING CYBER DUST PARTICLES (Ambient living atmosphere)
-    const particleCount = isMobile ? 60 : 160;
-    const particleGeo = new THREE.BufferGeometry();
-    const particlePositions = new Float32Array(particleCount * 3);
-    for (let p = 0; p < particleCount * 3; p += 3) {
-      particlePositions[p] = (Math.random() - 0.5) * 24;
-      particlePositions[p + 1] = Math.random() * 6 + 0.5;
-      particlePositions[p + 2] = (Math.random() - 0.5) * 18;
-    }
-    particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
-    const particleMat = new THREE.PointsMaterial({
+    // Tempered Frosted Glass Divider Partition between dev desks and server room
+    const glassMat = new THREE.MeshPhysicalMaterial({
       color: "#b9f5d8",
-      size: isMobile ? 0.08 : 0.12,
+      roughness: 0.1,
+      metalness: 0.05,
+      transmission: 0.75,
+      thickness: 0.2,
       transparent: true,
-      opacity: 0.6,
-      blending: THREE.AdditiveBlending,
+      opacity: 0.45,
     });
-    const cyberParticles = new THREE.Points(particleGeo, particleMat);
-    scene.add(cyberParticles);
+    const glassPartition = new THREE.Mesh(new THREE.BoxGeometry(0.12, 4.2, 7.5), glassMat);
+    glassPartition.position.set(4.0, 2.1, -4.5);
+    scene.add(glassPartition);
+
+    // Frosted Glass Aluminum Frame
+    const frameMat = new THREE.MeshStandardMaterial({ color: "#334155", metalness: 0.8 });
+    const fTop = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.12, 7.5), frameMat);
+    fTop.position.set(4.0, 4.2, -4.5);
+    scene.add(fTop);
+    const fPost1 = new THREE.Mesh(new THREE.BoxGeometry(0.16, 4.2, 0.16), frameMat);
+    fPost1.position.set(4.0, 2.1, -8.2);
+    scene.add(fPost1);
+    const fPost2 = new THREE.Mesh(new THREE.BoxGeometry(0.16, 4.2, 0.16), frameMat);
+    fPost2.position.set(4.0, 2.1, -0.8);
+    scene.add(fPost2);
+
+    // REALISTIC INDOOR PLANTS (Ceramic Cylindrical Planters + Lush Layered Foliage)
+    const createLushPlant = (x: number, z: number, scale = 1.0) => {
+      const plantGroup = new THREE.Group();
+      plantGroup.position.set(x, 0, z);
+
+      // Matte White Minimalist Ceramic Pot
+      const pot = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.45 * scale, 0.35 * scale, 0.9 * scale, 24),
+        new THREE.MeshStandardMaterial({ color: "#f8fafc", roughness: 0.3 })
+      );
+      pot.position.y = (0.45 * scale);
+      pot.castShadow = true;
+      plantGroup.add(pot);
+
+      // Soil
+      const soil = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.42 * scale, 0.42 * scale, 0.05, 16),
+        new THREE.MeshStandardMaterial({ color: "#291811", roughness: 0.9 })
+      );
+      soil.position.y = 0.88 * scale;
+      plantGroup.add(soil);
+
+      // Lush Stems & Leaves (Monstera / Fiddle-leaf style)
+      const leafMat = new THREE.MeshStandardMaterial({
+        color: "#15803d",
+        roughness: 0.45,
+        metalness: 0.05,
+      });
+
+      const leafMatLight = new THREE.MeshStandardMaterial({
+        color: "#22c55e",
+        roughness: 0.4,
+      });
+
+      for (let i = 0; i < 7; i++) {
+        const angle = (i / 7) * Math.PI * 2;
+        const stemHeight = (1.2 + (i % 3) * 0.25) * scale;
+        
+        // Curved leaf blade
+        const leaf = new THREE.Mesh(
+          new THREE.SphereGeometry(0.42 * scale, 8, 8),
+          i % 2 === 0 ? leafMat : leafMatLight
+        );
+        leaf.scale.set(0.7, 1.4, 0.12);
+        leaf.rotation.x = 0.45;
+        leaf.rotation.y = angle;
+        leaf.position.set(
+          Math.sin(angle) * 0.35 * scale,
+          0.9 * scale + stemHeight * 0.65,
+          Math.cos(angle) * 0.35 * scale
+        );
+        leaf.castShadow = true;
+        plantGroup.add(leaf);
+      }
+
+      scene.add(plantGroup);
+    };
+
+    // Strategic Lush Plants around studio
+    createLushPlant(-11.5, -8.2, 1.2);  // Near wooden slats
+    createLushPlant(11.0, -8.5, 1.3);   // Beside server rack
+    createLushPlant(-11.5, 7.5, 1.1);   // Near coffee bar
+    createLushPlant(4.0, 7.5, 1.0);     // Near conference table
+    createLushPlant(11.0, 7.5, 1.2);    // Far corner
+
+    // WARM CEILING TRACK LIGHTS (Illuminating desks cleanly)
+    const trackMat = new THREE.MeshStandardMaterial({ color: "#1e293b", metalness: 0.9 });
+    const trackRail1 = new THREE.Mesh(new THREE.BoxGeometry(16, 0.08, 0.08), trackMat);
+    trackRail1.position.set(-1.8, 5.8, -1.0);
+    scene.add(trackRail1);
+
+    // Warm spotlights attached to ceiling rail
+    [-6, -3, 0, 3, 6].forEach((tx) => {
+      const lamp = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.16, 0.3), trackMat);
+      lamp.position.set(-1.8 + tx, 5.65, -1.0);
+      scene.add(lamp);
+    });
 
     // 4. REALISTIC WORKSTATIONS WITH UNIQUE SPECIALIZED MONITORS
     const deskMat = new THREE.MeshStandardMaterial({ color: "#1e3535", roughness: 0.4, metalness: 0.3 });
@@ -807,12 +755,12 @@ export default function VirtualOffice() {
     };
 
     // 6 Workstations with CHARACTER SPECIFIC SCREENS
-    createRealWorkstation(-5.5, -3.5, bryanTex, terminalTex);    // Bryan: Next.js + Terminal
-    createRealWorkstation(-2.0, -3.5, jarwoTex, terminalTex);    // Jarwo: Neural Dispatcher + Terminal
-    createRealWorkstation(1.5, -3.5, mayaTex, bryanTex);         // Aura Nova: Figma UI Mockup + Code
-    createRealWorkstation(-5.5, 1.0, backendTex, terminalTex);   // Backend: PostgreSQL Tables + Terminal
-    createRealWorkstation(-2.0, 1.0, qaTex, bryanTex);           // QA: Mobile Emulator + Code
-    createRealWorkstation(1.5, 1.0, devopsTex, terminalTex);     // DevOps: Vercel Pipeline + Terminal
+    createRealWorkstation(-5.0, -3.5, bryanTex, terminalTex);    // Bryan: Next.js + Terminal
+    createRealWorkstation(-1.8, -3.5, jarwoTex, terminalTex);    // Jarwo: Neural Dispatcher + Terminal
+    createRealWorkstation(1.4, -3.5, mayaTex, bryanTex);         // Aura Nova: Figma UI Mockup + Code
+    createRealWorkstation(-5.0, 0.5, backendTex, terminalTex);   // Backend: PostgreSQL Tables + Terminal
+    createRealWorkstation(-1.8, 0.5, qaTex, bryanTex);           // QA: Mobile Emulator + Code
+    createRealWorkstation(1.4, 0.5, devopsTex, terminalTex);     // DevOps: Vercel Pipeline + Terminal
 
     // 5. SERVER ROOM WITH PROFESSIONAL STRUCTURED CABLE MANAGEMENT (NO MESSY FLOATING LINES)
     const rackGeo = new THREE.BoxGeometry(1.4, 4.2, 1.5);
@@ -1203,16 +1151,6 @@ export default function VirtualOffice() {
         }
       });
 
-      // Animate Floating Holographic Central Core
-      holoCoreGroup.rotation.y = time * 0.8;
-      octMesh.rotation.x = time * 0.5;
-      octMesh.rotation.z = time * 0.6;
-      ringMesh1.rotation.z = time * 0.4;
-      ringMesh2.rotation.x = -time * 0.4;
-
-      // Animate Cyber Dust Particles gentle drift
-      cyberParticles.rotation.y = time * 0.04;
-
       controls.update();
       renderer.render(scene, camera);
     };
@@ -1313,39 +1251,59 @@ export default function VirtualOffice() {
             className="w-full h-[420px] md:h-[560px] bg-[#0c1515] relative cursor-grab active:cursor-grabbing overflow-hidden"
           />
 
-          {/* LIVE AGENT INSPECTOR HUD */}
-          <div className="bg-[#121f1f] p-4 md:px-8 border-t border-mint/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 font-mono text-xs">
-            <div className="flex items-center gap-3">
-              <span 
-                className="w-3.5 h-3.5 rounded-full animate-ping" 
-                style={{ backgroundColor: selectedAgent?.badgeCol || "#FF7043" }} 
-              />
-              <div className="text-foreground/90">
-                <span className="text-foreground/50">Inspecting: </span>
-                <strong className="text-white text-sm">{selectedAgent?.name}</strong>
-                <span className="text-mint ml-2 px-2 py-0.5 rounded-md bg-mint/10 border border-mint/30 text-[10px]">
-                  {selectedAgent?.role}
-                </span>
-              </div>
+          {/* MODERN AGENT COMMAND CENTER & INSPECTOR HUD */}
+          <div className="bg-[#101c1c]/90 backdrop-blur-md p-4 md:px-6 border-t border-mint/20 flex flex-col gap-3 font-mono text-xs">
+            {/* Horizontal Agent Roster Selector */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 text-[11px] scrollbar-none">
+              <span className="text-white/40 text-[10px] uppercase font-bold tracking-wider mr-1">Roster:</span>
+              {agentDefs.map((agent) => (
+                <button
+                  key={agent.id}
+                  onClick={() => setSelectedAgent(agent)}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border transition-all whitespace-nowrap cursor-pointer ${
+                    selectedAgent?.id === agent.id
+                      ? "bg-mint/20 border-mint text-white font-bold shadow-[0_0_12px_rgba(185,245,216,0.25)]"
+                      : "bg-[#0a1313] border-white/10 text-white/60 hover:text-white hover:border-mint/40"
+                  }`}
+                >
+                  <span
+                    className="w-2 h-2 rounded-full"
+                    style={{ backgroundColor: agent.badgeCol }}
+                  />
+                  <span>{agent.name}</span>
+                </button>
+              ))}
             </div>
 
-            <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
-              <div className="flex items-center gap-2 text-foreground/80 bg-[#090f0f] px-3.5 py-2 rounded-xl border border-white/10 max-w-md w-full md:w-auto truncate">
-                <span className="text-flare font-bold text-[11px]">STATUS:</span>
-                <span className="text-mint font-sans text-xs truncate">
-                  &quot;{selectedAgent?.status}&quot;
+            {/* Selected Agent Details & Action Bar */}
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 pt-2 border-t border-white/5">
+              <div className="flex flex-wrap items-center gap-2 text-foreground/90">
+                <span className="w-2.5 h-2.5 rounded-full animate-ping" style={{ backgroundColor: selectedAgent?.badgeCol || "#FF7043" }} />
+                <strong className="text-white text-sm font-outfit">{selectedAgent?.name}</strong>
+                <span className="text-mint px-2 py-0.5 rounded-md bg-mint/10 border border-mint/30 text-[10px]">
+                  {selectedAgent?.role}
                 </span>
+                <span className="text-white/40 text-[11px] hidden sm:inline">• {selectedAgent?.dept}</span>
               </div>
 
-              {selectedAgent && (
-                <button
-                  onClick={() => handleOpenChat(selectedAgent)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-mint text-cinder font-outfit font-black text-xs hover:bg-flare hover:text-white transition-all shadow-[0_0_20px_rgba(185,245,216,0.4)] whitespace-nowrap active:scale-95 cursor-pointer"
-                >
-                  <MessageSquare size={14} />
-                  <span>Chat AI</span>
-                </button>
-              )}
+              <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+                <div className="flex items-center gap-2 text-foreground/80 bg-[#081212] px-3.5 py-1.5 rounded-xl border border-white/10 max-w-sm w-full md:w-auto truncate text-[11px]">
+                  <span className="text-flare font-bold">STATUS:</span>
+                  <span className="text-white/80 font-sans truncate">
+                    &quot;{selectedAgent?.status}&quot;
+                  </span>
+                </div>
+
+                {selectedAgent && (
+                  <button
+                    onClick={() => handleOpenChat(selectedAgent)}
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-mint text-cinder font-outfit font-black text-xs hover:bg-flare hover:text-white transition-all shadow-[0_0_20px_rgba(185,245,216,0.35)] whitespace-nowrap active:scale-95 cursor-pointer"
+                  >
+                    <MessageSquare size={14} />
+                    <span>Chat {selectedAgent.name.split(" ")[0]}</span>
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
