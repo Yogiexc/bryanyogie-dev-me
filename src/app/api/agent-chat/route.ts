@@ -201,9 +201,9 @@ function getContextualKnowledgeReply(agentId: string, userMsg: string, profile: 
     lower.includes("developer web")
   ) {
     if (agentId === "bryan") {
-      return "Aku Bryan Yogie Saputra! Mahasiswa S1 Teknik Informatika di Universitas Sebelas Maret (UNS) & alumni SMK Telkom Solo jurusan TKJ. Aku fokus mendalami Fullstack Web Engineering (Next.js, TypeScript), arsitektur jaringan, serta integrasi sistem cerdas AI.";
+      return "Aku Bryan Yogie Saputra! Mahasiswa D3 Teknik Informatika di Universitas Sebelas Maret (UNS) & alumni SMK Telkom Solo jurusan TKJ. Aku fokus mendalami Fullstack Web Engineering (Next.js, TypeScript), arsitektur jaringan, serta integrasi sistem cerdas AI.";
     }
-    return "Bryan Yogie Saputra adalah Lead Engineer & kreator seluruh portofolio ini. Dia mahasiswa S1 Teknik Informatika UNS dengan latar belakang TKJ SMK Telkom Solo. Di studio ini, Bryan memimpin perancangan sistem, kode Next.js, dan arsitektur jaringan kami!";
+    return "Bryan Yogie Saputra adalah Lead Engineer & kreator seluruh portofolio ini. Dia mahasiswa D3 Teknik Informatika UNS dengan latar belakang TKJ SMK Telkom Solo. Di studio ini, Bryan memimpin perancangan sistem, kode Next.js, dan arsitektur jaringan kami!";
   }
 
   // "Apa proyek andalan?" / "Projek apa saja?"
@@ -237,9 +237,9 @@ function getContextualKnowledgeReply(agentId: string, userMsg: string, profile: 
     lower.includes("background")
   ) {
     if (agentId === "bryan") {
-      return "Aku saat ini menempuh studi S1 Teknik Informatika di Universitas Sebelas Maret (UNS), Surakarta. Sebelumnya, pondasi teknologiku diasah di SMK Telkom Solo jurusan Teknik Komputer & Jaringan (TKJ), sehingga aku terbiasa menangani server fisik, routing mikrotik/cisco, hingga cloud stack modern.";
+      return "Aku saat ini menempuh studi D3 Teknik Informatika di Universitas Sebelas Maret (UNS), Surakarta. Sebelumnya, pondasi teknologiku diasah di SMK Telkom Solo jurusan Teknik Komputer & Jaringan (TKJ), sehingga aku terbiasa menangani server fisik, routing mikrotik/cisco, hingga cloud stack modern.";
     }
-    return "Bryan berakar dari SMK Telkom Solo (jurusan Teknik Komputer & Jaringan) dan saat ini sedang menempuh S1 Teknik Informatika di Universitas Sebelas Maret (UNS). Itulah mengapa dia menguasai fullstack web sekaligus infrastruktur server/jaringan!";
+    return "Bryan berakar dari SMK Telkom Solo (jurusan Teknik Komputer & Jaringan) dan saat ini sedang menempuh D3 Teknik Informatika di Universitas Sebelas Maret (UNS). Itulah mengapa dia menguasai fullstack web sekaligus infrastruktur server/jaringan!";
   }
 
   // "Kontak" / "Hire" / "Kerja sama" / "Hubungi" / "Email" / "Jasa"
