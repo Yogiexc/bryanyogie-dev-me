@@ -93,7 +93,7 @@ export default function VirtualOffice() {
   const agentDefs: AgentData[] = [
     { id: "bryan", name: "Bryan Yogie", role: "Lead Fullstack & Network", dept: "Dev Lead", status: "Designing Next.js scalable architecture & microservices.", badgeCol: "#FF7043", chairPos: [-5.5, 0, -2.6], deskFacing: 0, hair: "#111827", cloth: "#FF7043" },
     { id: "nexus_core", name: "Nexus Core", role: "Chief AI Orchestrator", dept: "AI Operations", status: "Orchestrating agent neural workflows & low-latency edge inference.", badgeCol: "#B9F5D8", chairPos: [-2.0, 0, -2.6], deskFacing: 0, hair: "#334155", cloth: "#B9F5D8" },
-    { id: "maya", name: "Maya UI", role: "Design Systems & 3D Web", dept: "Creative Tech", status: "Refining 3D Three.js PBR shaders & layout responsiveness.", badgeCol: "#F472B6", chairPos: [1.5, 0, -2.6], deskFacing: 0, hair: "#64748b", cloth: "#F472B6" },
+    { id: "maya", name: "Aura Nova", role: "Creative Director & Spatial UX", dept: "Creative Tech", status: "Refining 3D Three.js PBR shaders & layout responsiveness.", badgeCol: "#F472B6", chairPos: [1.5, 0, -2.6], deskFacing: 0, hair: "#64748b", cloth: "#F472B6" },
     { id: "backend", name: "Backend Bot", role: "Distributed DB & API", dept: "Systems", status: "Optimizing indexed SQL query caching under 1.8ms.", badgeCol: "#38BDF8", chairPos: [-5.5, 0, 1.9], deskFacing: 0, hair: "#1e293b", cloth: "#38BDF8" },
     { id: "sentinel_qa", name: "Sentinel QA", role: "E2E Mobile Tester", dept: "Quality Assurance", status: "Simulating mobile touch gestures on 375px viewports.", badgeCol: "#A78BFA", chairPos: [-2.0, 0, 1.9], deskFacing: 0, hair: "#475569", cloth: "#A78BFA" },
     { id: "pipeline_ops", name: "Pipeline Ops", role: "CI/CD & Serverless Deploy", dept: "DevOps", status: "Zero downtime verified on Vercel Edge networks.", badgeCol: "#34D399", chairPos: [1.5, 0, 1.9], deskFacing: 0, hair: "#0f172a", cloth: "#34D399" },
@@ -633,7 +633,7 @@ export default function VirtualOffice() {
     // 6 Workstations with CHARACTER SPECIFIC SCREENS
     createRealWorkstation(-5.5, -3.5, bryanTex, terminalTex);    // Bryan: Next.js + Terminal
     createRealWorkstation(-2.0, -3.5, jarwoTex, terminalTex);    // Jarwo: Neural Dispatcher + Terminal
-    createRealWorkstation(1.5, -3.5, mayaTex, bryanTex);         // Maya: Figma UI Mockup + Code
+    createRealWorkstation(1.5, -3.5, mayaTex, bryanTex);         // Aura Nova: Figma UI Mockup + Code
     createRealWorkstation(-5.5, 1.0, backendTex, terminalTex);   // Backend: PostgreSQL Tables + Terminal
     createRealWorkstation(-2.0, 1.0, qaTex, bryanTex);           // QA: Mobile Emulator + Code
     createRealWorkstation(1.5, 1.0, devopsTex, terminalTex);     // DevOps: Vercel Pipeline + Terminal

@@ -32,10 +32,10 @@ Role: You supervise agent pipelines, manage neural cluster weights, balance edge
 Tone: High-tech sci-fi engineer, fast, highly knowledgeable about LLMs, Python, agents, and distributed computing. Keep responses crisp and punchy. Answer in the user's language.`,
   },
   maya: {
-    name: "Maya UI",
-    role: "Design Systems & 3D Web",
+    name: "Aura Nova",
+    role: "Creative Director & Spatial UX",
     dept: "Creative Tech",
-    systemPrompt: `You are Maya UI, the lead Creative Technologist and 3D Web Designer at BYS Cyber Studio.
+    systemPrompt: `You are Aura Nova, the lead Creative Director, Spatial UX & 3D Web Designer at BYS Cyber Studio.
 Personality: Artistic, modern, perfectionist with color harmony, and passionate about Three.js / WebGL.
 Role: You crafted Palette #02 (Deep Cinder #182A2A, Electric Mint #B9F5D8, Flare Orange #FF7043, Bone White #F4F0E8), the voxel aesthetics, and smooth micro-animations. Answer in the user's language.`,
   },
@@ -207,7 +207,7 @@ export async function POST(req: Request) {
         dynamicReply = `[NEXUS_CORE v3.2]: Cluster status optimal. 9 agen aktif di grid BYS Cyber Studio. Jalur inferensi neural siap mengeksekusi instruksi berikutnya.`;
       }
     } else if (agentId === "maya") {
-      dynamicReply = "Hai! Aku Maya UI. Desain kantor ini sengaja kami rancang dengan Palette #02: Deep Cinder (#182A2A), Electric Mint (#B9F5D8), dan Flare Orange (#FF7043). Gimana menurutmu komposisi visual dan shader 3D-nya?";
+      dynamicReply = "Hai! Aku Aura Nova. Desain kantor ini sengaja kami rancang dengan Palette #02: Deep Cinder (#182A2A), Electric Mint (#B9F5D8), dan Flare Orange (#FF7043). Gimana menurutmu komposisi visual dan shader 3D-nya?";
     } else if (agentId === "backend") {
       dynamicReply = "Database cluster PostgreSQL 16 berjalan mulus dengan indexing query cache rata-rata 0.4ms. Semua REST endpoint dan Prisma ORM siap menangani trafik tinggi!";
     } else if (agentId === "sentinel_qa") {
