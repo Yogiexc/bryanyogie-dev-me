@@ -83,15 +83,16 @@ export default function FeaturedWorks() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-24 md:py-40 px-6 md:px-12 lg:px-24 bg-background text-foreground min-h-screen" id="works">
-      <div className="mb-20">
-        <h2 className="text-5xl md:text-8xl font-outfit font-black tracking-tighter uppercase mb-6">
-          Featured Works
-        </h2>
-        <div className="w-full h-[1px] bg-white/20" />
-      </div>
+    <section ref={containerRef} className="py-28 md:py-36 px-6 md:px-12 lg:px-24 bg-background text-foreground min-h-screen" id="works">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-16 md:mb-20">
+          <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-outfit font-black tracking-tighter uppercase mb-6 text-balance">
+            Featured Works
+          </h2>
+          <div className="w-full h-[1px] bg-mint/20" />
+        </div>
 
-      <div className="flex flex-col gap-12 md:gap-24">
+        <div className="flex flex-col gap-12 md:gap-24">
         {curatedProjects.map((project) => (
           <a
             href={project.url}
@@ -157,6 +158,7 @@ export default function FeaturedWorks() {
             </div>
           </a>
         ))}
+        </div>
       </div>
     </section>
   );

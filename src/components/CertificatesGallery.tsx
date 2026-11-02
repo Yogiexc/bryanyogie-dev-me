@@ -16,12 +16,12 @@ const certificateItems = [
 
 export default function CertificatesGallery() {
   return (
-    <section className="relative w-full bg-black py-24 flex flex-col items-center justify-center overflow-hidden" id="certificates">
-      <div className="z-10 mb-12 text-center pointer-events-none">
-        <h2 className="text-4xl md:text-6xl font-outfit font-black uppercase text-white tracking-tighter uppercase-text-shadow">
+    <section className="relative w-full bg-[#090f0f] py-28 md:py-36 border-t border-mint/20 flex flex-col items-center justify-center overflow-hidden" id="certificates">
+      <div className="z-10 mb-12 text-center pointer-events-none max-w-4xl px-6">
+        <h2 className="text-4xl sm:text-6xl md:text-7xl font-outfit font-black uppercase text-foreground tracking-tighter text-balance">
           My <span className="text-mint">Certifications</span>
         </h2>
-        <p className="text-white/60 font-mono mt-4 uppercase tracking-widest text-sm">
+        <p className="text-foreground/70 font-mono mt-3 uppercase tracking-widest text-xs md:text-sm">
           Drag to rotate the 3D gallery
         </p>
       </div>

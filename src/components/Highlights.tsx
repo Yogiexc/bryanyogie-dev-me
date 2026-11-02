@@ -47,8 +47,8 @@ export default function Highlights() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-32 px-6 md:px-24 bg-[#0d1717] border-y border-mint/15 relative z-10">
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+    <section ref={containerRef} className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-[#0d1717] border-y border-mint/15 relative z-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {highlights.map((item, index) => (
           <div
             key={index}
