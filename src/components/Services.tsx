@@ -71,27 +71,28 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-32 px-6 md:px-12 lg:px-24 bg-background relative overflow-hidden">
+    <section ref={containerRef} className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-background relative overflow-hidden">
       {/* Decorative background flare */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="flex flex-col md:flex-row gap-12 md:gap-24 mb-20 relative z-10">
-        <div className="md:w-1/2">
-          <h2 ref={titleRef} className="text-5xl md:text-7xl font-outfit font-black tracking-tighter uppercase text-white leading-tight">
-            Ready to Build. <br />
-            <span className="text-mint pb-2">
-              Ready to Impact.
-            </span>
-          </h2>
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row gap-12 md:gap-24 mb-20 relative z-10">
+          <div className="md:w-1/2">
+            <h2 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-outfit font-black tracking-tighter uppercase text-white leading-tight text-balance">
+              Ready to Build. <br />
+              <span className="text-mint pb-2">
+                Ready to Impact.
+              </span>
+            </h2>
+          </div>
+          <div className="md:w-1/2 flex items-center">
+            <p className="text-base sm:text-lg md:text-xl text-white/70 leading-relaxed font-outfit border-l-2 border-accent/50 pl-6 text-balance">
+              Currently seeking an <strong>internship opportunity</strong> for the upcoming semester and open to freelance collaborations. I bring a blend of strong software engineering principles and a practical, problem-solving mindset to every team I join. Let's create something profitable and impactful.
+            </p>
+          </div>
         </div>
-        <div className="md:w-1/2 flex items-center">
-          <p className="text-lg md:text-xl text-white/70 leading-relaxed font-outfit border-l-2 border-accent/50 pl-6">
-            Currently seeking an <strong>internship opportunity</strong> for the upcoming semester and open to freelance collaborations. I bring a blend of strong software engineering principles and a practical, problem-solving mindset to every team I join. Let's create something profitable and impactful.
-          </p>
-        </div>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
         {services.map((service, index) => (
           <div
             key={index}
@@ -121,6 +122,7 @@ export default function Services() {
         >
           Hire Me for Internship
         </a>
+      </div>
       </div>
     </section>
   );
