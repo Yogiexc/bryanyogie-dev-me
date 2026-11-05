@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# agent skills and local configs
+.agents/
+
 # local testing and experiments
 /experiments/
 /.image_backup_local/
@@ -47,6 +50,9 @@ lh-*.json
 next-env.d.ts
 
 .vercel
+
+# agent skills and local configs
+.agents/
 
 # local testing and experiments
 /experiments/
