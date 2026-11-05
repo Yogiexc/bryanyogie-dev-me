@@ -54,36 +54,25 @@ export default function StickyScrollStory() {
   return (
     <section 
       ref={containerRef} 
-      className="relative w-full bg-[#090f0f] py-28 md:py-36 px-6 md:px-12 lg:px-24 border-t border-mint/20 overflow-hidden" 
+      className="relative w-full bg-[#090F0F] py-24 md:py-32 px-6 md:px-12 lg:px-24 border-t border-[#182A2A] overflow-hidden" 
       id="about"
     >
-      {/* Subtle Background Glows */}
-      <div className="absolute top-1/4 -left-40 w-96 h-96 bg-mint/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-40 w-96 h-96 bg-flare/5 rounded-full blur-[140px] pointer-events-none" />
-      <div 
-        className="absolute inset-0 opacity-10 pointer-events-none"
-        style={{
-          backgroundImage: "radial-gradient(#b9f5d8 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
-      />
-
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="story-header mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-mint/20 pb-8">
+        <div className="story-header mb-14 md:mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#182A2A] pb-8">
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-flare animate-ping" />
-              <span className="font-mono text-xs uppercase tracking-widest text-mint font-semibold flex items-center gap-1.5">
-                <Sparkles size={13} className="text-flare" /> Engineering Biography & Philosophy
+              <span className="w-2 h-2 rounded-full bg-[#FF7043] inline-block" />
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#B9F5D8] font-semibold flex items-center gap-1.5">
+                Engineering Biography & Philosophy
               </span>
             </div>
-            <h2 className="text-4xl md:text-7xl font-outfit font-black uppercase text-[#f4f0e8] tracking-tighter leading-[0.9]">
-              BEHIND <span className="text-mint">THE</span> CODE
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-outfit font-black uppercase text-[#F4F0E8] tracking-tight leading-[0.95]">
+              BEHIND <span className="text-[#B9F5D8]">THE</span> CODE
             </h2>
           </div>
-          <p className="text-[#f4f0e8]/70 font-mono text-xs md:text-sm max-w-md leading-relaxed">
+          <p className="text-[#F4F0E8]/70 font-sans text-sm md:text-base max-w-md leading-relaxed">
             Bridging hardware network infrastructure with high-scale fullstack web architectures and quantitative systems.
           </p>
         </div>
@@ -92,21 +81,19 @@ export default function StickyScrollStory() {
         <div className="bento-grid grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
           {/* 1. Main Manifesto Hero Card (Large 2-col) */}
-          <div className="bento-card md:col-span-2 lg:col-span-2 bg-[#121f1f] rounded-3xl border border-mint/25 p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-mint/50 transition-all duration-500 shadow-xl">
-            <div className="absolute -right-12 -bottom-12 w-64 h-64 bg-mint/10 rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700" />
-            
+          <div className="bento-card md:col-span-2 lg:col-span-2 bg-[#142424] rounded-2xl border border-[#182A2A] hover:border-[#B9F5D8]/40 p-7 md:p-9 flex flex-col justify-between relative overflow-hidden transition-all duration-300 shadow-md">
             <div>
               <div className="flex items-center justify-between mb-6">
-                <span className="font-mono text-xs text-mint uppercase tracking-widest font-bold px-3 py-1 rounded-full bg-mint/10 border border-mint/30">
+                <span className="font-mono text-[11px] text-[#B9F5D8] uppercase tracking-widest font-bold px-3 py-1 rounded-full bg-[#B9F5D8]/10 border border-[#B9F5D8]/20">
                   01 // ORIGIN & SNAPSHOT
                 </span>
-                <span className="text-xs font-mono text-flare font-bold">UNS SURAKARTA</span>
+                <span className="text-xs font-mono text-[#FF7043] font-bold">UNS SURAKARTA</span>
               </div>
-              <h3 className="text-2xl md:text-3xl font-outfit font-black text-[#f4f0e8] mb-4 tracking-tight leading-snug">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-outfit font-black text-[#F4F0E8] mb-4 tracking-tight leading-snug">
                 Where Hardware Meets Modern Distributed Software.
               </h3>
-              <p className="text-[#f4f0e8]/75 font-sans text-sm md:text-base leading-relaxed mb-6">
-                Currently pursuing <strong className="text-mint font-semibold">Informatics Engineering</strong> at Universitas Sebelas Maret (UNS). My journey started deep in Computer & Network Engineering (TKJ), configuring physical routers, crimping cables, and designing topology before writing my first line of production code.
+              <p className="text-[#F4F0E8]/75 font-sans text-sm sm:text-base leading-relaxed mb-6">
+                Currently pursuing <strong className="text-[#B9F5D8] font-semibold">Informatics Engineering</strong> at Universitas Sebelas Maret (UNS). My journey started deep in Computer & Network Engineering (TKJ), configuring physical routers, crimping cables, and designing topology before writing my first line of production code.
               </p>
             </div>
 
@@ -128,7 +115,7 @@ export default function StickyScrollStory() {
           {/* 2. Visual Photo Feature Card (TKJ Hardware Roots) */}
           <div className="bento-card md:col-span-1 lg:col-span-2 bg-[#142424] rounded-3xl border border-mint/20 overflow-hidden relative group hover:border-mint/50 transition-all duration-500 min-h-[300px] shadow-xl">
             <Image 
-              src="/image/pkltkj.jpg" 
+              src="/image/pkltkj.webp" 
               alt="Hardware Networking Roots" 
               fill 
               className="object-cover filter brightness-70 group-hover:brightness-90 group-hover:scale-105 transition-all duration-700" 

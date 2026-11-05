@@ -4,14 +4,23 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 export default function AuroraBackground() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const blob1Ref = useRef<HTMLDivElement>(null);
   const blob2Ref = useRef<HTMLDivElement>(null);
   const blob3Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Smooth, slow moving blobs to simulate Aurora effect
+    // Respect user's reduced motion preference
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    let tween1: gsap.core.Tween;
+    let tween2: gsap.core.Tween;
+    let tween3: gsap.core.Tween;
+
     const ctx = gsap.context(() => {
-      gsap.to(blob1Ref.current, {
+      tween1 = gsap.to(blob1Ref.current, {
         x: "30vw",
         y: "20vh",
         duration: 20,
@@ -20,7 +29,7 @@ export default function AuroraBackground() {
         ease: "sine.inOut",
       });
 
-      gsap.to(blob2Ref.current, {
+      tween2 = gsap.to(blob2Ref.current, {
         x: "-40vw",
         y: "30vh",
         duration: 25,
@@ -29,7 +38,7 @@ export default function AuroraBackground() {
         ease: "sine.inOut",
       });
 
-      gsap.to(blob3Ref.current, {
+      tween3 = gsap.to(blob3Ref.current, {
         x: "20vw",
         y: "-30vh",
         duration: 30,
@@ -37,26 +46,48 @@ export default function AuroraBackground() {
         yoyo: true,
         ease: "sine.inOut",
       });
-    });
+    }, containerRef);
 
-    return () => ctx.revert();
+    // Pause heavy blur animation when offscreen
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          tween1?.play();
+          tween2?.play();
+          tween3?.play();
+        } else {
+          tween1?.pause();
+          tween2?.pause();
+          tween3?.pause();
+        }
+      },
+      { rootMargin: "100px" }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+      ctx.revert();
+    };
   }, []);
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 mix-blend-screen opacity-50">
+    <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none z-0 opacity-40">
       <div 
         ref={blob1Ref}
-        className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-[#182a2a]/60 blur-[120px]"
+        className="absolute top-[-10%] left-[-10%] w-[45vw] h-[45vw] rounded-full bg-[#182a2a]/70 blur-[90px]"
       />
       <div 
         ref={blob2Ref}
-        className="absolute top-[20%] right-[-10%] w-[55vw] h-[55vw] rounded-full bg-[#b9f5d8]/25 blur-[140px]"
+        className="absolute top-[20%] right-[-10%] w-[45vw] h-[45vw] rounded-full bg-[#b9f5d8]/15 blur-[100px]"
       />
       <div 
         ref={blob3Ref}
-        className="absolute bottom-[-20%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-[#ff7043]/20 blur-[130px]"
+        className="absolute bottom-[-15%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-[#142424]/80 blur-[80px]"
       />
-      <div className="absolute inset-0 bg-background/60 backdrop-blur-[40px]" />
     </div>
   );
 }

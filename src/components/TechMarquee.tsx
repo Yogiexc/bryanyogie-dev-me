@@ -22,6 +22,11 @@ export default function TechMarquee() {
   useEffect(() => {
     if (!marqueeRef.current) return;
 
+    // Respect reduced motion
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
     const marquee = marqueeRef.current;
     
     // We duplicate the content to make it seamless
@@ -43,7 +48,24 @@ export default function TechMarquee() {
       container.addEventListener("mouseleave", handleMouseLeave);
     }
 
+    // Pause animation when offscreen
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          tl.play();
+        } else {
+          tl.pause();
+        }
+      },
+      { rootMargin: "100px" }
+    );
+
+    if (container) {
+      observer.observe(container);
+    }
+
     return () => {
+      observer.disconnect();
       if (container) {
         container.removeEventListener("mouseenter", handleMouseEnter);
         container.removeEventListener("mouseleave", handleMouseLeave);

@@ -12,33 +12,29 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer ref={containerRef} className="relative w-full bg-[#090f0f] pt-24 pb-12 px-6 md:px-12 lg:px-24 border-t border-mint/20" id="contact">
+    <footer ref={containerRef} className="relative w-full bg-[#090F0F] pt-20 md:pt-28 pb-12 px-6 md:px-12 lg:px-24 border-t border-[#182A2A]" id="contact">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col items-center text-center mb-24 md:mb-32">
-          <h2 className="text-4xl sm:text-6xl md:text-8xl lg:text-[7vw] font-outfit font-black tracking-tighter uppercase leading-[0.95] text-[#f4f0e8] mb-10 max-w-5xl text-balance">
-            Let’s build something <span className="text-flare italic">unforgettable.</span>
+        <div className="flex flex-col items-center text-center mb-20 md:mb-28">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl lg:text-[6.5vw] font-outfit font-black tracking-tight uppercase leading-[0.98] text-[#F4F0E8] mb-8 max-w-5xl text-balance">
+            Let’s build something <span className="text-[#FF7043] italic font-serif">unforgettable.</span>
           </h2>
           
           <a 
             href="mailto:bryanyogie@student.uns.ac.id"
-            className="group flex items-center gap-3 md:gap-4 bg-mint text-cinder px-7 py-3.5 md:px-12 md:py-6 rounded-full font-outfit font-black text-lg md:text-2xl hover:bg-flare hover:text-white transition-all duration-300 shadow-[0_0_30px_rgba(185,245,216,0.3)] hover:shadow-[0_0_40px_rgba(255,112,67,0.5)]"
-            data-cursor-hover="true"
+            className="group flex items-center gap-3 bg-[#B9F5D8] text-[#090F0F] px-8 py-4 sm:px-10 sm:py-5 rounded-full font-outfit font-bold text-base sm:text-xl hover:bg-[#FF7043] hover:text-white transition-colors duration-300 shadow-lg min-h-[48px]"
           >
             Get in touch
-            <ArrowUpRight className="group-hover:rotate-45 transition-transform duration-300 w-6 h-6 md:w-8 md:h-8" />
+            <ArrowUpRight className="group-hover:rotate-45 transition-transform duration-300 w-5 h-5 sm:w-6 sm:h-6" />
           </a>
         </div>
 
-        <div className="w-full h-[1px] bg-mint/20 mb-8 relative overflow-hidden">
-          {/* Animated accent gradient line */}
-          <div className="absolute top-0 left-0 h-full w-1/3 bg-gradient-to-r from-transparent via-mint to-transparent animate-pulse" />
-        </div>
+        <div className="w-full h-[1px] bg-[#182A2A] mb-8 relative" />
 
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-[#f4f0e8]/60 font-mono text-xs sm:text-sm">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-[#F4F0E8]/60 font-mono text-xs sm:text-sm">
           <div className="flex items-center gap-6">
-            <a href="https://github.com/Yogiexc" target="_blank" rel="noreferrer" className="hover:text-mint transition-colors">GitHub</a>
-            <a href="https://www.linkedin.com/in/bryan-yogie-saputra-264306270" target="_blank" rel="noreferrer" className="hover:text-mint transition-colors">LinkedIn</a>
-            <a href="https://instagram.com/yogiexct" target="_blank" rel="noreferrer" className="hover:text-mint transition-colors">Instagram</a>
+            <a href="https://github.com/Yogiexc" target="_blank" rel="noreferrer" className="hover:text-[#B9F5D8] transition-colors min-h-[44px] flex items-center">GitHub</a>
+            <a href="https://www.linkedin.com/in/bryan-yogie-saputra-264306270" target="_blank" rel="noreferrer" className="hover:text-[#B9F5D8] transition-colors min-h-[44px] flex items-center">LinkedIn</a>
+            <a href="https://instagram.com/yogiexct" target="_blank" rel="noreferrer" className="hover:text-[#B9F5D8] transition-colors min-h-[44px] flex items-center">Instagram</a>
           </div>
           
           <div className="flex items-center gap-2 text-center">
@@ -46,8 +42,8 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-mint animate-pulse" />
-            <span className="text-mint font-semibold">Available for freelance</span>
+            <span className="w-2 h-2 rounded-full bg-[#B9F5D8]" />
+            <span className="text-[#B9F5D8] font-semibold">Available for collaboration</span>
           </div>
         </div>
       </div>

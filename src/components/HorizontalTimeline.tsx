@@ -33,19 +33,21 @@ export default function HorizontalTimeline() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+
+    const isMobile = window.innerWidth < 768;
     
+    // On desktop, pin and horizontal scroll. On mobile, allow standard responsive flow or pinned with auto height
     if (sectionRef.current && containerRef.current) {
       const containerWidth = containerRef.current.scrollWidth;
       const windowWidth = window.innerWidth;
       
-      // Horizontal scroll animation
-      gsap.to(containerRef.current, {
+      const pinTrigger = gsap.to(containerRef.current, {
         x: () => -(containerWidth - windowWidth),
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: () => `+=${containerWidth}`,
+          end: () => `+=${containerWidth * (isMobile ? 1.2 : 0.9)}`,
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,
@@ -61,41 +63,36 @@ export default function HorizontalTimeline() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="h-screen w-full bg-[#090f0f] border-t border-mint/15 overflow-hidden flex flex-col justify-center relative">
-      <div className="absolute top-12 md:top-20 left-6 md:left-24">
-        <h2 className="text-3xl md:text-6xl font-outfit font-black uppercase tracking-tighter text-[#f4f0e8]">
-          My <span className="text-mint">Journey</span>
+    <section ref={sectionRef} className="h-screen min-h-[640px] w-full bg-[#090F0F] border-t border-[#182A2A] overflow-hidden flex flex-col justify-center relative">
+      <div className="absolute top-8 sm:top-12 md:top-20 left-6 md:left-24 z-10">
+        <h2 className="text-3xl sm:text-4xl md:text-6xl font-outfit font-black uppercase tracking-tight text-[#F4F0E8]">
+          My <span className="text-[#B9F5D8]">Journey</span>
         </h2>
       </div>
 
-      <div ref={containerRef} className="flex h-1/2 items-center px-6 md:px-24 gap-8 md:gap-32 w-max mt-16 md:mt-10">
+      <div ref={containerRef} className="flex h-auto items-center px-6 md:px-24 gap-6 sm:gap-10 md:gap-24 w-max mt-20 sm:mt-16 md:mt-10">
         {timelineEvents.map((event, index) => (
-          <div key={index} className="flex flex-col w-[260px] sm:w-[320px] md:w-[450px] relative">
-            {/* Timeline line */}
-            <div className="absolute top-8 left-0 w-[150%] h-[2px] bg-mint/30 -z-10" />
-            
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-4 h-4 rounded-full bg-flare relative shadow-[0_0_12px_rgba(255,112,67,0.8)]">
-                <div className="absolute inset-0 bg-flare rounded-full animate-ping opacity-75" />
-              </div>
-              <span className="text-flare font-mono text-xl font-bold">{event.year}</span>
+          <div key={index} className="flex flex-col w-[280px] sm:w-[340px] md:w-[420px] bg-[#142424] border border-[#182A2A] rounded-2xl p-6 sm:p-8 relative shrink-0 shadow-md">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#FF7043]" />
+              <span className="text-[#FF7043] font-mono text-lg font-bold">{event.year}</span>
             </div>
             
-            <h3 className="text-2xl md:text-4xl font-outfit font-black text-[#f4f0e8] mb-4">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-outfit font-bold text-[#F4F0E8] mb-3 leading-snug">
               {event.title}
             </h3>
             
-            <p className="text-[#f4f0e8]/70 text-base md:text-lg leading-relaxed font-sans">
+            <p className="text-[#F4F0E8]/70 text-xs sm:text-sm md:text-base leading-relaxed font-sans">
               {event.description}
             </p>
           </div>
         ))}
-        {/* Empty space at the end so the last item isn't flush against the screen edge */}
-        <div className="w-[10vw]"></div>
+        {/* Empty space at the end so the last card isn't cut off */}
+        <div className="w-[15vw] sm:w-[10vw]"></div>
       </div>
       
       {/* Decorative large background text */}
-      <div className="absolute -bottom-10 left-0 text-[15vw] font-outfit font-black text-mint/5 whitespace-nowrap pointer-events-none select-none">
+      <div className="absolute -bottom-10 left-0 text-[14vw] font-outfit font-black text-[#142424]/40 whitespace-nowrap pointer-events-none select-none">
         TIMELINE
       </div>
     </section>
