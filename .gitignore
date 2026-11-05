@@ -36,8 +36,20 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local testing and experiments
+/experiments/
+/.image_backup_local/
+lh-*.json
+
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 
 .vercel
+
+# local testing and experiments
+/experiments/
+/.image_backup_local/
+lh-*.json
+
