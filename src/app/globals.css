@@ -83,3 +83,337 @@ body {
 .uppercase-text-shadow {
   text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 4px 20px rgba(0,0,0,0.8);
 }
+
+/* -------------------------------------------------------------
+   ANATOMY ISO SHADING STYLES (Cinder Mint Palette Adapted)
+   ------------------------------------------------------------- */
+.iso {
+  --anatomy-page: #090F0F;
+  --anatomy-card: #0E1A1A;
+  --anatomy-text: #F4F0E8;
+  --anatomy-strong: #F4F0E8;
+  --anatomy-muted: #8E9E9E;
+  --anatomy-paper: #121F1F;
+  --anatomy-face: #182C2C;
+  --anatomy-top: #223D3D;
+  --anatomy-shade-0: #0C1616;
+  --anatomy-shade-1: #101C1C;
+  --anatomy-shade-2: #142424;
+  --anatomy-shade-3: #182B2B;
+  --anatomy-lit-top: #2D5252;
+  --anatomy-lit-shade: #1E3737;
+  --anatomy-hi: #B9F5D8;
+  --anatomy-mid: #7E9E9E;
+  --anatomy-lo: #304E4E;
+  --anatomy-faint: #1D3232;
+  --anatomy-lit: #F4F0E8;
+  --anatomy-halo: #040909;
+  --anatomy-halo-opacity: 0.85;
+  --anatomy-dot: #B9F5D8;
+  --anatomy-red: #FF7043;
+  --anatomy-green: #B9F5D8;
+  --anatomy-blue: #64B5F6;
+  --anatomy-weight: 0.85px;
+  --anatomy-ease: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.iso-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.iso-svg path,
+.iso-svg circle,
+.iso-svg polygon,
+.iso-svg line {
+  vector-effect: non-scaling-stroke;
+}
+.iso-fill {
+  fill: var(--anatomy-paper);
+  stroke: none;
+}
+.iso-solid[data-lit] > .iso-fill {
+  fill: var(--anatomy-face);
+}
+.iso-shade,
+.iso-top {
+  stroke: none;
+}
+.iso-shade[data-shade="0"] {
+  fill: var(--anatomy-shade-0);
+}
+.iso-shade[data-shade="1"] {
+  fill: var(--anatomy-shade-1);
+}
+.iso-shade[data-shade="2"] {
+  fill: var(--anatomy-shade-2);
+}
+.iso-shade[data-shade="3"] {
+  fill: var(--anatomy-shade-3);
+}
+.iso-top {
+  fill: var(--anatomy-top);
+}
+.iso-solid[data-lit] > .iso-top {
+  fill: var(--anatomy-lit-top);
+}
+.iso-solid[data-lit] > .iso-shade {
+  fill: var(--anatomy-lit-shade);
+}
+.iso-solid[data-lit] > .iso-edge {
+  stroke: var(--anatomy-lit);
+}
+.iso-halo {
+  fill: var(--anatomy-halo);
+  stroke: none;
+  filter: blur(10px);
+  opacity: var(--anatomy-halo-opacity);
+  transform: translateY(4px);
+}
+.iso-line {
+  fill: none;
+  stroke: var(--anatomy-lo);
+  stroke-width: var(--anatomy-weight);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.iso-line[data-tone="hi"] {
+  stroke: var(--anatomy-hi);
+}
+.iso-line[data-tone="mid"] {
+  stroke: var(--anatomy-mid);
+}
+.iso-line[data-tone="lo"] {
+  stroke: var(--anatomy-lo);
+}
+.iso-line[data-tone="faint"] {
+  stroke: var(--anatomy-faint);
+}
+.iso-line[data-tone="lit"] {
+  stroke: var(--anatomy-lit);
+}
+.iso-line[data-tone="red"] {
+  stroke: var(--anatomy-red);
+}
+.iso-line[data-tone="green"] {
+  stroke: var(--anatomy-green);
+}
+.iso-line[data-crease] {
+  stroke: var(--anatomy-lo);
+}
+.iso-dots circle {
+  fill: var(--anatomy-dot);
+  stroke: none;
+  opacity: 0.6;
+}
+.iso-dots[data-tone="hi"] circle {
+  opacity: 0.95;
+}
+.iso-dots[data-tone="mid"] circle {
+  opacity: 0.7;
+}
+.iso-dots[data-tone="faint"] circle {
+  opacity: 0.35;
+}
+.iso-dots[data-tone="lo"] circle {
+  opacity: 0.45;
+}
+
+/* =========================================================================
+   PHASE 11.3: PHYSICAL MATERIAL PALETTES (Solid, Recognizable Surfaces)
+   ========================================================================= */
+
+/* 1. Bedplate Machined Metal Surface */
+.mat-bedplate > .iso-fill { fill: #101E1E; }
+.mat-bedplate > .iso-top { fill: #1D3333; }
+.mat-bedplate > .iso-shade[data-shade="0"] { fill: #0B1414; }
+.mat-bedplate > .iso-shade[data-shade="1"] { fill: #0E1A1A; }
+.mat-bedplate > .iso-shade[data-shade="2"] { fill: #122222; }
+.mat-bedplate > .iso-shade[data-shade="3"] { fill: #172A2A; }
+
+/* 2. Heavy Machine Steel / Feet / Tools */
+.mat-machine-steel > .iso-fill { fill: #1E2828; }
+.mat-machine-steel > .iso-top { fill: #364949; }
+.mat-machine-steel > .iso-shade[data-shade="0"] { fill: #151D1D; }
+.mat-machine-steel > .iso-shade[data-shade="1"] { fill: #1A2323; }
+.mat-machine-steel > .iso-shade[data-shade="2"] { fill: #222E2E; }
+.mat-machine-steel > .iso-shade[data-shade="3"] { fill: #2C3C3C; }
+
+/* 3. Sub-Pads (Terraces for each quadrant) */
+.mat-pad-garage > .iso-fill { fill: #162424; }
+.mat-pad-garage > .iso-top { fill: #253D3D; }
+.mat-pad-garage > .iso-shade { fill: #101A1A; }
+
+.mat-pad-aviary > .iso-fill { fill: #202A24; }
+.mat-pad-aviary > .iso-top { fill: #2E3D35; }
+.mat-pad-aviary > .iso-shade { fill: #161D19; }
+
+.mat-pad-garden > .iso-fill { fill: #182822; }
+.mat-pad-garden > .iso-top { fill: #263D34; }
+.mat-pad-garden > .iso-shade { fill: #121E19; }
+
+.mat-pad-aquarium > .iso-fill { fill: #14242A; }
+.mat-pad-aquarium > .iso-top { fill: #203A43; }
+.mat-pad-aquarium > .iso-shade { fill: #0E1B20; }
+
+/* 4. THE RIDE: Yamaha Fino Grande Matte Red */
+.mat-fino-red > .iso-fill { fill: #821E19; }
+.mat-fino-red > .iso-top { fill: #D9453B; }
+.mat-fino-red > .iso-shade[data-shade="0"] { fill: #5A1410; }
+.mat-fino-red > .iso-shade[data-shade="1"] { fill: #701A15; }
+.mat-fino-red > .iso-shade[data-shade="2"] { fill: #92221C; }
+.mat-fino-red > .iso-shade[data-shade="3"] { fill: #B52D25; }
+.mat-fino-red > .iso-edge { stroke: #FF7B72 !important; }
+
+/* 5. THE RIDE: Stitched Brown Leather Saddle */
+.mat-leather > .iso-fill { fill: #5D3A29; }
+.mat-leather > .iso-top { fill: #9E6B4F; }
+.mat-leather > .iso-shade[data-shade="0"] { fill: #3A241A; }
+.mat-leather > .iso-shade[data-shade="1"] { fill: #4E3022; }
+.mat-leather > .iso-shade[data-shade="2"] { fill: #6B432F; }
+.mat-leather > .iso-shade[data-shade="3"] { fill: #83523B; }
+.mat-leather > .iso-edge { stroke: #D4A373 !important; }
+
+/* 6. Chrome & Polished Metal */
+.mat-chrome > .iso-fill { fill: #90A4AE; }
+.mat-chrome > .iso-top { fill: #ECEFF1; }
+.mat-chrome > .iso-shade[data-shade="0"] { fill: #455A64; }
+.mat-chrome > .iso-shade[data-shade="1"] { fill: #607D8B; }
+.mat-chrome > .iso-shade[data-shade="2"] { fill: #78909C; }
+.mat-chrome > .iso-shade[data-shade="3"] { fill: #B0BEC5; }
+.mat-chrome > .iso-edge { stroke: #FFFFFF !important; }
+
+/* 7. Rubber Tires */
+.mat-tire > .iso-fill { fill: #111414; }
+.mat-tire > .iso-top { fill: #2B3030; }
+.mat-tire > .iso-shade[data-shade="0"] { fill: #0A0C0C; }
+.mat-tire > .iso-shade[data-shade="1"] { fill: #141717; }
+.mat-tire > .iso-shade[data-shade="2"] { fill: #1C2020; }
+.mat-tire > .iso-shade[data-shade="3"] { fill: #242929; }
+
+/* 8. THE GARDEN: Terracotta Baked Clay */
+.mat-terracotta > .iso-fill { fill: #9C4B2E; }
+.mat-terracotta > .iso-top { fill: #D96B43; }
+.mat-terracotta > .iso-shade[data-shade="0"] { fill: #682F1D; }
+.mat-terracotta > .iso-shade[data-shade="1"] { fill: #7E3C25; }
+.mat-terracotta > .iso-shade[data-shade="2"] { fill: #A24E31; }
+.mat-terracotta > .iso-shade[data-shade="3"] { fill: #BD5D3A; }
+.mat-terracotta > .iso-edge { stroke: #FF9B71 !important; }
+
+/* 9. Rich Soil */
+.mat-soil > .iso-fill { fill: #241A14; }
+.mat-soil > .iso-top { fill: #423026; }
+.mat-soil > .iso-shade { fill: #1C1410; }
+
+/* 10. Monstera Natural Green Foliage */
+.mat-foliage > .iso-fill { fill: #1B5E38; }
+.mat-foliage > .iso-top { fill: #43A047; }
+.mat-foliage > .iso-shade[data-shade="0"] { fill: #0D3820; }
+.mat-foliage > .iso-shade[data-shade="1"] { fill: #134B2C; }
+.mat-foliage > .iso-shade[data-shade="2"] { fill: #206E42; }
+.mat-foliage > .iso-shade[data-shade="3"] { fill: #2E8B57; }
+.mat-foliage > .iso-edge { stroke: #81C784 !important; }
+
+.mat-foliage-dark > .iso-fill { fill: #0E331E; }
+.mat-foliage-dark > .iso-top { fill: #1F5A37; }
+.mat-foliage-dark > .iso-shade { fill: #0A2415; }
+
+/* 11. Copper Watering Can */
+.mat-copper > .iso-fill { fill: #9E5936; }
+.mat-copper > .iso-top { fill: #D98254; }
+.mat-copper > .iso-shade { fill: #753F24; }
+.mat-copper > .iso-edge { stroke: #FFB38A !important; }
+
+/* 12. THE AVIARY: Warm Natural Turned Wood */
+.mat-warm-wood > .iso-fill { fill: #6B492B; }
+.mat-warm-wood > .iso-top { fill: #A67448; }
+.mat-warm-wood > .iso-shade[data-shade="0"] { fill: #452E1B; }
+.mat-warm-wood > .iso-shade[data-shade="1"] { fill: #543922; }
+.mat-warm-wood > .iso-shade[data-shade="2"] { fill: #755030; }
+.mat-warm-wood > .iso-shade[data-shade="3"] { fill: #8F623B; }
+.mat-warm-wood > .iso-edge { stroke: #DEB887 !important; }
+
+/* 13. Aviary Sand Floor */
+.mat-sand > .iso-fill { fill: #524734; }
+.mat-sand > .iso-top { fill: #8A7B61; }
+.mat-sand > .iso-shade { fill: #3D3527; }
+
+/* 14. Songbird Golden/Warm Plumage */
+.mat-songbird > .iso-fill { fill: #B87C14; }
+.mat-songbird > .iso-top { fill: #F5B041; }
+.mat-songbird > .iso-shade[data-shade="0"] { fill: #7D5208; }
+.mat-songbird > .iso-shade[data-shade="1"] { fill: #9E6A0D; }
+.mat-songbird > .iso-shade[data-shade="2"] { fill: #C98A19; }
+.mat-songbird > .iso-shade[data-shade="3"] { fill: #E5A124; }
+.mat-songbird > .iso-edge { stroke: #FAD7A0 !important; }
+
+/* 15. THE AQUARIUM: Rimless Ultra-Clear Glass Tank */
+.mat-glass-tank > .iso-fill { fill: #1A3E47; opacity: 0.25; }
+.mat-glass-tank > .iso-top { fill: #64D2E6; opacity: 0.35; }
+.mat-glass-tank > .iso-shade { fill: #133038; opacity: 0.28; }
+.mat-glass-tank > .iso-edge { stroke: #A7F3D0 !important; stroke-width: 1px !important; }
+
+/* 16. Aquarium Water Volume */
+.mat-aqua-water > .iso-fill { fill: #007791; opacity: 0.45; }
+.mat-aqua-water > .iso-top { fill: #4DD0E1; opacity: 0.55; }
+.mat-aqua-water > .iso-shade { fill: #004D61; opacity: 0.48; }
+
+/* 17. Dark Aquasoil Substrate */
+.mat-aquasoil > .iso-fill { fill: #141717; }
+.mat-aquasoil > .iso-top { fill: #2C3333; }
+.mat-aquasoil > .iso-shade { fill: #0F1212; }
+
+/* 18. Seiryu Stone Cluster */
+.mat-stone > .iso-fill { fill: #37474F; }
+.mat-stone > .iso-top { fill: #607D8B; }
+.mat-stone > .iso-shade[data-shade="0"] { fill: #1E272C; }
+.mat-stone > .iso-shade[data-shade="1"] { fill: #263238; }
+.mat-stone > .iso-shade[data-shade="2"] { fill: #455A64; }
+.mat-stone > .iso-shade[data-shade="3"] { fill: #546E7A; }
+.mat-stone > .iso-edge { stroke: #90A4AE !important; }
+
+/* 19. Neon Tetra Fish */
+.mat-tetra > .iso-fill { fill: #0288D1; }
+.mat-tetra > .iso-top { fill: #E53935; }
+.mat-tetra > .iso-shade { fill: #01579B; }
+.mat-tetra > .iso-edge { stroke: #FF8A80 !important; }
+
+/* 20. Lit White / Lamp */
+.mat-lit-white > .iso-fill { fill: #E0F2F1; }
+.mat-lit-white > .iso-top { fill: #FFFFFF; }
+.mat-lit-white > .iso-shade { fill: #B2DFDB; }
+.mat-lit-white > .iso-edge { stroke: #FFFFFF !important; }
+
+/* 21. PHASE 11.4: RETRO GARAGE ARCHITECTURAL MATERIALS */
+.mat-garage-concrete > .iso-fill { fill: #131B1B; }
+.mat-garage-concrete > .iso-top { fill: #1E2B2B; }
+.mat-garage-concrete > .iso-shade[data-shade="0"] { fill: #0D1313; }
+.mat-garage-concrete > .iso-shade[data-shade="1"] { fill: #111717; }
+.mat-garage-concrete > .iso-shade[data-shade="2"] { fill: #161F1F; }
+.mat-garage-concrete > .iso-shade[data-shade="3"] { fill: #1C2727; }
+
+.mat-workshop-wall > .iso-fill { fill: #0E1616; }
+.mat-workshop-wall > .iso-top { fill: #172424; }
+.mat-workshop-wall > .iso-shade { fill: #0A1010; }
+
+.mat-tool-wood > .iso-fill { fill: #4E331E; }
+.mat-tool-wood > .iso-top { fill: #7A5333; }
+.mat-tool-wood > .iso-shade[data-shade="0"] { fill: #2E1E12; }
+.mat-tool-wood > .iso-shade[data-shade="1"] { fill: #3A2617; }
+.mat-tool-wood > .iso-shade[data-shade="2"] { fill: #523720; }
+.mat-tool-wood > .iso-shade[data-shade="3"] { fill: #66452B; }
+.mat-tool-wood > .iso-edge { stroke: #A07248 !important; }
+
+.mat-warm-lamp > .iso-fill { fill: #FFB74D; }
+.mat-warm-lamp > .iso-top { fill: #FFE082; }
+.mat-warm-lamp > .iso-shade { fill: #FFA726; }
+.mat-warm-lamp > .iso-edge { stroke: #FFF9C4 !important; }
+
+.iso-contact-shadow {
+  fill: #040808;
+  opacity: 0.75;
+  filter: blur(4px);
+}
+
+
