@@ -19,23 +19,36 @@ export default function Hero() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const tl = gsap.timeline({ delay: 0.2 });
 
-    tl.fromTo(
+    // Respect reduced motion: no entrance displacement
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      gsap.set([subtitleRef.current, title1Ref.current, title2Ref.current, scrollHintRef.current], {
+        opacity: 1,
+        y: 0,
+      });
+      return;
+    }
+
+    const isMobile = window.innerWidth < 768;
+
+    // Non-blocking instant paint: start at full visibility so LCP registers immediately
+    gsap.fromTo(
       [subtitleRef.current, title1Ref.current, title2Ref.current],
-      { y: 100, opacity: 0 },
+      { y: isMobile ? 8 : 20, opacity: 1 },
       {
         y: 0,
         opacity: 1,
-        duration: 1,
-        stagger: 0.15,
-        ease: "power4.out",
+        duration: isMobile ? 0.3 : 0.5,
+        stagger: 0.04,
+        ease: "power2.out",
       }
-    ).fromTo(
+    );
+
+    gsap.fromTo(
       scrollHintRef.current,
-      { opacity: 0, y: -20 },
-      { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
-      "-=0.5"
+      { opacity: 0, y: -10 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", delay: 0.2 }
     );
 
     // Parallax effect on scroll
@@ -63,15 +76,15 @@ export default function Hero() {
         <div className="w-full lg:w-3/5 mt-10 lg:mt-0 hero-content pointer-events-none flex flex-col justify-center h-auto lg:h-full flex-1">
           <p
             ref={subtitleRef}
-            className="text-mint font-mono text-sm md:text-base uppercase tracking-widest mb-4 opacity-0 flex items-center gap-2"
+            className="text-mint font-mono text-xs sm:text-sm md:text-base uppercase tracking-[0.2em] mb-4 flex items-center gap-2 will-change-transform"
           >
-            <span className="w-2 h-2 rounded-full bg-flare animate-ping inline-block" />
+            <span className="w-2 h-2 rounded-full bg-flare inline-block" />
             Informatics Engineering • Network & Web Developer
           </p>
           <div className="relative">
             <h1
               ref={title1Ref}
-              className="text-5xl md:text-7xl lg:text-[5vw] xl:text-[6vw] font-outfit font-black tracking-tighter leading-none text-foreground opacity-0 uppercase"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-[5vw] xl:text-[5.5vw] font-outfit font-black tracking-tight leading-none text-[#F4F0E8] uppercase will-change-transform"
             >
               <GlitchText text="BRYAN YOGIE" />
             </h1>
@@ -79,8 +92,7 @@ export default function Hero() {
           <div className="relative mt-2">
             <h1
               ref={title2Ref}
-              className="text-5xl md:text-7xl lg:text-[5vw] xl:text-[6vw] font-outfit font-black tracking-tighter leading-none text-mint opacity-0 uppercase pb-6"
-              style={{ WebkitTextStroke: "1px rgba(185,245,216,0.3)" }}
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-[5vw] xl:text-[5.5vw] font-outfit font-black tracking-tight leading-none text-[#B9F5D8] uppercase pb-4 will-change-transform"
             >
               <GlitchText text="SAPUTRA" />
             </h1>
