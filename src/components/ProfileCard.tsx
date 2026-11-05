@@ -75,15 +75,16 @@ export default function ProfileCard() {
               pixelDuration={350}
               firstContent={
                 <Image
-                  src="/image/profil.jpg"
+                  src="/image/profil.webp"
                   alt="Profile Picture"
                   fill
+                  priority
                   className="object-cover"
                 />
               }
               secondContent={
                 <Image
-                  src="/image/aku_dipantai.png"
+                  src="/image/aku_dipantai.webp"
                   alt="Profile Picture Alternate"
                   fill
                   className="object-cover"

@@ -15,7 +15,7 @@ const curatedProjects = [
     color: "#b9f5d8",
     badge: "Public Sector Tech",
     tags: ["Next.js", "Fullstack", "PostgreSQL", "Tailwind CSS"],
-    image: "/image/projek/SiPandai.png",
+    image: "/image/projek/SiPandai.webp",
     url: "https://github.com/Yogiexc/SIPANDAI---Sistem-Pintar-Ekosistem-Desa",
   },
   {
@@ -27,7 +27,7 @@ const curatedProjects = [
     color: "#ff7043",
     badge: "Production Monorepo",
     tags: ["Next.js App Router", "NestJS API", "Prisma", "TypeScript"],
-    image: "/image/projek/Journova.png",
+    image: "/image/projek/Journova.webp",
     url: "https://github.com/Yogiexc/Journova",
   },
   {
@@ -39,7 +39,7 @@ const curatedProjects = [
     color: "#b9f5d8",
     badge: "Quant Automation",
     tags: ["Python 3", "MetaTrader 5", "Algorithmic Trading", "Telegram Bot API"],
-    image: "/image/projek/botTrading.png",
+    image: "/image/projek/botTrading.webp",
     url: "https://github.com/Yogiexc/SemiAutoTrade_byBYS",
   },
   {
@@ -51,7 +51,7 @@ const curatedProjects = [
     color: "#ff7043",
     badge: "Client Service",
     tags: ["Next.js", "React", "Mobile First", "Vercel"],
-    image: "/image/projek/Iky-Barber.png",
+    image: "/image/projek/Iky-Barber.webp",
     url: "https://github.com/Yogiexc/iky_barbershop",
   },
 ];
@@ -112,35 +112,37 @@ export default function FeaturedWorks() {
 
             <div className="flex flex-col md:w-1/2">
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-accent font-mono text-xs tracking-widest uppercase">
+                <span className="text-[#FF7043] font-mono text-xs tracking-widest uppercase font-semibold">
                   {project.id} // {project.category}
                 </span>
-                <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full border border-mint/40 bg-mint/10 text-mint font-semibold">
+                <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full border border-[#B9F5D8]/30 bg-[#B9F5D8]/10 text-[#B9F5D8] font-semibold">
                   {project.badge}
                 </span>
               </div>
-              <h3 className="text-3xl md:text-5xl lg:text-6xl font-outfit font-black mb-2 group-hover:pl-3 group-hover:text-mint transition-all duration-300">
+              <h3 className="text-2xl sm:text-4xl md:text-5xl font-outfit font-black mb-2 group-hover:text-[#B9F5D8] transition-colors duration-200">
                 {project.title}
               </h3>
-              <h4 className="text-lg md:text-xl font-outfit text-white/80 mb-4 group-hover:pl-3 transition-all duration-300">
+              <h4 className="text-base sm:text-lg font-outfit text-[#F4F0E8]/80 mb-4 transition-colors duration-200">
                 {project.subtitle}
               </h4>
-              <p className="text-[#f4f0e8]/70 md:w-4/5 text-base md:text-lg leading-relaxed mb-6 font-sans">
+              <p className="text-[#F4F0E8]/70 md:w-4/5 text-sm sm:text-base leading-relaxed mb-6 font-sans">
                 {project.description}
               </p>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag, tIdx) => (
-                  <span key={tIdx} className="text-xs font-mono text-[#f4f0e8]/60 bg-[#142424] px-3 py-1 rounded-lg border border-mint/15">
+                  <span key={tIdx} className="text-xs font-mono text-[#F4F0E8]/60 bg-[#142424] px-3 py-1 rounded-lg border border-[#182A2A]">
                     #{tag}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="md:w-5/12 h-[260px] md:h-[380px] w-full mt-8 md:mt-0 bg-[#142424] rounded-2xl overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-500 flex items-center justify-center border border-mint/25 shadow-xl">
+            <div className="md:w-5/12 h-[240px] sm:h-[280px] md:h-[340px] w-full mt-6 md:mt-0 bg-[#142424] rounded-2xl overflow-hidden relative group-hover:scale-[1.01] transition-transform duration-300 flex items-center justify-center border border-[#182A2A] shadow-lg">
               <img 
                 src={project.image} 
                 alt={project.title} 
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover filter brightness-75 group-hover:brightness-95 group-hover:scale-105 transition-all duration-700" 
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#090f0f] via-transparent to-transparent opacity-80" />

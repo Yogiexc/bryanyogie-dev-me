@@ -7,18 +7,18 @@ import DriftWall from "@/components/DriftWall";
 import ImageTrail from "@/components/ImageTrail";
 
 const photos = [
-  { id: 1, title: "University Life", span: "col-span-1 md:col-span-2 row-span-2", color: "#3b82f6", src: "/image/dikampus.jpg" },
-  { id: 2, title: "Late Night Coding", span: "col-span-1 row-span-1", color: "#8b5cf6", src: "/image/malam.png" },
-  { id: 3, title: "Office / Freelance", span: "col-span-1 row-span-1", color: "#10b981", src: "/image/bordir.jpg" },
-  { id: 4, title: "Networking Lab", span: "col-span-1 md:col-span-2 row-span-1", color: "#f59e0b", src: "/image/pkltkj.jpg" },
-  { id: 5, title: "Achievement", span: "col-span-1 row-span-1", color: "#ef4444", src: "/image/akudapatpenghargaan.png" },
-  { id: 6, title: "PBL at Kodegiri", span: "col-span-1 row-span-1", color: "#eab308", src: "/image/ditempatPBL_kodegiri.png" },
-  { id: 7, title: "Group Project", span: "col-span-1 row-span-1", color: "#14b8a6", src: "/image/dokumentasi_saat ngerjain tugas bareng.png" },
-  { id: 8, title: "Campus Competition", span: "col-span-1 row-span-1", color: "#a855f7", src: "/image/lombadikampus.png" },
-  { id: 9, title: "Lecture with Mr. Fiddin", span: "col-span-1 row-span-1", color: "#3b82f6", src: "/image/matkul_pakFiddin.png" },
-  { id: 10, title: "Coding at Shelter", span: "col-span-1 row-span-1", color: "#10b981", src: "/image/ngoding-diShelter_manahan.png" },
-  { id: 11, title: "Hardware / IoT", span: "col-span-1 row-span-1", color: "#f59e0b", src: "/image/nyetingIOT_arduinoUNO.png" },
-  { id: 12, title: "Chilling at Beach", span: "col-span-1 row-span-1", color: "#0ea5e9", src: "/image/aku_dipantai.png" },
+  { id: 1, title: "University Life", span: "col-span-1 md:col-span-2 row-span-2", color: "#3b82f6", src: "/image/dikampus.webp" },
+  { id: 2, title: "Late Night Coding", span: "col-span-1 row-span-1", color: "#8b5cf6", src: "/image/malam.webp" },
+  { id: 3, title: "Office / Freelance", span: "col-span-1 row-span-1", color: "#10b981", src: "/image/bordir.webp" },
+  { id: 4, title: "Networking Lab", span: "col-span-1 md:col-span-2 row-span-1", color: "#f59e0b", src: "/image/pkltkj.webp" },
+  { id: 5, title: "Achievement", span: "col-span-1 row-span-1", color: "#ef4444", src: "/image/akudapatpenghargaan.webp" },
+  { id: 6, title: "PBL at Kodegiri", span: "col-span-1 row-span-1", color: "#eab308", src: "/image/ditempatPBL_kodegiri.webp" },
+  { id: 7, title: "Group Project", span: "col-span-1 row-span-1", color: "#14b8a6", src: "/image/dokumentasi_saat_ngerjain_tugas_bareng.webp" },
+  { id: 8, title: "Campus Competition", span: "col-span-1 row-span-1", color: "#a855f7", src: "/image/lombadikampus.webp" },
+  { id: 9, title: "Lecture with Mr. Fiddin", span: "col-span-1 row-span-1", color: "#3b82f6", src: "/image/matkul_pakFiddin.webp" },
+  { id: 10, title: "Coding at Shelter", span: "col-span-1 row-span-1", color: "#10b981", src: "/image/ngoding-diShelter_manahan.webp" },
+  { id: 11, title: "Hardware / IoT", span: "col-span-1 row-span-1", color: "#f59e0b", src: "/image/nyetingIOT_arduinoUNO.webp" },
+  { id: 12, title: "Chilling at Beach", span: "col-span-1 row-span-1", color: "#0ea5e9", src: "/image/aku_dipantai.webp" },
 ];
 
 export default function PhotoGallery() {
