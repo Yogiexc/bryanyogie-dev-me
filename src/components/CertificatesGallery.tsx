@@ -3,15 +3,15 @@
 import CircularGallery from "./CircularGallery";
 
 const certificateItems = [
-  { image: "/image/sertif/AWS_Academy_Graduate_Cloud_Developing_BryanYogieSaputra_page-0001.jpg", text: "AWS Cloud" },
-  { image: "/image/sertif/AWS_Academy_Graduate___Machine_Learning_Foundations_BryanYogieSaputra_page-0001.jpg", text: "AWS ML" },
-  { image: "/image/sertif/Exploring_IoT_with_Cisco_Packet_Tracer_certificate_bryanyogie-student-uns-ac-id.jpg", text: "Cisco IoT" },
-  { image: "/image/sertif/Getting_Started_with_Cisco_Packet_Tracer_certificate_bryanyogie-student-uns-ac-id.jpg", text: "Cisco Packet Tracer" },
-  { image: "/image/sertif/HTML_Essentials_certificate_bryanyogie-student-uns-ac-id.jpg", text: "HTML Essentials" },
-  { image: "/image/sertif/Introduction_to_IoT_certificate_bryanyogie-student-uns-ac-id.jpg", text: "Intro to IoT" },
-  { image: "/image/sertif/JavaScript_Essentials_1_certificate_bryanyogie-student-uns-ac-id.jpg", text: "JS Essentials 1" },
-  { image: "/image/sertif/JavaScript_Essentials_2_certificate_bryanyogie-student-uns-ac-id.jpg", text: "JS Essentials 2" },
-  { image: "/image/sertif/_certificate_bryanyogie-student-uns-ac-id.jpg", text: "Certificate" }
+  { image: "/image/sertif/AWS_Academy_Graduate_Cloud_Developing_BryanYogieSaputra_page-0001.webp", text: "AWS Cloud" },
+  { image: "/image/sertif/AWS_Academy_Graduate___Machine_Learning_Foundations_BryanYogieSaputra_page-0001.webp", text: "AWS ML" },
+  { image: "/image/sertif/Exploring_IoT_with_Cisco_Packet_Tracer_certificate_bryanyogie-student-uns-ac-id.webp", text: "Cisco IoT" },
+  { image: "/image/sertif/Getting_Started_with_Cisco_Packet_Tracer_certificate_bryanyogie-student-uns-ac-id.webp", text: "Cisco Packet Tracer" },
+  { image: "/image/sertif/HTML_Essentials_certificate_bryanyogie-student-uns-ac-id.webp", text: "HTML Essentials" },
+  { image: "/image/sertif/Introduction_to_IoT_certificate_bryanyogie-student-uns-ac-id.webp", text: "Intro to IoT" },
+  { image: "/image/sertif/JavaScript_Essentials_1_certificate_bryanyogie-student-uns-ac-id.webp", text: "JS Essentials 1" },
+  { image: "/image/sertif/JavaScript_Essentials_2_certificate_bryanyogie-student-uns-ac-id.webp", text: "JS Essentials 2" },
+  { image: "/image/sertif/_certificate_bryanyogie-student-uns-ac-id.webp", text: "Certificate" }
 ];
 
 export default function CertificatesGallery() {
