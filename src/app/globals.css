@@ -480,5 +480,30 @@ body {
   transition: fill 0.3s ease;
 }
 
+/* 28. Aquatic Ripple Tank / Fluid & Glass */
+.mat-water-liquid > .iso-fill { fill: #113B38; }
+.mat-water-liquid > .iso-top { fill: #1D5450; }
+.mat-water-liquid > .iso-shade { fill: #0B2927; }
+.mat-water-liquid > .iso-edge { stroke: #3DC49F !important; stroke-width: 0.65px !important; }
+
+.mat-glass-edge > .iso-fill { fill: transparent; }
+.mat-glass-edge > .iso-top { fill: rgba(185, 245, 216, 0.08); }
+.mat-glass-edge > .iso-edge { stroke: #68AFA0 !important; stroke-width: 0.85px !important; }
+
+.iso-water-ripple {
+  fill: none;
+  stroke: #B9F5D8;
+  stroke-width: 0.85px;
+  opacity: 0.65;
+  animation: pulseRipple 2.4s ease-out infinite;
+}
+
+@keyframes pulseRipple {
+  0% { transform: scale(0.96); opacity: 0.2; }
+  50% { transform: scale(1.02); opacity: 0.8; }
+  100% { transform: scale(0.96); opacity: 0.2; }
+}
+
+
 
 

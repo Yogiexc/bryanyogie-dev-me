@@ -32,6 +32,12 @@ interface WorldDioramaProps {
   clockStr: string;
   catPetCount: number;
   onPetCat: () => void;
+  arcadeClicks?: number;
+  onArcadePlay?: () => void;
+  rippleClicks?: number;
+  onTriggerRipple?: () => void;
+  dialAngle?: number;
+  onRotateDial?: () => void;
 }
 
 export default function WorldDiorama({
@@ -48,6 +54,12 @@ export default function WorldDiorama({
   clockStr,
   catPetCount,
   onPetCat,
+  arcadeClicks = 0,
+  onArcadePlay,
+  rippleClicks = 0,
+  onTriggerRipple,
+  dialAngle = 45,
+  onRotateDial,
 }: WorldDioramaProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const parts = workstationData.parts as WorkstationPart[];
@@ -99,6 +111,18 @@ export default function WorldDiorama({
       }
       if (pid === "companion-cat") {
         onPetCat();
+        return;
+      }
+      if (pid === "arcade-cabinet-body" || pid === "arcade-base") {
+        onArcadePlay?.();
+        return;
+      }
+      if (pid === "ripple-tank-aquarium") {
+        onTriggerRipple?.();
+        return;
+      }
+      if (pid === "turning-dial-unit") {
+        onRotateDial?.();
         return;
       }
     }
@@ -160,7 +184,10 @@ export default function WorldDiorama({
           const isClickable =
             part.id === "architectural-lamp" ||
             part.id === "companion-cat" ||
-            part.id === "keyboard-keys";
+            part.id === "keyboard-keys" ||
+            part.id === "arcade-cabinet-body" ||
+            part.id === "ripple-tank-aquarium" ||
+            part.id === "turning-dial-unit";
           return (
             <g
               key={part.id}

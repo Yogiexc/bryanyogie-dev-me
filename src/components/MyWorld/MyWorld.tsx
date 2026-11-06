@@ -72,9 +72,24 @@ export default function MyWorld() {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [clockStr, setClockStr] = useState<string>("15:48:00");
   const [catPetCount, setCatPetCount] = useState<number>(0);
+  const [arcadeScore, setArcadeScore] = useState<number>(1280);
+  const [rippleWave, setRippleWave] = useState<number>(0);
+  const [dialDeg, setDialDeg] = useState<number>(45);
 
   const stageRef = useRef<HTMLDivElement>(null);
   const startTimeRef = useRef<number | null>(null);
+
+  const handleArcadePlay = () => {
+    setArcadeScore((s) => s + 100);
+  };
+
+  const handleTriggerRipple = () => {
+    setRippleWave((w) => w + 1);
+  };
+
+  const handleRotateDial = () => {
+    setDialDeg((d) => (d + 30) % 360);
+  };
 
   // Live digital clock on the smartphone
   useEffect(() => {
@@ -332,15 +347,25 @@ export default function MyWorld() {
             clockStr={clockStr}
             catPetCount={catPetCount}
             onPetCat={handlePetCat}
+            arcadeClicks={arcadeScore}
+            onArcadePlay={handleArcadePlay}
+            rippleClicks={rippleWave}
+            onTriggerRipple={handleTriggerRipple}
+            dialAngle={dialDeg}
+            onRotateDial={handleRotateDial}
           />
 
           {/* Bottom Technical Readout Bar (Exact Reference Footer) */}
           <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-[#182A2A]/80 text-xs font-mono text-[#F4F0E8]/60">
             <div>
-              <span className="text-[#B9F5D8]">keyboard.layout</span> = &quot;65%&quot;{" "}
-              <span className="text-[#F4F0E8]/40">// type on it · click lamp or cat</span>
+              <span className="text-[#B9F5D8]">studio.space</span> = &quot;all-in-one&quot;{" "}
+              <span className="text-[#F4F0E8]/40">// arcade · 65% keyboard · aquarium · dial</span>
             </div>
             <div className="flex items-center gap-3 text-[#F4F0E8]/80">
+              <span className="text-[#3DC49F]">score: {arcadeScore}</span>
+              <span className="text-[#F4F0E8]/30">·</span>
+              <span className="text-[#B9F5D8]">dial: {dialDeg}°</span>
+              <span className="text-[#F4F0E8]/30">·</span>
               <span>{wpm > 0 ? `${wpm} wpm` : "— wpm"}</span>
               <span className="text-[#F4F0E8]/30">·</span>
               <span className="text-[#FF7043]">key: {lastKeyName}</span>
