@@ -416,4 +416,69 @@ body {
   filter: blur(4px);
 }
 
+/* =========================================================================
+   PHASE 12: INTERACTIVE WORKSTATION DESK RIG MATERIALS (Studio Keffi / Anatomy Style)
+   ========================================================================= */
+
+/* 22. Desk Surface & Frame (Crisp Technical Slate & Mint-Tinted Ivory) */
+.mat-desk-surface > .iso-fill { fill: #182929; }
+.mat-desk-surface > .iso-top { fill: #243B3B; }
+.mat-desk-surface > .iso-shade[data-shade="0"] { fill: #0E1919; }
+.mat-desk-surface > .iso-shade[data-shade="1"] { fill: #122020; }
+.mat-desk-surface > .iso-shade[data-shade="2"] { fill: #172828; }
+.mat-desk-surface > .iso-shade[data-shade="3"] { fill: #1D3131; }
+.mat-desk-surface > .iso-edge { stroke: #648888 !important; }
+
+.mat-desk-frame > .iso-fill { fill: #132020; }
+.mat-desk-frame > .iso-top { fill: #1F3333; }
+.mat-desk-frame > .iso-shade { fill: #0D1717; }
+.mat-desk-frame > .iso-edge { stroke: #486868 !important; }
+
+/* 23. Mechanical Keycaps & Monitor Housing (Bone White / Technical Ivory) */
+.mat-keycap-light > .iso-fill { fill: #C8C4BA; }
+.mat-keycap-light > .iso-top { fill: #F4F0E8; }
+.mat-keycap-light > .iso-shade[data-shade="0"] { fill: #8E8B82; }
+.mat-keycap-light > .iso-shade[data-shade="1"] { fill: #A3A096; }
+.mat-keycap-light > .iso-shade[data-shade="2"] { fill: #B8B4AA; }
+.mat-keycap-light > .iso-shade[data-shade="3"] { fill: #DBD7CD; }
+.mat-keycap-light > .iso-edge { stroke: #5A6B6B !important; stroke-width: 0.7px !important; }
+
+/* 24. Accent Mechanical Keycaps (Esc & Enter — Flare Orange) */
+.mat-keycap-accent > .iso-fill { fill: #C84B28; }
+.mat-keycap-accent > .iso-top { fill: #FF7043; }
+.mat-keycap-accent > .iso-shade[data-shade="0"] { fill: #872E15; }
+.mat-keycap-accent > .iso-shade[data-shade="1"] { fill: #A3391C; }
+.mat-keycap-accent > .iso-shade[data-shade="2"] { fill: #C24725; }
+.mat-keycap-accent > .iso-shade[data-shade="3"] { fill: #E05A34; }
+.mat-keycap-accent > .iso-edge { stroke: #FFAB91 !important; stroke-width: 0.75px !important; }
+
+/* 25. Active / Pressed Keycap Highlight */
+.ws-key {
+  cursor: pointer;
+  transition: filter 0.08s ease-out;
+}
+.ws-key[data-pressed="true"] > .iso-solid > .iso-top {
+  fill: #B9F5D8 !important;
+}
+.ws-key[data-pressed="true"] > .iso-solid > .iso-edge {
+  stroke: #B9F5D8 !important;
+  stroke-width: 1.1px !important;
+}
+
+/* 26. Companion Orange Cat (Warm Low-Poly Ginger Tabby) */
+.mat-cat-orange > .iso-fill { fill: #C2591A; }
+.mat-cat-orange > .iso-top { fill: #F58231; }
+.mat-cat-orange > .iso-shade[data-shade="0"] { fill: #7D360B; }
+.mat-cat-orange > .iso-shade[data-shade="1"] { fill: #994310; }
+.mat-cat-orange > .iso-shade[data-shade="2"] { fill: #B85216; }
+.mat-cat-orange > .iso-shade[data-shade="3"] { fill: #D96B27; }
+.mat-cat-orange > .iso-edge { stroke: #FFAB73 !important; }
+
+/* 27. Monitor & Smartphone Screen Surfaces */
+.ws-screen-bg {
+  fill: #070D0D;
+  transition: fill 0.3s ease;
+}
+
+
 
