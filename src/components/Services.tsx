@@ -71,23 +71,30 @@ export default function Services() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-background relative overflow-hidden">
-      {/* Decorative background flare */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none" />
+    <section ref={containerRef} className="py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-[#090F0F] relative overflow-hidden border-t border-[#182A2A]" id="services">
+      {/* Editorial Studio backdrop accents */}
+      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#B9F5D8]/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 left-10 w-[400px] h-[400px] bg-[#FF7043]/5 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row gap-12 md:gap-24 mb-20 relative z-10">
+        <div className="flex flex-col md:flex-row gap-12 md:gap-20 mb-20 relative z-10 border-b border-[#182A2A] pb-14">
           <div className="md:w-1/2">
-            <h2 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-outfit font-black tracking-tighter uppercase text-white leading-tight text-balance">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="w-2 h-2 rounded-full bg-[#B9F5D8] inline-block" />
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#B9F5D8] font-semibold">
+                04 // Professional Capabilities & Impact
+              </span>
+            </div>
+            <h2 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-outfit font-black tracking-tight uppercase text-[#F4F0E8] leading-[0.95]">
               Ready to Build. <br />
-              <span className="text-mint pb-2">
+              <span className="text-[#B9F5D8]">
                 Ready to Impact.
               </span>
             </h2>
           </div>
           <div className="md:w-1/2 flex items-center">
-            <p className="text-base sm:text-lg md:text-xl text-white/70 leading-relaxed font-outfit border-l-2 border-accent/50 pl-6 text-balance">
-              Currently seeking an <strong>internship opportunity</strong> for the upcoming semester and open to freelance collaborations. I bring a blend of strong software engineering principles and a practical, problem-solving mindset to every team I join. Let's create something profitable and impactful.
+            <p className="text-base sm:text-lg md:text-xl text-[#F4F0E8]/75 leading-relaxed font-sans border-l-2 border-[#FF7043]/60 pl-6">
+              Currently seeking an <strong className="text-[#B9F5D8] font-semibold">internship opportunity</strong> for the upcoming semester and open to selective freelance collaborations. I combine robust software architecture with practical, metric-driven execution.
             </p>
           </div>
         </div>
@@ -96,31 +103,49 @@ export default function Services() {
         {services.map((service, index) => (
           <div
             key={index}
-            className={`service-card group p-10 rounded-3xl bg-white/[0.03] border border-white/10 hover:bg-white/[0.05] transition-all duration-500 ${service.borderColor} overflow-hidden relative`}
+            className={`service-card group p-8 md:p-10 rounded-2xl bg-[#142424] border border-[#182A2A] hover:border-[#B9F5D8]/50 transition-all duration-500 shadow-[0_15px_35px_rgba(0,0,0,0.5)] overflow-hidden relative flex flex-col justify-between`}
           >
             {/* Hover Gradient Background */}
             <div className={`absolute inset-0 bg-gradient-to-b ${service.color} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`} />
             
             <div className="relative z-10">
-              {service.icon}
-              <h3 className="text-2xl font-outfit font-bold text-white mb-4">
+              <div className="flex items-center justify-between mb-8">
+                <div className="p-3.5 rounded-xl bg-[#182A2A] border border-[#B9F5D8]/20 group-hover:border-[#B9F5D8]/50 transition-colors">
+                  {service.icon}
+                </div>
+                <span className="font-mono text-xs text-[#F4F0E8]/40">0{index + 1}</span>
+              </div>
+              <h3 className="text-2xl font-outfit font-black text-[#F4F0E8] mb-4 tracking-tight">
                 {service.title}
               </h3>
-              <p className="text-white/60 leading-relaxed">
+              <p className="text-[#F4F0E8]/70 leading-relaxed font-sans text-sm md:text-base">
                 {service.description}
               </p>
+            </div>
+
+            <div className="relative z-10 mt-8 pt-4 border-t border-[#182A2A] flex items-center justify-between text-xs font-mono text-[#B9F5D8]">
+              <span>// DEPLOYMENT READY</span>
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
             </div>
           </div>
         ))}
       </div>
       
       {/* Call to action button */}
-      <div className="mt-20 flex justify-center">
+      <div className="mt-20 flex flex-col sm:flex-row items-center justify-center gap-4">
         <a 
           href="#contact" 
-          className="px-8 py-4 rounded-full bg-white text-background font-outfit font-bold tracking-wide uppercase hover:bg-accent hover:text-white transition-colors duration-300 transform hover:scale-105 active:scale-95"
+          className="px-8 py-4 rounded-full bg-[#B9F5D8] text-[#090F0F] font-outfit font-black tracking-wider uppercase hover:bg-[#FF7043] hover:text-[#F4F0E8] transition-colors duration-300 shadow-[0_10px_30px_rgba(185,245,216,0.3)] active:scale-95"
         >
           Hire Me for Internship
+        </a>
+        <a 
+          href="https://github.com/Yogiexc" 
+          target="_blank"
+          rel="noreferrer"
+          className="px-8 py-4 rounded-full bg-[#142424] text-[#F4F0E8] border border-[#182A2A] hover:border-[#B9F5D8]/40 font-mono text-xs uppercase tracking-widest transition-colors duration-300"
+        >
+          View GitHub Archive ↗
         </a>
       </div>
       </div>

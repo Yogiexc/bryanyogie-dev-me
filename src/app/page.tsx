@@ -35,25 +35,6 @@ const CertificatesGallery = dynamic(() => import("@/components/CertificatesGalle
   ),
 });
 
-const VirtualOffice = dynamic(() => import("@/components/VirtualOffice"), {
-  ssr: false,
-  loading: () => (
-    <section className="relative w-full py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-[#090f0f] border-t border-mint/20 overflow-hidden">
-      <div className="max-w-7xl mx-auto flex flex-col items-center justify-center py-24 text-center">
-        <div className="w-14 h-14 rounded-2xl bg-mint/10 border border-mint/30 flex items-center justify-center mb-4">
-          <div className="w-6 h-6 border-2 border-mint border-t-transparent rounded-full animate-spin" />
-        </div>
-        <h3 className="text-2xl md:text-3xl font-outfit font-black uppercase text-white mb-2">
-          Connecting to BYS 3D Virtual Office
-        </h3>
-        <p className="text-mint font-mono text-xs tracking-widest uppercase animate-pulse">
-          STREAMING VOXEL AGENTS & THREE.JS SHADER ENGINE...
-        </p>
-      </div>
-    </section>
-  ),
-});
-
 export default function Home() {
   const [showLoader, setShowLoader] = useState(true);
 
@@ -79,7 +60,6 @@ export default function Home() {
         <Highlights />
         <MyWorld />
         <CertificatesGallery />
-        <VirtualOffice />
         <Footer />
       </div>
     </main>

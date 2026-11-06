@@ -179,15 +179,12 @@ export default function WorldDiorama({
           pointerEvents="none"
         />
 
-        {/* Render all 28 depth-sorted 3D solid groups */}
+        {/* Render all depth-sorted 3D solid groups */}
         {parts.map((part) => {
           const isClickable =
             part.id === "architectural-lamp" ||
             part.id === "companion-cat" ||
-            part.id === "keyboard-keys" ||
-            part.id === "arcade-cabinet-body" ||
-            part.id === "ripple-tank-aquarium" ||
-            part.id === "turning-dial-unit";
+            part.id === "keyboard-keys";
           return (
             <g
               key={part.id}
