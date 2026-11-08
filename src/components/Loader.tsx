@@ -5,10 +5,8 @@ import gsap from "gsap";
 
 export default function Loader({ onComplete }: { onComplete: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
+  const curtainRef = useRef<HTMLDivElement>(null);
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     // Respect reduced motion: finish immediately
@@ -17,76 +15,34 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
       return;
     }
 
-    const isMobile = window.innerWidth < 768;
+    const obj = { val: 0 };
     const tl = gsap.timeline({
       onComplete: () => {
         onComplete();
       },
     });
 
-    // 1. Initial State
-    gsap.set(logoRef.current, { opacity: 0, scale: 0.95, y: 10 });
-    gsap.set(titleRef.current, { opacity: 0, y: 12 });
-    gsap.set(subtitleRef.current, { opacity: 0, y: 8 });
-    gsap.set(lineRef.current, { scaleX: 0, opacity: 0 });
-
-    // 2. Crisp & Snappy Editorial Reveal Sequence
-    tl.to(logoRef.current, {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      duration: isMobile ? 0.35 : 0.5,
-      ease: "power2.out",
+    // Fast 0 -> 100% Studio Counter
+    tl.to(obj, {
+      val: 100,
+      duration: 1.1,
+      ease: "power2.inOut",
+      onUpdate: () => {
+        setCounter(Math.floor(obj.val));
+      },
     })
-      .to(
-        titleRef.current,
-        {
-          opacity: 1,
-          y: 0,
-          duration: isMobile ? 0.35 : 0.5,
-          ease: "power2.out",
-        },
-        "-=0.25"
-      )
-      .to(
-        subtitleRef.current,
-        {
-          opacity: 1,
-          y: 0,
-          duration: isMobile ? 0.3 : 0.45,
-          ease: "power2.out",
-        },
-        "-=0.25"
-      )
-      .to(
-        lineRef.current,
-        {
-          scaleX: 1,
-          opacity: 1,
-          duration: isMobile ? 0.45 : 0.6,
-          ease: "power2.inOut",
-        },
-        "-=0.2"
-      )
-      // Smooth fade out
-      .to(
-        [logoRef.current, titleRef.current, subtitleRef.current, lineRef.current],
-        {
-          opacity: 0,
-          duration: isMobile ? 0.25 : 0.35,
-          ease: "power2.in",
-        },
-        "+=0.1"
-      )
-      .to(
-        containerRef.current,
-        {
-          opacity: 0,
-          duration: isMobile ? 0.25 : 0.35,
-          ease: "power2.out",
-        },
-        "-=0.15"
-      )
+      .to(".loader-fade-content", {
+        opacity: 0,
+        y: -15,
+        duration: 0.3,
+        ease: "power2.in",
+      })
+      // Smooth curtain split reveal upwards
+      .to(curtainRef.current, {
+        yPercent: -100,
+        duration: 0.7,
+        ease: "power4.inOut",
+      })
       .to(containerRef.current, {
         display: "none",
         duration: 0.01,
@@ -100,46 +56,41 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[99999] pointer-events-none bg-[#090F0F] flex items-center justify-center p-6 select-none"
+      className="fixed inset-0 z-[99999] pointer-events-none select-none overflow-hidden"
     >
-      {/* Subtle organic ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-96 h-80 sm:h-96 bg-[#182A2A]/40 rounded-full blur-[100px] pointer-events-none" />
+      <div
+        ref={curtainRef}
+        className="w-full h-full bg-[#090F0F] border-b border-[#B9F5D8]/20 flex flex-col justify-between p-8 sm:p-14 relative"
+      >
+        {/* Subtle background ambient halo */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#142424]/40 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="relative z-10 flex flex-col items-center text-center max-w-md w-full">
-        {/* Authentic BYS Brand Mark Logo */}
-        <div
-          ref={logoRef}
-          className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#142424] border border-[#B9F5D8]/20 flex items-center justify-center p-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.5)] mb-6"
-        >
-          <img
-            src="/favicon-32x32.png"
-            alt="BYS Brand Mark"
-            className="w-full h-full object-contain"
-          />
+        {/* Top Header */}
+        <div className="loader-fade-content relative z-10 flex items-center justify-between text-xs font-mono text-[#F4F0E8]/40 tracking-widest uppercase">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-[#B9F5D8] inline-block animate-pulse" />
+            <span className="text-[#F4F0E8]/70">BYS © 2026</span>
+          </div>
+          <span className="hidden sm:inline-block">INFORMATICS &amp; FULLSTACK ARCHITECT</span>
         </div>
 
-        {/* Studio Name Title */}
-        <h1
-          ref={titleRef}
-          className="text-2xl sm:text-3xl font-outfit font-black tracking-tight text-[#F4F0E8] uppercase mb-2"
-        >
-          Bryan Yogie Saputra
-        </h1>
+        {/* Center: Massive Monospaced Studio Counter */}
+        <div className="loader-fade-content relative z-10 flex flex-col items-center justify-center my-auto">
+          <div className="flex items-baseline font-outfit font-black tracking-tighter text-[#F4F0E8] text-7xl sm:text-9xl md:text-[13vw] leading-none">
+            <span>{counter < 10 ? `0${counter}` : counter}</span>
+            <span className="text-2xl sm:text-4xl md:text-5xl font-mono text-[#B9F5D8] ml-2 font-normal">%</span>
+          </div>
+          <div className="flex items-center gap-3 mt-4 text-xs font-mono text-[#F4F0E8]/50 uppercase tracking-[0.25em]">
+            <span>LOADING ARCHIVE</span>
+            <span className="text-[#B9F5D8]">/</span>
+            <span className="text-[#FF7043]">SURAKARTA, ID</span>
+          </div>
+        </div>
 
-        {/* Editorial Subtitle */}
-        <p
-          ref={subtitleRef}
-          className="text-xs sm:text-sm font-mono text-[#F4F0E8]/60 uppercase tracking-[0.25em] mb-8"
-        >
-          Creative Engineering <span className="text-[#B9F5D8]">•</span> Studio
-        </p>
-
-        {/* Minimalist Electric Mint Accent Progress Bar */}
-        <div className="w-36 sm:w-44 h-[2px] bg-[#182A2A] rounded-full overflow-hidden">
-          <div
-            ref={lineRef}
-            className="w-full h-full bg-gradient-to-r from-transparent via-[#B9F5D8] to-transparent origin-center"
-          />
+        {/* Bottom Progress Tracker */}
+        <div className="loader-fade-content relative z-10 flex items-end justify-between border-t border-[#182A2A] pt-4 text-[11px] font-mono text-[#F4F0E8]/40">
+          <span>INITIALIZING INTERACTIVE CANVAS</span>
+          <span className="text-[#B9F5D8]">{counter === 100 ? "READY" : "DECODING"}</span>
         </div>
       </div>
     </div>

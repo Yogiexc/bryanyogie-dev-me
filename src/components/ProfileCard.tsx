@@ -14,22 +14,19 @@ export default function ProfileCard() {
   const mouseY = useMotionValue(0);
 
   // Smooth out the mouse values
-  const springConfig = { damping: 20, stiffness: 300 };
+  const springConfig = { damping: 25, stiffness: 200 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
-  // Map mouse position to rotation values (tilt effect)
-  const rotateX = useTransform(smoothY, [-0.5, 0.5], [15, -15]);
-  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-15, 15]);
+  // Map mouse position to rotation values (subtle 3D tilt)
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], [8, -8]);
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-8, 8]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    
-    // Calculate normalized mouse position from center (-0.5 to 0.5)
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    
     mouseX.set(x);
     mouseY.set(y);
   };
@@ -41,7 +38,7 @@ export default function ProfileCard() {
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-8 lg:p-16">
+    <div className="w-full h-full flex items-center justify-center p-4 [perspective:1000px]">
       <motion.div
         ref={cardRef}
         onMouseMove={handleMouseMove}
@@ -52,74 +49,61 @@ export default function ProfileCard() {
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        className="relative w-full max-w-md aspect-[3/4] rounded-2xl cursor-pointer"
-        whileHover={{ scale: 1.05 }}
+        className="relative w-72 sm:w-80 md:w-96 aspect-[4/5] cursor-pointer group"
+        whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.3 }}
       >
-        {/* Glow effect behind the card */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#ff7043]/40 to-[#b9f5d8]/40 rounded-2xl blur-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        {/* Soft Organic Backlight Aura */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#FF7043]/20 via-[#B9F5D8]/25 to-transparent rounded-[2.5rem] blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
-        {/* Card Content */}
-        <div className="absolute inset-0 bg-[#182a2a]/90 backdrop-blur-xl border border-[#b9f5d8]/20 rounded-2xl overflow-hidden shadow-2xl flex flex-col items-center justify-center p-6">
+        {/* Frameless Editorial Studio Card */}
+        <div className="absolute inset-0 bg-[#121F1F]/90 backdrop-blur-md rounded-[2.5rem] border border-[#B9F5D8]/20 group-hover:border-[#B9F5D8]/50 overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.7)] transition-colors duration-500 flex flex-col justify-between p-6">
           
-          {/* Picture Frame */}
-          <div 
-            className="relative w-48 h-48 sm:w-64 sm:h-64 rounded-full border-4 border-[#b9f5d8]/40 overflow-hidden shadow-[0_0_25px_rgba(185,245,216,0.2)] mb-6"
-            style={{ transform: "translateZ(50px)" }} // Pop out effect
-          >
+          {/* Micro Editorial Header */}
+          <div className="flex items-center justify-between text-[11px] font-mono text-[#F4F0E8]/50 z-20">
+            <span className="flex items-center gap-1.5 text-[#B9F5D8] font-bold">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#B9F5D8] animate-ping" />
+              PORTRAIT // 01
+            </span>
+            <span className="text-[#FF7043] font-semibold text-[10px] tracking-wider">CLICK TO SWAP</span>
+          </div>
+
+          {/* Clean PixelSwap Portrait Photo */}
+          <div className="relative w-full aspect-square my-auto rounded-3xl overflow-hidden border border-[#182A2A] shadow-inner group-hover:border-[#B9F5D8]/30 transition-colors">
             <PixelSwap 
               className="w-full h-full aspect-square cursor-pointer"
               trigger="click"
-              pixelSize={32}
-              duration={900}
-              pixelDuration={350}
+              pixelSize={24}
+              duration={700}
+              pixelDuration={250}
               firstContent={
                 <Image
                   src="/image/profil.webp"
-                  alt="Profile Picture"
+                  alt="Bryan Yogie Portrait"
                   fill
                   priority
-                  className="object-cover"
+                  className="object-cover object-center filter brightness-95 contrast-105 group-hover:scale-105 transition-transform duration-700"
                 />
               }
               secondContent={
                 <Image
                   src="/image/aku_dipantai.webp"
-                  alt="Profile Picture Alternate"
+                  alt="Bryan Yogie Beach Portrait"
                   fill
-                  className="object-cover"
+                  className="object-cover object-center filter brightness-95 contrast-105 group-hover:scale-105 transition-transform duration-700"
                 />
               }
             />
           </div>
 
-          <motion.div 
-            style={{ transform: "translateZ(30px)" }}
-            className="text-center"
-          >
-            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 tracking-tight">
-              Bryan Yogie Saputra
-            </h3>
-            <p className="text-sm sm:text-base text-gray-400 uppercase tracking-widest font-mono">
-              Informatics Engineering
-            </p>
-          </motion.div>
-
-          {/* Decorative Elements */}
-          <div className="absolute top-4 right-4 flex space-x-2">
-            <div className="w-2 h-2 rounded-full bg-red-500/80" />
-            <div className="w-2 h-2 rounded-full bg-yellow-500/80" />
-            <div className="w-2 h-2 rounded-full bg-green-500/80" />
+          {/* Bottom Minimalist Technical Footer */}
+          <div className="z-20 pt-3 border-t border-[#182A2A] flex items-center justify-between font-mono text-xs text-[#F4F0E8]/70">
+            <div>
+              <span className="font-bold text-[#F4F0E8] block tracking-tight">Bryan Yogie Saputra</span>
+              <span className="text-[10px] text-[#B9F5D8] uppercase tracking-wider">Informatics Engineer</span>
+            </div>
+            <span className="text-[10px] text-[#F4F0E8]/40">UNS 2026</span>
           </div>
-
-          <div 
-            className="absolute bottom-4 left-4 right-4 flex justify-between items-end"
-            style={{ transform: "translateZ(20px)" }}
-          >
-            <div className="text-xs font-mono text-white/50">ID: BYS-2026</div>
-            <div className="text-xs font-mono text-white/50">ACCESS: GRANTED</div>
-          </div>
-
         </div>
       </motion.div>
     </div>
