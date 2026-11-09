@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Magnetic from "@/components/Magnetic";
-import LogoBYS from "@/components/LogoBYS";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -39,12 +38,16 @@ export default function Navbar() {
         <Magnetic>
           <Link 
             href="/" 
-            className="group flex items-center gap-3.5 text-white font-outfit font-black text-2xl tracking-widest uppercase transition-colors w-fit"
+            className="group flex items-center gap-3 text-white font-outfit font-black text-2xl tracking-widest uppercase hover:text-accent transition-colors w-fit"
           >
-            <LogoBYS className="w-9 h-9" />
-            <span className="tracking-tight text-xl sm:text-2xl font-black">
-              BYS<span className="text-[#FF7043]">.</span>
-            </span>
+            <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-white/20 shadow-[0_0_15px_rgba(185,245,216,0.3)] group-hover:scale-105 transition-transform">
+              <img 
+                src="/favicon-32x32.png" 
+                alt="BYS Logo" 
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <span>BYS<span className="text-[#FF7043]">.</span></span>
           </Link>
         </Magnetic>
       </div>
