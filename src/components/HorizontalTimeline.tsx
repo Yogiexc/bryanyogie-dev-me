@@ -92,7 +92,7 @@ export default function HorizontalTimeline() {
       </div>
       
       {/* Decorative large background text */}
-      <div className="absolute -bottom-10 left-0 text-[14vw] font-outfit font-black text-[#142424]/40 whitespace-nowrap pointer-events-none select-none">
+      <div aria-hidden="true" className="absolute -bottom-10 left-0 text-[14vw] font-outfit font-black text-[#142424]/40 whitespace-nowrap pointer-events-none select-none">
         TIMELINE
       </div>
     </section>

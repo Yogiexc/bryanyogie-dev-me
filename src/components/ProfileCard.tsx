@@ -82,6 +82,7 @@ export default function ProfileCard() {
                   alt="Bryan Yogie Portrait"
                   fill
                   priority
+                  sizes="(max-width: 640px) 280px, (max-width: 1024px) 340px, 384px"
                   className="object-cover object-center filter brightness-95 contrast-105 group-hover:scale-105 transition-transform duration-700"
                 />
               }
@@ -90,6 +91,7 @@ export default function ProfileCard() {
                   src="/image/aku_dipantai.webp"
                   alt="Bryan Yogie Beach Portrait"
                   fill
+                  sizes="(max-width: 640px) 280px, (max-width: 1024px) 340px, 384px"
                   className="object-cover object-center filter brightness-95 contrast-105 group-hover:scale-105 transition-transform duration-700"
                 />
               }

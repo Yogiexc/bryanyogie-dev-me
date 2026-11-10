@@ -42,8 +42,10 @@ export default function Navbar() {
           >
             <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden bg-[#142424]/80 border border-[#B9F5D8]/20 shadow-[0_0_20px_rgba(185,245,216,0.15)] group-hover:border-[#B9F5D8]/50 group-hover:shadow-[0_0_25px_rgba(185,245,216,0.3)] transition-all duration-300 p-1 flex items-center justify-center">
               <img 
-                src="/android-chrome-192x192.png" 
+                src="/favicon-32x32.png" 
                 alt="BYS Logo" 
+                width={32}
+                height={32}
                 className="w-full h-full object-contain filter brightness-105 contrast-105 group-hover:scale-110 transition-transform duration-300"
               />
             </div>

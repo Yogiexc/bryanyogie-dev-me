@@ -325,9 +325,9 @@ export default function MyWorld() {
           }`}
         >
           {/* Top-Left Subtle Technical Caption inside Card */}
-          <div className="flex items-center justify-between text-[11px] font-mono text-[#F4F0E8]/40 pb-2">
+          <div className="flex items-center justify-between text-[11px] font-mono text-[#F4F0E8]/70 pb-2">
             <span>01 / THE CRAFT WE KEEP</span>
-            <span className="text-[#B9F5D8]/80">
+            <span className="text-[#B9F5D8]">
               {isFocused ? "● KEYBOARD ACTIVE — TYPE NOW" : "○ CLICK DESK TO TYPE"}
             </span>
           </div>
@@ -359,7 +359,7 @@ export default function MyWorld() {
           <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-[#182A2A]/80 text-xs font-mono text-[#F4F0E8]/60">
             <div>
               <span className="text-[#B9F5D8]">keyboard.layout</span> = &quot;65%&quot;{" "}
-              <span className="text-[#F4F0E8]/40">// type on it · click lamp or cat</span>
+              <span className="text-[#F4F0E8]/70">// type on it · click lamp or cat</span>
             </div>
             <div className="flex items-center gap-3 text-[#F4F0E8]/80">
               <span>{wpm > 0 ? `${wpm} wpm` : "— wpm"}</span>

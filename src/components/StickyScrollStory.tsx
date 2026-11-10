@@ -132,6 +132,7 @@ export default function StickyScrollStory() {
               src="/image/pkltkj.webp" 
               alt="Hardware Networking Roots" 
               fill 
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
               className="object-cover filter brightness-[0.72] contrast-105 group-hover:brightness-95 group-hover:scale-105 transition-all duration-700" 
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#090F0F] via-[#090F0F]/50 to-transparent" />
