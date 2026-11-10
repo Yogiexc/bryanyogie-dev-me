@@ -16,8 +16,12 @@ import LenisProvider from "@/components/LenisProvider";
 import CustomCursor from "@/components/CustomCursor";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://bryanyogie.is-a.dev"),
   title: "BYS | Bryan Yogie Saputra — Build Your Story",
   description: "Personal Portfolio & Creative Space of Bryan Yogie Saputra. Informatics Engineering Student, Network & Fullstack Developer.",
+  alternates: {
+    canonical: "https://bryanyogie.is-a.dev",
+  },
   icons: {
     icon: [
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
