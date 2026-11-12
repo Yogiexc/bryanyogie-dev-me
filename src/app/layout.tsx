@@ -24,15 +24,23 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon-32x32.png?v=2", sizes: "32x32", type: "image/png" },
-      { url: "/favicon-16x16.png?v=2", sizes: "16x16", type: "image/png" },
-      { url: "/favicon.ico?v=2" },
+      { url: "/favicon-32x32.png?v=3", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png?v=3", sizes: "16x16", type: "image/png" },
+      { url: "/favicon.ico?v=3" },
     ],
     apple: [
-      { url: "/apple-touch-icon.png?v=2", sizes: "180x180", type: "image/png" },
+      { url: "/apple-touch-icon.png?v=3", sizes: "180x180", type: "image/png" },
     ],
   },
   manifest: "/site.webmanifest",
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Bryan Yogie",
+  "alternateName": ["BYS", "Bryan Yogie Saputra"],
+  "url": "https://bryanyogie.is-a.dev",
 };
 
 export default function RootLayout({
@@ -42,6 +50,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} antialiased dark`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="min-h-screen bg-background text-foreground font-sans selection:bg-primary selection:text-white flex flex-col overflow-x-hidden">
         <div className="noise-bg"></div>
         <CustomCursor />
