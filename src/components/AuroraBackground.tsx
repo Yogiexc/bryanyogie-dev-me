@@ -78,15 +78,15 @@ export default function AuroraBackground() {
     <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none z-0 opacity-40">
       <div 
         ref={blob1Ref}
-        className="absolute top-[-10%] left-[-10%] w-[45vw] h-[45vw] rounded-full bg-[#182a2a]/70 blur-[90px]"
+        className="absolute top-[-10%] left-[-10%] w-[45vw] h-[45vw] rounded-full bg-[#4D354E]/70 blur-[90px]"
       />
       <div 
         ref={blob2Ref}
-        className="absolute top-[20%] right-[-10%] w-[45vw] h-[45vw] rounded-full bg-[#b9f5d8]/15 blur-[100px]"
+        className="absolute top-[20%] right-[-10%] w-[45vw] h-[45vw] rounded-full bg-[#93F1E3]/15 blur-[100px]"
       />
       <div 
         ref={blob3Ref}
-        className="absolute bottom-[-15%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-[#142424]/80 blur-[80px]"
+        className="absolute bottom-[-15%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-[#5C435D]/80 blur-[80px]"
       />
     </div>
   );

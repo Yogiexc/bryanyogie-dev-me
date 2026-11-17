@@ -16,7 +16,7 @@ const certificateItems = [
 
 export default function CertificatesGallery() {
   return (
-    <section className="relative w-full bg-[#090f0f] py-28 md:py-36 border-t border-mint/20 flex flex-col items-center justify-center overflow-hidden" id="certificates">
+    <section className="relative w-full bg-[#6E536F] py-28 md:py-36 border-t border-mint/20 flex flex-col items-center justify-center overflow-hidden" id="certificates">
       <div className="z-10 mb-12 text-center pointer-events-none max-w-4xl px-6">
         <h2 className="text-4xl sm:text-6xl md:text-7xl font-outfit font-black uppercase text-foreground tracking-tighter text-balance">
           My <span className="text-mint">Certifications</span>

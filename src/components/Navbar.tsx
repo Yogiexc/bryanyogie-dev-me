@@ -40,7 +40,7 @@ export default function Navbar() {
             href="/" 
             className="group flex items-center gap-3.5 text-white font-outfit font-black text-2xl tracking-widest uppercase hover:text-accent transition-colors w-fit"
           >
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden bg-[#142424]/80 border border-[#B9F5D8]/20 shadow-[0_0_20px_rgba(185,245,216,0.15)] group-hover:border-[#B9F5D8]/50 group-hover:shadow-[0_0_25px_rgba(185,245,216,0.3)] transition-all duration-300 p-1 flex items-center justify-center">
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden bg-[#5C435D]/80 border border-[#93F1E3]/20 shadow-[0_0_20px_rgba(185,245,216,0.15)] group-hover:border-[#93F1E3]/50 group-hover:shadow-[0_0_25px_rgba(185,245,216,0.3)] transition-all duration-300 p-1 flex items-center justify-center">
               <img 
                 src="/favicon-32x32.png" 
                 alt="BYS Logo" 

@@ -56,22 +56,22 @@ export default function ProfileCard() {
         className="relative w-64 sm:w-72 md:w-80 aspect-[4/5] cursor-pointer group"
       >
         {/* Soft Ambient Backdrop Aura */}
-        <div className="absolute inset-0 bg-[#B9F5D8]/10 rounded-3xl blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 pointer-events-none" />
+        <div className="absolute inset-0 bg-[#93F1E3]/10 rounded-3xl blur-2xl opacity-40 group-hover:opacity-70 transition-opacity duration-500 pointer-events-none" />
 
         {/* Minimalist Precision Studio Card */}
-        <div className="absolute inset-0 bg-[#121F1F]/90 backdrop-blur-md rounded-3xl border border-[#B9F5D8]/15 group-hover:border-[#B9F5D8]/40 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] transition-all duration-300 flex flex-col justify-between p-5">
+        <div className="absolute inset-0 bg-[#5C435D]/90 backdrop-blur-md rounded-3xl border border-[#93F1E3]/15 group-hover:border-[#93F1E3]/40 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] transition-all duration-300 flex flex-col justify-between p-5">
           
           {/* Header Bar */}
-          <div className="flex items-center justify-between text-[11px] font-mono text-[#F4F0E8]/50 z-20">
-            <span className="flex items-center gap-1.5 text-[#B9F5D8] font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#B9F5D8]" />
+          <div className="flex items-center justify-between text-[11px] font-mono text-[#FDF8F0]/50 z-20">
+            <span className="flex items-center gap-1.5 text-[#93F1E3] font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#93F1E3]" />
               ID: BYS-2026
             </span>
             <span className="text-[#FF7043] text-[10px] tracking-wider uppercase font-mono">TAP TO SWAP</span>
           </div>
 
           {/* Portrait Photo Container */}
-          <div className="relative w-full aspect-square my-auto rounded-2xl overflow-hidden border border-[#182A2A] shadow-inner group-hover:border-[#B9F5D8]/25 transition-colors">
+          <div className="relative w-full aspect-square my-auto rounded-2xl overflow-hidden border border-[#4D354E] shadow-inner group-hover:border-[#93F1E3]/25 transition-colors">
             <PixelSwap 
               className="w-full h-full aspect-square cursor-pointer"
               trigger="click"
@@ -101,9 +101,9 @@ export default function ProfileCard() {
           </div>
 
           {/* Footer Bar */}
-          <div className="flex items-center justify-between text-[11px] font-mono text-[#F4F0E8]/60 pt-2 border-t border-[#B9F5D8]/10 z-20">
+          <div className="flex items-center justify-between text-[11px] font-mono text-[#FDF8F0]/60 pt-2 border-t border-[#93F1E3]/10 z-20">
             <span>SURAKARTA</span>
-            <span className="text-[#B9F5D8] text-[10px]">UNS INFORMATICS</span>
+            <span className="text-[#93F1E3] text-[10px]">UNS INFORMATICS</span>
           </div>
 
         </div>

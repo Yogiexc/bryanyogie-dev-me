@@ -60,37 +60,37 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
     >
       <div
         ref={curtainRef}
-        className="w-full h-full bg-[#090F0F] border-b border-[#B9F5D8]/20 flex flex-col justify-between p-8 sm:p-14 relative"
+        className="w-full h-full bg-[#6E536F] border-b border-[#93F1E3]/20 flex flex-col justify-between p-8 sm:p-14 relative"
       >
         {/* Subtle background ambient halo */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#142424]/40 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#5C435D]/40 rounded-full blur-[140px] pointer-events-none" />
 
         {/* Top Header */}
-        <div className="loader-fade-content relative z-10 flex items-center justify-between text-xs font-mono text-[#F4F0E8]/40 tracking-widest uppercase">
+        <div className="loader-fade-content relative z-10 flex items-center justify-between text-xs font-mono text-[#FDF8F0]/40 tracking-widest uppercase">
           <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-[#B9F5D8] inline-block animate-pulse" />
-            <span className="text-[#F4F0E8]/70">BYS © 2026</span>
+            <span className="w-2 h-2 rounded-full bg-[#93F1E3] inline-block animate-pulse" />
+            <span className="text-[#FDF8F0]/70">BYS © 2026</span>
           </div>
           <span className="hidden sm:inline-block">INFORMATICS &amp; FULLSTACK ARCHITECT</span>
         </div>
 
         {/* Center: Massive Monospaced Studio Counter */}
         <div className="loader-fade-content relative z-10 flex flex-col items-center justify-center my-auto">
-          <div className="flex items-baseline font-outfit font-black tracking-tighter text-[#F4F0E8] text-7xl sm:text-9xl md:text-[13vw] leading-none">
+          <div className="flex items-baseline font-outfit font-black tracking-tighter text-[#FDF8F0] text-7xl sm:text-9xl md:text-[13vw] leading-none">
             <span>{counter < 10 ? `0${counter}` : counter}</span>
-            <span className="text-2xl sm:text-4xl md:text-5xl font-mono text-[#B9F5D8] ml-2 font-normal">%</span>
+            <span className="text-2xl sm:text-4xl md:text-5xl font-mono text-[#93F1E3] ml-2 font-normal">%</span>
           </div>
-          <div className="flex items-center gap-3 mt-4 text-xs font-mono text-[#F4F0E8]/50 uppercase tracking-[0.25em]">
+          <div className="flex items-center gap-3 mt-4 text-xs font-mono text-[#FDF8F0]/50 uppercase tracking-[0.25em]">
             <span>LOADING ARCHIVE</span>
-            <span className="text-[#B9F5D8]">/</span>
+            <span className="text-[#93F1E3]">/</span>
             <span className="text-[#FF7043]">SURAKARTA, ID</span>
           </div>
         </div>
 
         {/* Bottom Progress Tracker */}
-        <div className="loader-fade-content relative z-10 flex items-end justify-between border-t border-[#182A2A] pt-4 text-[11px] font-mono text-[#F4F0E8]/40">
+        <div className="loader-fade-content relative z-10 flex items-end justify-between border-t border-[#4D354E] pt-4 text-[11px] font-mono text-[#FDF8F0]/40">
           <span>INITIALIZING INTERACTIVE CANVAS</span>
-          <span className="text-[#B9F5D8]">{counter === 100 ? "READY" : "DECODING"}</span>
+          <span className="text-[#93F1E3]">{counter === 100 ? "READY" : "DECODING"}</span>
         </div>
       </div>
     </div>

@@ -47,17 +47,17 @@ export default function Highlights() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-20 md:py-28 px-6 md:px-12 lg:px-24 bg-[#090F0F] border-y border-[#182A2A] relative z-10">
+    <section ref={containerRef} className="py-20 md:py-28 px-6 md:px-12 lg:px-24 bg-[#6E536F] border-y border-[#4D354E] relative z-10">
       <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {highlights.map((item, index) => (
           <div
             key={index}
-            className="highlight-card bg-[#142424] border border-[#182A2A] rounded-2xl p-4 md:p-8 flex flex-col justify-center items-center text-center aspect-square md:aspect-auto md:h-56 hover:border-[#B9F5D8]/40 transition-colors duration-300 cursor-default shadow-sm"
+            className="highlight-card bg-[#5C435D] border border-[#4D354E] rounded-2xl p-4 md:p-8 flex flex-col justify-center items-center text-center aspect-square md:aspect-auto md:h-56 hover:border-[#93F1E3]/40 transition-colors duration-300 cursor-default shadow-sm"
           >
-            <h4 className="text-[#B9F5D8] font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] mb-2 md:mb-3">
+            <h4 className="text-[#93F1E3] font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] mb-2 md:mb-3">
               {item.label}
             </h4>
-            <p className="text-xl md:text-3xl lg:text-4xl font-outfit font-black text-[#F4F0E8] leading-tight">
+            <p className="text-xl md:text-3xl lg:text-4xl font-outfit font-black text-[#FDF8F0] leading-tight">
               {item.value}
             </p>
           </div>

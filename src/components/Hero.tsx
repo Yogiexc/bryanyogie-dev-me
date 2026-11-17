@@ -68,41 +68,41 @@ export default function Hero() {
           {/* Telemetry Status Bar (Location + Live Clock + Availability) */}
           <div 
             ref={infoBarRef}
-            className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 text-[11px] font-mono tracking-wider text-[#F4F0E8]/60"
+            className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 text-[11px] font-mono tracking-wider text-[#FDF8F0]/60"
           >
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#142424]/80 border border-[#B9F5D8]/15 backdrop-blur-sm text-[#B9F5D8]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#B9F5D8] animate-pulse" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#5C435D]/80 border border-[#93F1E3]/15 backdrop-blur-sm text-[#93F1E3]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#93F1E3] animate-pulse" />
               <span>AVAILABLE FOR COLLAB</span>
             </div>
 
-            <span className="inline-flex items-center gap-1 text-[#F4F0E8]/70">
-              <MapPin size={12} className="text-[#B9F5D8]" /> SURAKARTA, ID
+            <span className="inline-flex items-center gap-1 text-[#FDF8F0]/70">
+              <MapPin size={12} className="text-[#93F1E3]" /> SURAKARTA, ID
             </span>
 
-            <span className="text-[#B9F5D8]/30 hidden sm:inline">•</span>
+            <span className="text-[#93F1E3]/30 hidden sm:inline">•</span>
 
-            <span className="inline-flex items-center gap-1 text-[#F4F0E8]/70">
-              <Clock size={12} className="text-[#B9F5D8]" /> {wibTime || "LIVE WIB"}
+            <span className="inline-flex items-center gap-1 text-[#FDF8F0]/70">
+              <Clock size={12} className="text-[#93F1E3]" /> {wibTime || "LIVE WIB"}
             </span>
           </div>
 
           {/* Single Semantic H1 for Clean SEO & Visual Power */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-outfit font-black tracking-tight leading-[0.95] text-[#F4F0E8] uppercase mb-4">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-outfit font-black tracking-tight leading-[0.95] text-[#FDF8F0] uppercase mb-4">
             <span className="block">
               <GlitchText text="BRYAN YOGIE" />
             </span>
-            <span className="block text-[#B9F5D8] mt-1">
+            <span className="block text-[#93F1E3] mt-1">
               <GlitchText text="SAPUTRA" />
             </span>
           </h1>
 
           {/* Sub-headline: Precise Disciplines */}
-          <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.18em] text-[#B9F5D8]/90 mb-6">
-            Informatics Engineering <span className="text-[#F4F0E8]/40">•</span> Network &amp; Fullstack Architect
+          <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.18em] text-[#93F1E3]/90 mb-6">
+            Informatics Engineering <span className="text-[#FDF8F0]/40">•</span> Network &amp; Fullstack Architect
           </p>
 
           {/* Concise Bio / Statement with Tactile Quote Border */}
-          <p className="text-sm sm:text-base md:text-lg text-[#F4F0E8]/75 leading-relaxed font-sans max-w-xl mb-8 border-l border-[#B9F5D8]/30 pl-5">
+          <p className="text-sm sm:text-base md:text-lg text-[#FDF8F0]/75 leading-relaxed font-sans max-w-xl mb-8 border-l border-[#93F1E3]/30 pl-5">
             Forged in physical network cabling and enterprise routing topologies; now building high-throughput modern web architectures, algorithmic automation systems, and clean human interfaces.
           </p>
 
@@ -112,16 +112,16 @@ export default function Hero() {
               href="https://wa.me/62882005703770"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#B9F5D8] text-[#090F0F] font-outfit font-bold text-xs sm:text-sm uppercase tracking-wider hover:bg-[#FF7043] hover:text-[#F4F0E8] transition-colors duration-200 active:scale-95 shadow-[0_4px_20px_rgba(185,245,216,0.2)]"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#93F1E3] text-[#6E536F] font-outfit font-bold text-xs sm:text-sm uppercase tracking-wider hover:bg-[#FF7043] hover:text-[#FDF8F0] transition-colors duration-200 active:scale-95 shadow-[0_4px_20px_rgba(185,245,216,0.2)]"
             >
               Contact Bryan <ArrowUpRight size={15} />
             </a>
 
             <a
               href="#about"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#142424] text-[#F4F0E8] border border-[#B9F5D8]/20 hover:border-[#B9F5D8]/60 font-mono text-xs uppercase tracking-wider transition-colors duration-200 active:scale-95"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#5C435D] text-[#FDF8F0] border border-[#93F1E3]/20 hover:border-[#93F1E3]/60 font-mono text-xs uppercase tracking-wider transition-colors duration-200 active:scale-95"
             >
-              <Terminal size={14} className="text-[#B9F5D8]" /> Read Story
+              <Terminal size={14} className="text-[#93F1E3]" /> Read Story
             </a>
           </div>
 
@@ -135,7 +135,7 @@ export default function Hero() {
       </div>
 
       {/* Subtle Bottom Accent Line */}
-      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#B9F5D8]/15 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#93F1E3]/15 to-transparent pointer-events-none" />
     </section>
   );
 }

@@ -12,7 +12,7 @@ const curatedProjects = [
     subtitle: "Sistem Pintar Ekosistem Desa",
     category: "Fullstack Architecture",
     description: "Digital governance and administrative ecosystem for smart villages, empowering regional public services with modern web technologies.",
-    color: "#b9f5d8",
+    color: "#93F1E3",
     badge: "Public Sector Tech",
     tags: ["Next.js", "Fullstack", "PostgreSQL", "Tailwind CSS"],
     image: "/image/projek/SiPandai.webp",
@@ -36,7 +36,7 @@ const curatedProjects = [
     subtitle: "Hedge Fund Sniper Quantitative Algo",
     category: "Algorithmic Finance & Python",
     description: "Institutional-grade quantitative algorithmic trading engine integrated with MetaTrader 5 (MT5), real-time scoring filters, strict risk management, and automated Telegram telemetry.",
-    color: "#b9f5d8",
+    color: "#93F1E3",
     badge: "Quant Automation",
     tags: ["Python 3", "MetaTrader 5", "Algorithmic Trading", "Telegram Bot API"],
     image: "/image/projek/botTrading.webp",
@@ -115,29 +115,29 @@ export default function FeaturedWorks() {
                 <span className="text-[#FF7043] font-mono text-xs tracking-widest uppercase font-semibold">
                   {project.id} // {project.category}
                 </span>
-                <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full border border-[#B9F5D8]/30 bg-[#B9F5D8]/10 text-[#B9F5D8] font-semibold">
+                <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full border border-[#93F1E3]/30 bg-[#93F1E3]/10 text-[#93F1E3] font-semibold">
                   {project.badge}
                 </span>
               </div>
-              <h3 className="text-2xl sm:text-4xl md:text-5xl font-outfit font-black mb-2 group-hover:text-[#B9F5D8] transition-colors duration-200">
+              <h3 className="text-2xl sm:text-4xl md:text-5xl font-outfit font-black mb-2 group-hover:text-[#93F1E3] transition-colors duration-200">
                 {project.title}
               </h3>
-              <h4 className="text-base sm:text-lg font-outfit text-[#F4F0E8]/80 mb-4 transition-colors duration-200">
+              <h4 className="text-base sm:text-lg font-outfit text-[#FDF8F0]/80 mb-4 transition-colors duration-200">
                 {project.subtitle}
               </h4>
-              <p className="text-[#F4F0E8]/70 md:w-4/5 text-sm sm:text-base leading-relaxed mb-6 font-sans">
+              <p className="text-[#FDF8F0]/70 md:w-4/5 text-sm sm:text-base leading-relaxed mb-6 font-sans">
                 {project.description}
               </p>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag, tIdx) => (
-                  <span key={tIdx} className="text-xs font-mono text-[#F4F0E8]/60 bg-[#142424] px-3 py-1 rounded-lg border border-[#182A2A]">
+                  <span key={tIdx} className="text-xs font-mono text-[#FDF8F0]/60 bg-[#5C435D] px-3 py-1 rounded-lg border border-[#4D354E]">
                     #{tag}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="md:w-5/12 h-[240px] sm:h-[280px] md:h-[340px] w-full mt-6 md:mt-0 bg-[#142424] rounded-2xl overflow-hidden relative group-hover:scale-[1.01] transition-transform duration-300 flex items-center justify-center border border-[#182A2A] shadow-lg">
+            <div className="md:w-5/12 h-[240px] sm:h-[280px] md:h-[340px] w-full mt-6 md:mt-0 bg-[#5C435D] rounded-2xl overflow-hidden relative group-hover:scale-[1.01] transition-transform duration-300 flex items-center justify-center border border-[#4D354E] shadow-lg">
               <img 
                 src={project.image} 
                 alt={project.title} 
@@ -145,7 +145,7 @@ export default function FeaturedWorks() {
                 decoding="async"
                 className="absolute inset-0 w-full h-full object-cover filter brightness-75 group-hover:brightness-95 group-hover:scale-105 transition-all duration-700" 
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#090f0f] via-transparent to-transparent opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#6E536F] via-transparent to-transparent opacity-80" />
               
               <div className="absolute inset-0 flex flex-col items-center justify-center text-white font-mono gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 bg-black/50 backdrop-blur-sm">
                  <div className="p-4 rounded-full bg-mint text-cinder shadow-[0_0_25px_rgba(185,245,216,0.6)]">

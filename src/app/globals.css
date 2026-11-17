@@ -3,13 +3,14 @@
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-outfit: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
-  --color-background: #090f0f;
-  --color-foreground: #f4f0e8;
-  --color-cinder: #182a2a;
-  --color-mint: #b9f5d8;
-  --color-flare: #ff7043;
-  --color-primary: #b9f5d8;
-  --color-accent: #ff7043;
+  --color-background: #6E536F;
+  --color-foreground: #FDF8F0;
+  --color-surface: #5C435D;
+  --color-cinder: #4D354E;
+  --color-mint: #93F1E3;
+  --color-flare: #FF6B00;
+  --color-primary: #93F1E3;
+  --color-accent: #FF6B00;
 
   --animate-scroll-down: scroll-down 1.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
   @keyframes scroll-down {
@@ -19,10 +20,12 @@
 }
 
 :root {
-  --background: #090f0f;
-  --foreground: #f4f0e8;
-  --primary: #b9f5d8;
-  --accent: #ff7043;
+  --background: #6E536F;
+  --foreground: #FDF8F0;
+  --surface: #5C435D;
+  --surface-border: rgba(253, 248, 240, 0.15);
+  --primary: #93F1E3;
+  --accent: #FF6B00;
 }
 
 html.lenis, html.lenis body {
