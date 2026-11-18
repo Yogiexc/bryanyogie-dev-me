@@ -53,13 +53,13 @@ export default function CustomCursor() {
       });
 
       const onMouseEnterLink = () => {
-        gsap.to(cursor, { scale: 0, duration: 0.3 });
-        gsap.to(follower, { scale: 1.5, backgroundColor: "rgba(255,107,0,0.25)", borderColor: "#FF6B00", duration: 0.3 });
+        gsap.to(cursor, { scale: 0.5, opacity: 0.8, duration: 0.2 });
+        gsap.to(follower, { scale: 1.6, backgroundColor: "rgba(255,107,0,0.2)", borderColor: "#FF6B00", duration: 0.2 });
       };
 
       const onMouseLeaveLink = () => {
-        gsap.to(cursor, { scale: 1, duration: 0.3 });
-        gsap.to(follower, { scale: 1, backgroundColor: "transparent", borderColor: "#FF6B00", duration: 0.3 });
+        gsap.to(cursor, { scale: 1, opacity: 1, duration: 0.2 });
+        gsap.to(follower, { scale: 1, backgroundColor: "transparent", borderColor: "#FF6B00", duration: 0.2 });
       };
 
       window.addEventListener("mousemove", onMouseMove);
