@@ -66,7 +66,7 @@ const writingsData: Writing[] = [
 const projectsData = [
   {
     name: "SIPANDAI",
-    desc: "Sistem Pintar Ekosistem Desa — Platform tata kelola digital publik untuk administrasi kependudukan dan layanan warga desa cerdas.",
+    desc: "Sistem Pintar Ekosistem Desa: Platform tata kelola digital publik untuk administrasi kependudukan dan layanan warga desa cerdas.",
     tag: "Next.js · PostgreSQL · Fullstack",
     year: "2024",
     url: "https://github.com/Yogiexc/SIPANDAI---Sistem-Pintar-Ekosistem-Desa",
@@ -74,7 +74,7 @@ const projectsData = [
   },
   {
     name: "Journova",
-    desc: "Academic Journal Publishing Platform — Arsitektur monorepo enterprise untuk pengelolaan naskah ilmiah, peer-review, dan publikasi jurnal multi-tenant.",
+    desc: "Academic Journal Publishing Platform: Arsitektur monorepo enterprise untuk pengelolaan naskah ilmiah, peer-review, dan publikasi jurnal multi-tenant.",
     tag: "Next.js · NestJS · Prisma · Monorepo",
     year: "2024",
     url: "https://github.com/Yogiexc/Journova",
@@ -82,7 +82,7 @@ const projectsData = [
   },
   {
     name: "SemiAutoTrade by BYS",
-    desc: "Institutional Sniper Quantitative Algorithm — Mesin eksekusi trading otomatis terintegrasi MetaTrader 5 API dengan kalkulasi risiko real-time dan notifikasi telemetri Telegram.",
+    desc: "Institutional Sniper Quantitative Algorithm: Mesin eksekusi trading otomatis terintegrasi MetaTrader 5 API dengan kalkulasi risiko real-time dan notifikasi telemetri Telegram.",
     tag: "Python 3 · MT5 API · Quant",
     year: "2024",
     url: "https://github.com/Yogiexc/SemiAutoTrade_byBYS",
@@ -90,7 +90,7 @@ const projectsData = [
   },
   {
     name: "Iky Barbershop",
-    desc: "Digital Booking & Slot Reservation — Aplikasi web reservasi antrean dan janji temu pelanggan dengan antarmuka responsif mobile-first.",
+    desc: "Digital Booking & Slot Reservation: Aplikasi web reservasi antrean dan janji temu pelanggan dengan antarmuka responsif mobile-first.",
     tag: "React · Mobile First · Client Work",
     year: "2023",
     url: "https://github.com/Yogiexc/iky_barbershop",
@@ -140,7 +140,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Modals for Brian Lovin style tools
+  // Modals for interactive tools
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [selectedPost, setSelectedPost] = useState<Writing | null>(null);
 
@@ -151,7 +151,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -200,20 +200,20 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#6E536F] text-[#FDF8F0] selection:bg-[#93F1E3] selection:text-[#6E536F] antialiased">
+    <div className="min-h-screen bg-[#6E536F] text-[#FDF8F0] selection:bg-[#FF6B00] selection:text-[#FDF8F0] antialiased">
       
       {/* =========================================================================
-          1. FLOATING HEADER BAR (Mix-Blend-Difference & Minimalist High-End)
+          1. FLOATING HEADER BAR (Mix-Blend-Difference with dynamic scroll padding)
           ========================================================================= */}
       <header 
-        className={`fixed top-0 left-0 w-full z-40 flex items-center justify-between px-6 md:px-12 py-6 mix-blend-difference text-white transition-all duration-300 ${
-          isScrolled ? "py-4 backdrop-blur-sm" : "py-6"
+        className={`fixed top-0 left-0 w-full z-40 flex items-center justify-between px-6 md:px-12 transition-all duration-500 will-change-transform mix-blend-difference text-white ${
+          isScrolled ? "py-4" : "py-6"
         }`}
       >
         {/* Brand / Logo */}
         <a 
           href="#hero" 
-          className="text-2xl sm:text-3xl font-outfit font-black tracking-tight cursor-pointer hover:opacity-80 transition-opacity"
+          className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter cursor-pointer z-50 hover:opacity-80 transition-opacity"
         >
           BRYAN YOGIE
         </a>
@@ -221,13 +221,13 @@ export default function Home() {
         {/* Trigger Button */}
         <button 
           onClick={() => setMenuOpen(true)}
-          className="flex items-center gap-2.5 group cursor-pointer"
-          aria-label="Open full navigation menu"
+          className="flex items-center gap-2 group z-50 cursor-pointer"
+          aria-label="Open navigation menu"
         >
-          <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-60 transition-opacity">
+          <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-50 transition-opacity">
             Menu
           </span>
-          <Menu className="w-7 h-7 sm:w-8 sm:h-8 group-hover:scale-105 transition-transform" />
+          <Menu className="w-8 h-8 group-hover:scale-105 transition-transform" />
         </button>
       </header>
 
@@ -241,11 +241,11 @@ export default function Home() {
             animate={{ y: 0 }}
             exit={{ y: "-100%" }}
             transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 bg-[#5C435D] z-50 flex flex-col md:flex-row text-[#FDF8F0] overflow-hidden"
+            className="fixed inset-0 bg-[#FF6B00] z-50 flex flex-col md:flex-row text-white overflow-hidden"
           >
             {/* Overlay Header Bar with Close Trigger */}
             <div className="absolute top-0 left-0 w-full flex items-center justify-between px-6 md:px-12 py-6 z-50 mix-blend-difference text-white">
-              <div className="text-2xl sm:text-3xl font-outfit font-black tracking-tight">
+              <div className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter">
                 BRYAN YOGIE
               </div>
               <button 
@@ -253,15 +253,15 @@ export default function Home() {
                 className="flex items-center gap-2 group cursor-pointer"
                 aria-label="Close navigation menu"
               >
-                <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-60 transition-opacity">
+                <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-50 transition-opacity">
                   Close
                 </span>
-                <X className="w-7 h-7 sm:w-8 sm:h-8 group-hover:rotate-90 transition-transform duration-300" />
+                <X className="w-8 h-8 group-hover:rotate-90 transition-transform duration-300" />
               </button>
             </div>
 
             {/* SISI KIRI: Big Typography Navigation Links with Rolling Slide Effect */}
-            <div className="flex-1 flex flex-col justify-center px-6 md:px-20 space-y-3 md:space-y-5 pt-28 md:pt-0 bg-[#4D354E]/95">
+            <div className="flex-1 flex flex-col justify-center px-6 md:px-20 space-y-3 md:space-y-4 pt-24 md:pt-0 bg-[#4D354E]">
               {navMenuItems.map((item, i) => (
                 <motion.a
                   key={item.title}
@@ -271,13 +271,13 @@ export default function Home() {
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ x: -80, opacity: 0 }}
                   transition={{ delay: 0.25 + i * 0.08, duration: 0.5 }}
-                  className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-outfit font-black tracking-tight text-[#FDF8F0] hover:text-[#93F1E3] transition-colors flex items-center group overflow-hidden w-fit"
+                  className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-outfit font-black tracking-tight text-[#FDF8F0] hover:text-[#FF6B00] transition-colors flex items-center group overflow-hidden w-fit"
                 >
                   <span className="relative overflow-hidden inline-block leading-[1.05]">
                     <span className="block group-hover:-translate-y-full transition-transform duration-500 ease-in-out">
                       {item.title}
                     </span>
-                    <span className="absolute top-0 left-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out text-[#93F1E3]">
+                    <span className="absolute top-0 left-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out text-[#FF6B00]">
                       {item.title}
                     </span>
                   </span>
@@ -285,77 +285,73 @@ export default function Home() {
               ))}
 
               {/* Sub-Interactive Quick Links */}
-              <div className="pt-4 flex flex-wrap items-center gap-3 font-mono text-xs">
+              <div className="pt-3 flex flex-wrap items-center gap-2.5 font-mono text-xs">
                 <button
                   onClick={() => { setMenuOpen(false); setActiveModal("stack"); }}
-                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#93F1E3] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors"
+                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#FF6B00] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors cursor-pointer"
                 >
                   Stack // Tools
                 </button>
                 <button
                   onClick={() => { setMenuOpen(false); setActiveModal("ama"); }}
-                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#93F1E3] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors"
+                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#FF6B00] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors cursor-pointer"
                 >
                   AMA // Tanya Bryan
                 </button>
                 <button
                   onClick={() => { setMenuOpen(false); setActiveModal("listening"); }}
-                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#93F1E3] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors"
+                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#FF6B00] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors cursor-pointer"
                 >
                   Listening
                 </button>
                 <button
                   onClick={() => { setMenuOpen(false); setActiveModal("til"); }}
-                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#93F1E3] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors"
+                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#FF6B00] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors cursor-pointer"
                 >
                   TIL // Snippets
                 </button>
               </div>
 
               {/* Social Channels */}
-              <div className="flex flex-wrap gap-6 pt-6 font-mono text-xs sm:text-sm text-[#FDF8F0]/60">
-                <a href="https://github.com/Yogiexc" target="_blank" rel="noopener noreferrer" className="hover:text-[#93F1E3] transition-colors">
+              <div className="flex flex-wrap gap-6 pt-5 font-mono text-xs sm:text-sm text-[#FDF8F0]/60">
+                <a href="https://github.com/Yogiexc" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6B00] transition-colors">
                   GITHUB ↗
                 </a>
-                <a href="https://linkedin.com/in/bryanyogie" target="_blank" rel="noopener noreferrer" className="hover:text-[#93F1E3] transition-colors">
+                <a href="https://linkedin.com/in/bryanyogie" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6B00] transition-colors">
                   LINKEDIN ↗
                 </a>
-                <a href="https://wa.me/62882005703770" target="_blank" rel="noopener noreferrer" className="hover:text-[#93F1E3] transition-colors">
+                <a href="https://wa.me/62882005703770" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6B00] transition-colors">
                   WHATSAPP ↗
                 </a>
-                <a href="mailto:bryanyogie@student.uns.ac.id" className="hover:text-[#93F1E3] transition-colors">
+                <a href="mailto:bryanyogie@student.uns.ac.id" className="hover:text-[#FF6B00] transition-colors">
                   EMAIL ↗
                 </a>
               </div>
             </div>
 
             {/* SISI KANAN (Desktop Only): Featured Focus Card & Massive Ambient Watermark */}
-            <div className="hidden md:flex flex-1 bg-[#5C435D] p-16 lg:p-20 flex-col justify-center relative overflow-hidden">
-              <div className="absolute top-10 left-12 font-mono text-xs uppercase tracking-widest text-[#93F1E3]">
-                // Active Engineering Focus
-              </div>
-              
-              <div className="space-y-6 relative z-10">
-                <div className="text-xs font-mono text-[#FDF8F0]/60">
-                  SURAKARTA, ID • UNS INFORMATICS
-                </div>
-                <h3 className="text-3xl lg:text-4xl font-outfit font-black leading-tight max-w-md text-[#FDF8F0]">
+            <div className="hidden md:flex flex-1 bg-[#FF6B00] p-16 lg:p-20 flex-col justify-center relative overflow-hidden">
+              <div className="space-y-6 relative z-10 text-white">
+                <span className="text-xs font-mono opacity-80 uppercase tracking-widest block">
+                  Surakarta, ID • UNS Informatics
+                </span>
+                <h3 className="text-4xl lg:text-5xl font-outfit font-black leading-none max-w-md">
                   BRIDGING HARDWARE TOPOLOGY WITH DISTRIBUTED WEB CODE.
                 </h3>
-                <p className="font-sans text-sm text-[#FDF8F0]/80 max-w-sm leading-relaxed">
-                  Forged in Computer &amp; Network Engineering (SMK TKJ). Designing low-latency web apps in Next.js/NestJS and quantitative execution bots in Python.
+                <p className="opacity-90 max-w-sm font-sans text-sm leading-relaxed">
+                  Forged in Computer &amp; Network Engineering (SMK TKJ). Designing low-latency web apps in Next.js/NestJS and quantitative execution algorithms in Python.
                 </p>
                 <a
                   href="#projects"
                   onClick={() => setMenuOpen(false)}
-                  className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[#93F1E3] hover:translate-x-2 transition-transform"
+                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider hover:translate-x-2 transition-transform"
                 >
                   Explore Projects <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
 
               {/* Watermark Besar Khas Split-Menu */}
-              <span className="absolute -bottom-16 -right-16 text-[18rem] lg:text-[22rem] font-outfit font-black leading-none text-[#FDF8F0]/[0.03] select-none pointer-events-none">
+              <span className="absolute -bottom-20 -right-20 text-[20rem] font-outfit font-black leading-none opacity-15 select-none pointer-events-none text-white">
                 BYS
               </span>
             </div>
@@ -365,7 +361,7 @@ export default function Home() {
       </AnimatePresence>
 
       {/* =========================================================================
-          3. MAIN SINGLE-COLUMN CONTENT (brianlovin.com Layout Style)
+          3. MAIN SINGLE-COLUMN CONTENT (brianlovin.com Clean Architecture)
           ========================================================================= */}
       <main id="hero" className="max-w-2xl mx-auto px-6 pt-32 pb-20 flex flex-col gap-16 md:gap-20">
 
@@ -383,8 +379,8 @@ export default function Home() {
               />
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-mono text-[#FDF8F0]/70 bg-[#5C435D] px-3.5 py-1.5 rounded-full border border-[#FDF8F0]/10">
-              <span className="w-2 h-2 rounded-full bg-[#93F1E3] animate-pulse" />
+            <div className="flex items-center gap-2 text-xs font-mono text-[#FDF8F0]/80 bg-[#5C435D] px-3.5 py-1.5 rounded-full border border-[#FDF8F0]/15">
+              <span className="w-2 h-2 rounded-full bg-[#FF6B00] animate-pulse" />
               <span>Surakarta, ID</span>
             </div>
           </div>
@@ -393,8 +389,8 @@ export default function Home() {
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#FDF8F0]">
               Bryan Yogie Saputra
             </h1>
-            <p className="text-sm sm:text-base text-[#FDF8F0]/80 font-sans leading-relaxed">
-              Software designer and network infrastructure engineer at Universitas Sebelas Maret (UNS). Forged in Computer &amp; Network Engineering (TKJ) — bridging bare-metal server racks with modern distributed fullstack web apps and quantitative trading algorithms.
+            <p className="text-sm sm:text-base text-[#FDF8F0]/85 font-sans leading-relaxed">
+              Software designer and network infrastructure engineer at Universitas Sebelas Maret (UNS). Forged in Computer &amp; Network Engineering (TKJ), bridging bare-metal server racks with modern distributed fullstack web apps and quantitative trading algorithms.
             </p>
           </div>
 
@@ -404,7 +400,7 @@ export default function Home() {
               href="https://wa.me/62882005703770"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#FDF8F0] text-[#6E536F] font-bold hover:bg-[#93F1E3] transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#FF6B00] text-[#FDF8F0] font-bold hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors"
             >
               <MessageSquare size={13} />
               <span>WhatsApp</span>
@@ -413,7 +409,7 @@ export default function Home() {
               href="https://github.com/Yogiexc"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#5C435D] text-[#FDF8F0] hover:text-[#93F1E3] border border-[#FDF8F0]/10 hover:border-[#93F1E3]/40 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#5C435D] text-[#FDF8F0] hover:text-[#FF6B00] border border-[#FDF8F0]/15 hover:border-[#FF6B00]/40 transition-colors"
             >
               <span>GitHub</span>
               <ArrowUpRight size={12} />
@@ -422,7 +418,7 @@ export default function Home() {
               href="https://linkedin.com/in/bryanyogie"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#5C435D] text-[#FDF8F0] hover:text-[#93F1E3] border border-[#FDF8F0]/10 hover:border-[#93F1E3]/40 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#5C435D] text-[#FDF8F0] hover:text-[#FF6B00] border border-[#FDF8F0]/15 hover:border-[#FF6B00]/40 transition-colors"
             >
               <span>LinkedIn</span>
               <ArrowUpRight size={12} />
@@ -431,8 +427,8 @@ export default function Home() {
         </header>
 
         {/* 2. Section: About & Engineering Roots */}
-        <section id="about" className="flex flex-col gap-4 text-sm sm:text-[15px] text-[#FDF8F0]/80 leading-relaxed font-sans border-t border-[#FDF8F0]/15 pt-10">
-          <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#93F1E3] font-semibold mb-1">
+        <section id="about" className="flex flex-col gap-4 text-sm sm:text-[15px] text-[#FDF8F0]/85 leading-relaxed font-sans border-t border-[#FDF8F0]/15 pt-10">
+          <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#FF6B00] font-bold mb-1">
             01 // About &amp; Engineering Roots
           </h2>
           <p>
@@ -443,14 +439,14 @@ export default function Home() {
           </p>
         </section>
 
-        {/* 3. Section: Writing (5 Judul Artikel Asli Bryan) */}
+        {/* 3. Section: Writing */}
         <section id="writing" className="flex flex-col gap-5 border-t border-[#FDF8F0]/15 pt-10">
           <div className="flex items-center justify-between">
-            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#93F1E3] font-semibold">
+            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#FF6B00] font-bold">
               02 // Writing
             </h2>
             <span className="text-xs font-mono text-[#FDF8F0]/50">
-              5 Essays
+              5 Technical Essays
             </span>
           </div>
 
@@ -462,7 +458,7 @@ export default function Home() {
                 className="py-3.5 flex items-baseline justify-between gap-4 text-left group -mx-2 px-2 rounded-lg hover:bg-[#5C435D]/50 transition-colors cursor-pointer"
               >
                 <div className="flex items-baseline gap-2">
-                  <span className="text-sm sm:text-[15px] font-medium text-[#FDF8F0] group-hover:text-[#93F1E3] transition-colors line-clamp-1">
+                  <span className="text-sm sm:text-[15px] font-medium text-[#FDF8F0] group-hover:text-[#FF6B00] transition-colors line-clamp-1">
                     {post.title}
                   </span>
                 </div>
@@ -474,14 +470,14 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 4. Section: Projects (Karya Asli Milik Bryan) */}
+        {/* 4. Section: Projects */}
         <section id="projects" className="flex flex-col gap-6 border-t border-[#FDF8F0]/15 pt-10">
           <div className="flex items-center justify-between">
-            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#93F1E3] font-semibold">
+            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#FF6B00] font-bold">
               03 // Selected Projects
             </h2>
             <span className="text-xs font-mono text-[#FDF8F0]/50">
-              {projectsData.length} Software Systems
+              {projectsData.length} Systems
             </span>
           </div>
 
@@ -496,10 +492,10 @@ export default function Home() {
               >
                 <div className="flex items-baseline justify-between gap-4">
                   <div className="flex items-center gap-1.5">
-                    <h3 className="text-base sm:text-lg font-bold text-[#FDF8F0] group-hover:text-[#93F1E3] transition-colors">
+                    <h3 className="text-base sm:text-lg font-bold text-[#FDF8F0] group-hover:text-[#FF6B00] transition-colors">
                       {project.name}
                     </h3>
-                    <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-[#93F1E3]" />
+                    <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-[#FF6B00]" />
                   </div>
                   <span className="text-xs font-mono text-[#FDF8F0]/50 shrink-0">
                     {project.year}
@@ -510,7 +506,7 @@ export default function Home() {
                   {project.desc}
                 </p>
 
-                <div className="flex items-center gap-2 text-[11px] font-mono text-[#93F1E3]">
+                <div className="flex items-center gap-2 text-[11px] font-mono text-[#FF6B00]">
                   <span>{project.tag}</span>
                 </div>
 
@@ -532,7 +528,7 @@ export default function Home() {
         {/* 5. Section: Certifications */}
         <section id="certifications" className="flex flex-col gap-6 border-t border-[#FDF8F0]/15 pt-10">
           <div className="flex items-center justify-between">
-            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#93F1E3] font-semibold">
+            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#FF6B00] font-bold">
               04 // Formal Certifications
             </h2>
             <span className="text-xs font-mono text-[#FDF8F0]/50">
@@ -561,7 +557,7 @@ export default function Home() {
                       href={cred.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs font-mono text-[#93F1E3] hover:underline inline-flex items-center gap-0.5"
+                      className="text-xs font-mono text-[#FF6B00] hover:underline inline-flex items-center gap-0.5"
                     >
                       Verify <ArrowUpRight size={11} />
                     </a>
@@ -578,13 +574,13 @@ export default function Home() {
             <span>&copy; {new Date().getFullYear()} Bryan Yogie Saputra</span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="mailto:bryanyogie@student.uns.ac.id" className="hover:text-[#93F1E3] transition-colors">
+            <a href="mailto:bryanyogie@student.uns.ac.id" className="hover:text-[#FF6B00] transition-colors">
               Email
             </a>
-            <a href="https://github.com/Yogiexc" target="_blank" rel="noopener noreferrer" className="hover:text-[#93F1E3] transition-colors">
+            <a href="https://github.com/Yogiexc" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6B00] transition-colors">
               GitHub
             </a>
-            <a href="https://linkedin.com/in/bryanyogie" target="_blank" rel="noopener noreferrer" className="hover:text-[#93F1E3] transition-colors">
+            <a href="https://linkedin.com/in/bryanyogie" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6B00] transition-colors">
               LinkedIn
             </a>
           </div>
@@ -604,12 +600,12 @@ export default function Home() {
         >
           <div className="relative w-full max-w-lg bg-[#5C435D] rounded-2xl border border-[#FDF8F0]/20 p-6 sm:p-8 shadow-2xl flex flex-col max-h-[85vh] overflow-y-auto">
             <div className="flex items-center justify-between pb-4 border-b border-[#FDF8F0]/15 mb-6">
-              <span className="font-mono text-xs uppercase tracking-widest text-[#93F1E3]">
+              <span className="font-mono text-xs uppercase tracking-widest text-[#FF6B00]">
                 bryanyogie.is-a.dev/writing/{selectedPost.slug}
               </span>
               <button
                 onClick={() => setSelectedPost(null)}
-                className="text-xs font-mono px-2 py-1 rounded bg-[#4D354E] hover:bg-[#FDF8F0] text-[#FDF8F0] hover:text-[#6E536F] transition-colors"
+                className="text-xs font-mono px-2 py-1 rounded bg-[#4D354E] hover:bg-[#FDF8F0] text-[#FDF8F0] hover:text-[#6E536F] transition-colors cursor-pointer"
               >
                 Close [Esc]
               </button>
@@ -625,7 +621,7 @@ export default function Home() {
               <p className="text-sm text-[#FDF8F0]/85 font-sans leading-relaxed pt-2">
                 {selectedPost.excerpt}
               </p>
-              <div className="p-4 rounded-xl bg-[#4D354E]/80 border border-[#FDF8F0]/10 text-xs font-mono text-[#93F1E3] mt-2">
+              <div className="p-4 rounded-xl bg-[#4D354E]/80 border border-[#FDF8F0]/10 text-xs font-mono text-[#FF6B00] mt-2">
                 // Full technical essay and code repository logs maintained on GitHub.
               </div>
             </div>
@@ -646,12 +642,12 @@ export default function Home() {
           <div className="relative w-full max-w-lg bg-[#5C435D] rounded-2xl border border-[#FDF8F0]/20 p-6 sm:p-8 shadow-2xl flex flex-col max-h-[85vh] overflow-y-auto">
             
             <div className="flex items-center justify-between pb-4 border-b border-[#FDF8F0]/15 mb-6">
-              <span className="font-mono text-xs uppercase tracking-widest text-[#93F1E3]">
+              <span className="font-mono text-xs uppercase tracking-widest text-[#FF6B00]">
                 bryanyogie.is-a.dev/{activeModal}
               </span>
               <button
                 onClick={() => setActiveModal(null)}
-                className="text-xs font-mono px-2 py-1 rounded bg-[#4D354E] hover:bg-[#FDF8F0] text-[#FDF8F0] hover:text-[#6E536F] transition-colors"
+                className="text-xs font-mono px-2 py-1 rounded bg-[#4D354E] hover:bg-[#FDF8F0] text-[#FDF8F0] hover:text-[#6E536F] transition-colors cursor-pointer"
               >
                 Close [Esc]
               </button>
@@ -661,7 +657,7 @@ export default function Home() {
             {activeModal === "stack" && (
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#4D354E] text-[#93F1E3]">
+                  <div className="p-2.5 rounded-xl bg-[#4D354E] text-[#FF6B00]">
                     <Layers size={20} />
                   </div>
                   <div>
@@ -672,15 +668,15 @@ export default function Home() {
 
                 <div className="flex flex-col gap-3.5 text-xs font-mono">
                   <div className="p-3.5 rounded-lg bg-[#4D354E]/70 border border-[#FDF8F0]/10">
-                    <span className="text-[#93F1E3] block mb-1 font-bold">// WORKSTATION &amp; HARDWARE</span>
+                    <span className="text-[#FF6B00] block mb-1 font-bold">// WORKSTATION &amp; HARDWARE</span>
                     <p className="text-[#FDF8F0]/80">Laptop Lenovo + Dual Monitor Setup · MikroTik Routerboard · Gigabit Patch Panel</p>
                   </div>
                   <div className="p-3.5 rounded-lg bg-[#4D354E]/70 border border-[#FDF8F0]/10">
-                    <span className="text-[#93F1E3] block mb-1 font-bold">// ENVIRONMENT &amp; CLI</span>
+                    <span className="text-[#FF6B00] block mb-1 font-bold">// ENVIRONMENT &amp; CLI</span>
                     <p className="text-[#FDF8F0]/80">VS Code + Neovim Keybindings · Turbopack · Git · Warp Terminal · Linux WSL2</p>
                   </div>
                   <div className="p-3.5 rounded-lg bg-[#4D354E]/70 border border-[#FDF8F0]/10">
-                    <span className="text-[#93F1E3] block mb-1 font-bold">// PRODUCTION TECH</span>
+                    <span className="text-[#FF6B00] block mb-1 font-bold">// PRODUCTION TECH</span>
                     <p className="text-[#FDF8F0]/80">Next.js 16 App Router · TypeScript · NestJS · PostgreSQL · Python MT5 API · Tailwind CSS</p>
                   </div>
                 </div>
@@ -691,7 +687,7 @@ export default function Home() {
             {activeModal === "ama" && (
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#4D354E] text-[#93F1E3]">
+                  <div className="p-2.5 rounded-xl bg-[#4D354E] text-[#FF6B00]">
                     <HelpCircle size={20} />
                   </div>
                   <div>
@@ -702,7 +698,7 @@ export default function Home() {
 
                 {amaSuccess ? (
                   <div className="p-6 rounded-xl bg-[#4D354E] text-center flex flex-col items-center gap-2">
-                    <Check size={28} className="text-[#93F1E3]" />
+                    <Check size={28} className="text-[#FF6B00]" />
                     <span className="text-sm font-bold text-[#FDF8F0]">Pesan Diteruskan!</span>
                     <p className="text-xs text-[#FDF8F0]/70 font-mono">Langsung tersambung ke WhatsApp Bryan.</p>
                   </div>
@@ -713,7 +709,7 @@ export default function Home() {
                       value={senderName}
                       onChange={(e) => setSenderName(e.target.value)}
                       placeholder="Nama kamu (opsional)"
-                      className="w-full p-3 rounded-xl bg-[#4D354E] border border-[#FDF8F0]/15 text-xs text-[#FDF8F0] placeholder-[#FDF8F0]/40 focus:outline-none focus:border-[#93F1E3] font-sans"
+                      className="w-full p-3 rounded-xl bg-[#4D354E] border border-[#FDF8F0]/15 text-xs text-[#FDF8F0] placeholder-[#FDF8F0]/40 focus:outline-none focus:border-[#FF6B00] font-sans"
                     />
                     <textarea
                       required
@@ -721,11 +717,11 @@ export default function Home() {
                       value={question}
                       onChange={(e) => setQuestion(e.target.value)}
                       placeholder="Tulis pertanyaanmu di sini..."
-                      className="w-full p-3.5 rounded-xl bg-[#4D354E] border border-[#FDF8F0]/15 text-xs sm:text-sm text-[#FDF8F0] placeholder-[#FDF8F0]/40 focus:outline-none focus:border-[#93F1E3] resize-none font-sans"
+                      className="w-full p-3.5 rounded-xl bg-[#4D354E] border border-[#FDF8F0]/15 text-xs sm:text-sm text-[#FDF8F0] placeholder-[#FDF8F0]/40 focus:outline-none focus:border-[#FF6B00] resize-none font-sans"
                     />
                     <button
                       type="submit"
-                      className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#FDF8F0] text-[#6E536F] hover:bg-[#93F1E3] font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                      className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#FF6B00] text-[#FDF8F0] hover:bg-[#FDF8F0] hover:text-[#6E536F] font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
                     >
                       <Send size={13} />
                       <span>Kirim Pertanyaan</span>
@@ -739,7 +735,7 @@ export default function Home() {
             {activeModal === "listening" && (
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#4D354E] text-[#93F1E3]">
+                  <div className="p-2.5 rounded-xl bg-[#4D354E] text-[#FF6B00]">
                     <Headphones size={20} />
                   </div>
                   <div>
@@ -750,7 +746,7 @@ export default function Home() {
 
                 <div className="p-4 rounded-xl bg-[#4D354E]/70 border border-[#FDF8F0]/10 flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#93F1E3] animate-ping" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#FF6B00] animate-ping" />
                     <div>
                       <h4 className="text-sm font-bold text-[#FDF8F0]">Deep Minimal Techno &amp; Ambient</h4>
                       <p className="text-xs text-[#FDF8F0]/60 font-mono">Fokus konstan saat memprogram logika sistem</p>
@@ -764,7 +760,7 @@ export default function Home() {
             {activeModal === "til" && (
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#4D354E] text-[#93F1E3]">
+                  <div className="p-2.5 rounded-xl bg-[#4D354E] text-[#FF6B00]">
                     <Terminal size={20} />
                   </div>
                   <div>
@@ -775,11 +771,11 @@ export default function Home() {
 
                 <div className="flex flex-col gap-3 text-xs font-mono">
                   <div className="p-3 rounded-lg bg-[#4D354E] border border-[#FDF8F0]/10">
-                    <span className="text-[#93F1E3] block mb-1 font-bold">2026-02 // Next.js Turbopack Bundle Splitting</span>
+                    <span className="text-[#FF6B00] block mb-1 font-bold">2026-02 // Next.js Turbopack Bundle Splitting</span>
                     <p className="text-[#FDF8F0]/80">Menghilangkan client wrapper yang tidak perlu memotong Total Blocking Time (TBT) hingga 140ms pada koneksi HP lambat.</p>
                   </div>
                   <div className="p-3 rounded-lg bg-[#4D354E] border border-[#FDF8F0]/10">
-                    <span className="text-[#93F1E3] block mb-1 font-bold">2026-01 // MetaTrader 5 Zero-Sleep Tick Dispatch</span>
+                    <span className="text-[#FF6B00] block mb-1 font-bold">2026-01 // MetaTrader 5 Zero-Sleep Tick Dispatch</span>
                     <p className="text-[#FDF8F0]/80">Beralih dari polling loop interval ke event-driven tick callbacks memangkas latensi eksekusi order trading dari 45ms ke 8ms.</p>
                   </div>
                 </div>

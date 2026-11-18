@@ -7,10 +7,9 @@
   --color-foreground: #FDF8F0;
   --color-surface: #5C435D;
   --color-cinder: #4D354E;
-  --color-mint: #93F1E3;
-  --color-flare: #FF6B00;
-  --color-primary: #93F1E3;
   --color-accent: #FF6B00;
+  --color-primary: #FF6B00;
+  --color-orange: #FF6B00;
 
   --animate-scroll-down: scroll-down 1.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
   @keyframes scroll-down {
@@ -24,7 +23,7 @@
   --foreground: #FDF8F0;
   --surface: #5C435D;
   --surface-border: rgba(253, 248, 240, 0.15);
-  --primary: #93F1E3;
+  --primary: #FF6B00;
   --accent: #FF6B00;
 }
 
