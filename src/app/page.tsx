@@ -2,22 +2,19 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowUpRight, 
   Menu, 
   X, 
+  ArrowRight,
   MessageSquare, 
-  BookOpen, 
   Layers, 
   HelpCircle, 
   Headphones, 
   Terminal, 
   Send, 
-  Check,
-  ShieldCheck,
-  Award,
-  Sparkles
+  Check 
 } from "lucide-react";
 
 interface Writing {
@@ -28,7 +25,6 @@ interface Writing {
   excerpt: string;
 }
 
-// 100% Konten & Tulisan Asli Milik Bryan Yogie Saputra
 const writingsData: Writing[] = [
   {
     title: "From Bare-Metal Server Racks to Distributed Next.js Clouds",
@@ -67,7 +63,6 @@ const writingsData: Writing[] = [
   },
 ];
 
-// Proyek Asli Bryan Yogie Saputra
 const projectsData = [
   {
     name: "SIPANDAI",
@@ -103,7 +98,6 @@ const projectsData = [
   },
 ];
 
-// Sertifikat Resmi Terverifikasi Milik Bryan
 const certificationsData = [
   {
     title: "AWS Academy Graduate - Cloud Developing",
@@ -134,20 +128,35 @@ const certificationsData = [
   },
 ];
 
-export default function Home() {
-  // Mobile / Desktop Hamburger Menu Toggle State
-  const [menuOpen, setMenuOpen] = useState(false);
+const navMenuItems = [
+  { title: "HOME", href: "#hero" },
+  { title: "ABOUT", href: "#about" },
+  { title: "WRITING", href: "#writing" },
+  { title: "PROJECTS", href: "#projects" },
+  { title: "CREDENTIALS", href: "#certifications" },
+];
 
-  // Modal State for Specific Pages/Views
+export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Modals for Brian Lovin style tools
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [selectedPost, setSelectedPost] = useState<Writing | null>(null);
 
-  // AMA form state (Kirim Pertanyaan Langsung ke Bryan)
+  // AMA form state
   const [question, setQuestion] = useState("");
   const [senderName, setSenderName] = useState("");
   const [amaSuccess, setAmaSuccess] = useState(false);
 
-  // Close modals on Esc key
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -160,11 +169,22 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Lock body scroll when overlay menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   const handleSendQuestion = (e: React.FormEvent) => {
     e.preventDefault();
     if (!question.trim()) return;
 
-    // Direct WhatsApp dispatching link so user actually receives Bryan's questions
     const text = encodeURIComponent(
       `Halo Bryan! [Tanya Lewat Web Portofolio]\nDari: ${senderName || "Anonim"}\nPertanyaan: ${question}`
     );
@@ -183,135 +203,171 @@ export default function Home() {
     <div className="min-h-screen bg-[#6E536F] text-[#FDF8F0] selection:bg-[#93F1E3] selection:text-[#6E536F] antialiased">
       
       {/* =========================================================================
-          TOP NAV BAR WITH HAMBURGER BUTTON (Ala brianlovin.com)
+          1. FLOATING HEADER BAR (Mix-Blend-Difference & Minimalist High-End)
           ========================================================================= */}
-      <nav className="sticky top-0 z-40 w-full bg-[#6E536F]/90 backdrop-blur-md border-b border-[#FDF8F0]/10 px-6 py-4">
-        <div className="max-w-2xl mx-auto flex items-center justify-between">
-          
-          {/* Logo / Brand Name */}
-          <Link href="/" className="font-extrabold text-sm sm:text-base tracking-tight hover:text-[#93F1E3] transition-colors flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#93F1E3]" />
-            <span>Bryan Yogie</span>
-          </Link>
+      <header 
+        className={`fixed top-0 left-0 w-full z-40 flex items-center justify-between px-6 md:px-12 py-6 mix-blend-difference text-white transition-all duration-300 ${
+          isScrolled ? "py-4 backdrop-blur-sm" : "py-6"
+        }`}
+      >
+        {/* Brand / Logo */}
+        <a 
+          href="#hero" 
+          className="text-2xl sm:text-3xl font-outfit font-black tracking-tight cursor-pointer hover:opacity-80 transition-opacity"
+        >
+          BRYAN YOGIE
+        </a>
 
-          {/* Navigation Links (Desktop) & Hamburger Button (All Devices) */}
-          <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-5 text-xs font-mono text-[#FDF8F0]/80">
-              <a href="#about" className="hover:text-[#93F1E3] transition-colors">About</a>
-              <a href="#writing" className="hover:text-[#93F1E3] transition-colors">Writing</a>
-              <a href="#projects" className="hover:text-[#93F1E3] transition-colors">Projects</a>
+        {/* Trigger Button */}
+        <button 
+          onClick={() => setMenuOpen(true)}
+          className="flex items-center gap-2.5 group cursor-pointer"
+          aria-label="Open full navigation menu"
+        >
+          <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-60 transition-opacity">
+            Menu
+          </span>
+          <Menu className="w-7 h-7 sm:w-8 sm:h-8 group-hover:scale-105 transition-transform" />
+        </button>
+      </header>
+
+      {/* =========================================================================
+          2. FULLSCREEN OVERLAY MENU (Split Screen Slide with Text Roll Effect)
+          ========================================================================= */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ y: "-100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 bg-[#5C435D] z-50 flex flex-col md:flex-row text-[#FDF8F0] overflow-hidden"
+          >
+            {/* Overlay Header Bar with Close Trigger */}
+            <div className="absolute top-0 left-0 w-full flex items-center justify-between px-6 md:px-12 py-6 z-50 mix-blend-difference text-white">
+              <div className="text-2xl sm:text-3xl font-outfit font-black tracking-tight">
+                BRYAN YOGIE
+              </div>
               <button 
-                onClick={() => setActiveModal("ama")}
-                className="hover:text-[#93F1E3] transition-colors cursor-pointer"
+                onClick={() => setMenuOpen(false)} 
+                className="flex items-center gap-2 group cursor-pointer"
+                aria-label="Close navigation menu"
               >
-                AMA
+                <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-60 transition-opacity">
+                  Close
+                </span>
+                <X className="w-7 h-7 sm:w-8 sm:h-8 group-hover:rotate-90 transition-transform duration-300" />
               </button>
             </div>
 
-            {/* Hamburger Button */}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle navigation menu"
-              className="p-2 rounded-lg bg-[#5C435D] hover:bg-[#4D354E] text-[#FDF8F0] hover:text-[#93F1E3] border border-[#FDF8F0]/10 transition-colors"
-            >
-              {menuOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
-          </div>
+            {/* SISI KIRI: Big Typography Navigation Links with Rolling Slide Effect */}
+            <div className="flex-1 flex flex-col justify-center px-6 md:px-20 space-y-3 md:space-y-5 pt-28 md:pt-0 bg-[#4D354E]/95">
+              {navMenuItems.map((item, i) => (
+                <motion.a
+                  key={item.title}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  initial={{ x: -80, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -80, opacity: 0 }}
+                  transition={{ delay: 0.25 + i * 0.08, duration: 0.5 }}
+                  className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-outfit font-black tracking-tight text-[#FDF8F0] hover:text-[#93F1E3] transition-colors flex items-center group overflow-hidden w-fit"
+                >
+                  <span className="relative overflow-hidden inline-block leading-[1.05]">
+                    <span className="block group-hover:-translate-y-full transition-transform duration-500 ease-in-out">
+                      {item.title}
+                    </span>
+                    <span className="absolute top-0 left-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out text-[#93F1E3]">
+                      {item.title}
+                    </span>
+                  </span>
+                </motion.a>
+              ))}
 
-        </div>
-      </nav>
-
-      {/* =========================================================================
-          DROPDOWN / SIDE DRAWER MENU WHEN HAMBURGER CLICKED
-          ========================================================================= */}
-      {menuOpen && (
-        <div className="fixed inset-0 top-[57px] z-50 bg-[#6E536F]/95 backdrop-blur-lg flex flex-col p-6 max-w-2xl mx-auto animate-fade-in border-b border-[#FDF8F0]/15">
-          <div className="flex flex-col gap-5 py-4 font-mono text-sm">
-            <span className="text-[11px] uppercase tracking-widest text-[#93F1E3] font-bold">
-              // Navigation Index
-            </span>
-            
-            <a 
-              href="#about" 
-              onClick={() => setMenuOpen(false)}
-              className="py-2 border-b border-[#FDF8F0]/10 hover:text-[#93F1E3] transition-colors flex items-center justify-between"
-            >
-              <span>01. About &amp; Engineering Roots</span>
-              <span>&rarr;</span>
-            </a>
-
-            <a 
-              href="#writing" 
-              onClick={() => setMenuOpen(false)}
-              className="py-2 border-b border-[#FDF8F0]/10 hover:text-[#93F1E3] transition-colors flex items-center justify-between"
-            >
-              <span>02. Writing &amp; Field Essays</span>
-              <span>&rarr;</span>
-            </a>
-
-            <a 
-              href="#projects" 
-              onClick={() => setMenuOpen(false)}
-              className="py-2 border-b border-[#FDF8F0]/10 hover:text-[#93F1E3] transition-colors flex items-center justify-between"
-            >
-              <span>03. Software Projects &amp; Repos</span>
-              <span>&rarr;</span>
-            </a>
-
-            <a 
-              href="#certifications" 
-              onClick={() => setMenuOpen(false)}
-              className="py-2 border-b border-[#FDF8F0]/10 hover:text-[#93F1E3] transition-colors flex items-center justify-between"
-            >
-              <span>04. Credentials &amp; Certifications</span>
-              <span>&rarr;</span>
-            </a>
-
-            {/* Special Bryan Lovin Style Quick Apps */}
-            <div className="pt-4 flex flex-col gap-3">
-              <span className="text-[11px] uppercase tracking-widest text-[#93F1E3] font-bold">
-                // Interactive Sub-Views
-              </span>
-              <div className="grid grid-cols-2 gap-3">
+              {/* Sub-Interactive Quick Links */}
+              <div className="pt-4 flex flex-wrap items-center gap-3 font-mono text-xs">
                 <button
                   onClick={() => { setMenuOpen(false); setActiveModal("stack"); }}
-                  className="p-3 text-left rounded-xl bg-[#5C435D] hover:bg-[#4D354E] border border-[#FDF8F0]/10 text-xs font-mono"
+                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#93F1E3] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors"
                 >
-                  <span className="text-[#93F1E3] block font-bold mb-0.5">Stack</span>
-                  <span className="text-[#FDF8F0]/70 text-[11px]">Hardware &amp; tools</span>
+                  Stack // Tools
                 </button>
                 <button
                   onClick={() => { setMenuOpen(false); setActiveModal("ama"); }}
-                  className="p-3 text-left rounded-xl bg-[#5C435D] hover:bg-[#4D354E] border border-[#FDF8F0]/10 text-xs font-mono"
+                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#93F1E3] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors"
                 >
-                  <span className="text-[#93F1E3] block font-bold mb-0.5">AMA</span>
-                  <span className="text-[#FDF8F0]/70 text-[11px]">Tanya langsung</span>
+                  AMA // Tanya Bryan
                 </button>
                 <button
                   onClick={() => { setMenuOpen(false); setActiveModal("listening"); }}
-                  className="p-3 text-left rounded-xl bg-[#5C435D] hover:bg-[#4D354E] border border-[#FDF8F0]/10 text-xs font-mono"
+                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#93F1E3] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors"
                 >
-                  <span className="text-[#93F1E3] block font-bold mb-0.5">Listening</span>
-                  <span className="text-[#FDF8F0]/70 text-[11px]">Soundtrack coding</span>
+                  Listening
                 </button>
                 <button
                   onClick={() => { setMenuOpen(false); setActiveModal("til"); }}
-                  className="p-3 text-left rounded-xl bg-[#5C435D] hover:bg-[#4D354E] border border-[#FDF8F0]/10 text-xs font-mono"
+                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#93F1E3] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors"
                 >
-                  <span className="text-[#93F1E3] block font-bold mb-0.5">TIL</span>
-                  <span className="text-[#FDF8F0]/70 text-[11px]">Catatan teknis</span>
+                  TIL // Snippets
                 </button>
+              </div>
+
+              {/* Social Channels */}
+              <div className="flex flex-wrap gap-6 pt-6 font-mono text-xs sm:text-sm text-[#FDF8F0]/60">
+                <a href="https://github.com/Yogiexc" target="_blank" rel="noopener noreferrer" className="hover:text-[#93F1E3] transition-colors">
+                  GITHUB ↗
+                </a>
+                <a href="https://linkedin.com/in/bryanyogie" target="_blank" rel="noopener noreferrer" className="hover:text-[#93F1E3] transition-colors">
+                  LINKEDIN ↗
+                </a>
+                <a href="https://wa.me/62882005703770" target="_blank" rel="noopener noreferrer" className="hover:text-[#93F1E3] transition-colors">
+                  WHATSAPP ↗
+                </a>
+                <a href="mailto:bryanyogie@student.uns.ac.id" className="hover:text-[#93F1E3] transition-colors">
+                  EMAIL ↗
+                </a>
               </div>
             </div>
 
-          </div>
-        </div>
-      )}
+            {/* SISI KANAN (Desktop Only): Featured Focus Card & Massive Ambient Watermark */}
+            <div className="hidden md:flex flex-1 bg-[#5C435D] p-16 lg:p-20 flex-col justify-center relative overflow-hidden">
+              <div className="absolute top-10 left-12 font-mono text-xs uppercase tracking-widest text-[#93F1E3]">
+                // Active Engineering Focus
+              </div>
+              
+              <div className="space-y-6 relative z-10">
+                <div className="text-xs font-mono text-[#FDF8F0]/60">
+                  SURAKARTA, ID • UNS INFORMATICS
+                </div>
+                <h3 className="text-3xl lg:text-4xl font-outfit font-black leading-tight max-w-md text-[#FDF8F0]">
+                  BRIDGING HARDWARE TOPOLOGY WITH DISTRIBUTED WEB CODE.
+                </h3>
+                <p className="font-sans text-sm text-[#FDF8F0]/80 max-w-sm leading-relaxed">
+                  Forged in Computer &amp; Network Engineering (SMK TKJ). Designing low-latency web apps in Next.js/NestJS and quantitative execution bots in Python.
+                </p>
+                <a
+                  href="#projects"
+                  onClick={() => setMenuOpen(false)}
+                  className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[#93F1E3] hover:translate-x-2 transition-transform"
+                >
+                  Explore Projects <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+
+              {/* Watermark Besar Khas Split-Menu */}
+              <span className="absolute -bottom-16 -right-16 text-[18rem] lg:text-[22rem] font-outfit font-black leading-none text-[#FDF8F0]/[0.03] select-none pointer-events-none">
+                BYS
+              </span>
+            </div>
+
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* =========================================================================
-          MAIN SINGLE-COLUMN CONTENT (brianlovin.com Layout Style)
+          3. MAIN SINGLE-COLUMN CONTENT (brianlovin.com Layout Style)
           ========================================================================= */}
-      <main className="max-w-2xl mx-auto px-6 py-12 sm:py-20 flex flex-col gap-16 md:gap-20">
+      <main id="hero" className="max-w-2xl mx-auto px-6 pt-32 pb-20 flex flex-col gap-16 md:gap-20">
 
         {/* 1. Header Profile */}
         <header className="flex flex-col gap-6">
@@ -327,7 +383,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-mono text-[#FDF8F0]/70 bg-[#5C435D] px-3 py-1.5 rounded-full border border-[#FDF8F0]/10">
+            <div className="flex items-center gap-2 text-xs font-mono text-[#FDF8F0]/70 bg-[#5C435D] px-3.5 py-1.5 rounded-full border border-[#FDF8F0]/10">
               <span className="w-2 h-2 rounded-full bg-[#93F1E3] animate-pulse" />
               <span>Surakarta, ID</span>
             </div>
@@ -387,7 +443,7 @@ export default function Home() {
           </p>
         </section>
 
-        {/* 3. Section: Writing (5 Judul dengan Slug ID Acak Ala Brian Lovin) */}
+        {/* 3. Section: Writing (5 Judul Artikel Asli Bryan) */}
         <section id="writing" className="flex flex-col gap-5 border-t border-[#FDF8F0]/15 pt-10">
           <div className="flex items-center justify-between">
             <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#93F1E3] font-semibold">
