@@ -54,12 +54,12 @@ export default function CustomCursor() {
 
       const onMouseEnterLink = () => {
         gsap.to(cursor, { scale: 0, duration: 0.3 });
-        gsap.to(follower, { scale: 1.5, backgroundColor: "rgba(185,245,216,0.25)", duration: 0.3 });
+        gsap.to(follower, { scale: 1.5, backgroundColor: "rgba(255,107,0,0.25)", borderColor: "#FF6B00", duration: 0.3 });
       };
 
       const onMouseLeaveLink = () => {
         gsap.to(cursor, { scale: 1, duration: 0.3 });
-        gsap.to(follower, { scale: 1, backgroundColor: "transparent", duration: 0.3 });
+        gsap.to(follower, { scale: 1, backgroundColor: "transparent", borderColor: "#FF6B00", duration: 0.3 });
       };
 
       window.addEventListener("mousemove", onMouseMove);
@@ -97,13 +97,13 @@ export default function CustomCursor() {
       {/* Solid dot */}
       <div 
         ref={cursorRef} 
-        className="fixed top-0 left-0 w-3 h-3 bg-[#ff7043] rounded-full pointer-events-none z-[99999] -translate-x-1/2 -translate-y-1/2 shadow-[0_0_12px_rgba(255,112,67,0.9)]"
+        className="fixed top-0 left-0 w-3 h-3 bg-[#FF6B00] rounded-full pointer-events-none z-[99999] -translate-x-1/2 -translate-y-1/2 shadow-[0_0_12px_rgba(255,107,0,0.9)]"
       />
       
       {/* Smooth follower outline */}
       <div 
         ref={followerRef} 
-        className="fixed top-0 left-0 w-10 h-10 border-2 border-[#b9f5d8] rounded-full pointer-events-none z-[99998] -translate-x-1/2 -translate-y-1/2"
+        className="fixed top-0 left-0 w-10 h-10 border-2 border-[#FF6B00] rounded-full pointer-events-none z-[99998] -translate-x-1/2 -translate-y-1/2"
       />
     </>
   );

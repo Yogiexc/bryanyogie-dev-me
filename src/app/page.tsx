@@ -182,41 +182,37 @@ export default function Home() {
     <div className="min-h-screen bg-[#6E536F] text-[#FDF8F0] selection:bg-[#FF6B00] selection:text-[#FDF8F0] antialiased">
       
       {/* =========================================================================
-          1. FLOATING HEADER BAR (Pumpkin Orange Header)
+          1. FLOATING HEADER BAR (Mix-Blend-Difference)
           ========================================================================= */}
-      {!menuOpen && (
-        <header 
-          className={`fixed top-0 left-0 w-full z-40 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${
-            isScrolled 
-              ? "py-3.5 bg-[#FF6B00]/95 backdrop-blur-md shadow-lg shadow-black/15 text-white" 
-              : "py-6 bg-transparent text-[#FF6B00]"
-          }`}
+      <header 
+        className={`fixed top-0 left-0 w-full z-40 flex items-center justify-between px-6 md:px-12 transition-all duration-500 will-change-transform mix-blend-difference text-white ${
+          isScrolled ? "py-4" : "py-6"
+        }`}
+      >
+        {/* Brand / Logo */}
+        <a 
+          href="#hero" 
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick("#hero");
+          }}
+          className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter cursor-pointer hover:opacity-85 transition-opacity"
         >
-          {/* Brand / Logo */}
-          <a 
-            href="#hero" 
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavClick("#hero");
-            }}
-            className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter cursor-pointer hover:opacity-85 transition-opacity"
-          >
-            BRYAN YOGIE
-          </a>
+          BRYAN YOGIE
+        </a>
 
-          {/* Trigger Button */}
-          <button 
-            onClick={() => setMenuOpen(true)}
-            className="flex items-center gap-2 group cursor-pointer"
-            aria-label="Open navigation menu"
-          >
-            <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-60 transition-opacity font-bold">
-              Menu
-            </span>
-            <Menu className="w-8 h-8 group-hover:scale-105 transition-transform" />
-          </button>
-        </header>
-      )}
+        {/* Trigger Button */}
+        <button 
+          onClick={() => setMenuOpen(true)}
+          className="flex items-center gap-2 group cursor-pointer"
+          aria-label="Open navigation menu"
+        >
+          <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-50 transition-opacity font-bold">
+            Menu
+          </span>
+          <Menu className="w-8 h-8 group-hover:scale-105 transition-transform" />
+        </button>
+      </header>
 
       {/* =========================================================================
           2. FULLSCREEN OVERLAY MENU (Split Screen Slide with Text Roll Effect)
@@ -231,8 +227,8 @@ export default function Home() {
             className="fixed inset-0 bg-[#FF6B00] z-50 flex flex-col md:flex-row text-white overflow-hidden"
           >
             {/* Top Close Bar */}
-            <div className="absolute top-0 left-0 w-full flex items-center justify-between px-6 md:px-12 py-6 z-50 text-white">
-              <span className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter select-none">
+            <div className="absolute top-0 left-0 w-full flex items-center justify-between px-6 md:px-12 py-6 z-50 mix-blend-difference text-white">
+              <span className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter select-none cursor-pointer" onClick={() => setMenuOpen(false)}>
                 BRYAN YOGIE
               </span>
               <button 
@@ -240,7 +236,7 @@ export default function Home() {
                 className="flex items-center gap-2 group cursor-pointer"
                 aria-label="Close navigation menu"
               >
-                <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-75 transition-opacity font-bold">
+                <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-50 transition-opacity font-bold">
                   Close
                 </span>
                 <X className="w-8 h-8 group-hover:rotate-90 transition-transform duration-300" />
@@ -248,7 +244,7 @@ export default function Home() {
             </div>
 
             {/* SISI KIRI: Big Typography Navigation Links with Clean Spacing */}
-            <div className="flex-1 flex flex-col justify-center px-6 md:px-20 space-y-4 md:space-y-6 pt-24 md:pt-0 bg-[#4D354E]">
+            <div className="flex-1 flex flex-col justify-center px-6 md:px-20 space-y-4 md:space-y-6 pt-32 pb-12 md:pt-0 md:pb-0 bg-[#4D354E] overflow-y-auto">
               <nav className="flex flex-col space-y-2 md:space-y-4" aria-label="Main Navigation">
                 {navMenuItems.map((item, i) => (
                   <motion.button
@@ -273,7 +269,7 @@ export default function Home() {
               </nav>
 
               {/* Social Channels - Clean & Spaced */}
-              <div className="flex flex-wrap gap-6 sm:gap-8 pt-8 border-t border-[#FDF8F0]/15 font-mono text-xs sm:text-sm text-[#FDF8F0]/70">
+              <div className="flex flex-wrap gap-6 sm:gap-8 pt-6 border-t border-[#FDF8F0]/15 font-mono text-xs sm:text-sm text-[#FDF8F0]/70">
                 <a href="https://github.com/Yogiexc" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6B00] transition-colors">
                   GITHUB ↗
                 </a>
