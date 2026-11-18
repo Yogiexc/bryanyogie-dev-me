@@ -9,10 +9,6 @@ import {
   X, 
   ArrowRight,
   MessageSquare, 
-  Layers, 
-  HelpCircle, 
-  Headphones, 
-  Terminal, 
   Send, 
   Check 
 } from "lucide-react";
@@ -139,15 +135,7 @@ const navMenuItems = [
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
-  // Modals for interactive tools
-  const [activeModal, setActiveModal] = useState<string | null>(null);
   const [selectedPost, setSelectedPost] = useState<Writing | null>(null);
-
-  // AMA form state
-  const [question, setQuestion] = useState("");
-  const [senderName, setSenderName] = useState("");
-  const [amaSuccess, setAmaSuccess] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -161,7 +149,6 @@ export default function Home() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setMenuOpen(false);
-        setActiveModal(null);
         setSelectedPost(null);
       }
     };
@@ -181,55 +168,55 @@ export default function Home() {
     };
   }, [menuOpen]);
 
-  const handleSendQuestion = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!question.trim()) return;
-
-    const text = encodeURIComponent(
-      `Halo Bryan! [Tanya Lewat Web Portofolio]\nDari: ${senderName || "Anonim"}\nPertanyaan: ${question}`
-    );
-    window.open(`https://wa.me/62882005703770?text=${text}`, "_blank");
-
-    setAmaSuccess(true);
+  const handleNavClick = (href: string) => {
+    setMenuOpen(false);
     setTimeout(() => {
-      setQuestion("");
-      setSenderName("");
-      setAmaSuccess(false);
-      setActiveModal(null);
-    }, 1500);
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 150);
   };
 
   return (
     <div className="min-h-screen bg-[#6E536F] text-[#FDF8F0] selection:bg-[#FF6B00] selection:text-[#FDF8F0] antialiased">
       
       {/* =========================================================================
-          1. FLOATING HEADER BAR (Mix-Blend-Difference with dynamic scroll padding)
+          1. FLOATING HEADER BAR (Pumpkin Orange Header)
           ========================================================================= */}
-      <header 
-        className={`fixed top-0 left-0 w-full z-40 flex items-center justify-between px-6 md:px-12 transition-all duration-500 will-change-transform mix-blend-difference text-white ${
-          isScrolled ? "py-4" : "py-6"
-        }`}
-      >
-        {/* Brand / Logo */}
-        <a 
-          href="#hero" 
-          className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter cursor-pointer z-50 hover:opacity-80 transition-opacity"
+      {!menuOpen && (
+        <header 
+          className={`fixed top-0 left-0 w-full z-40 flex items-center justify-between px-6 md:px-12 transition-all duration-300 ${
+            isScrolled 
+              ? "py-3.5 bg-[#FF6B00]/95 backdrop-blur-md shadow-lg shadow-black/15 text-white" 
+              : "py-6 bg-transparent text-[#FF6B00]"
+          }`}
         >
-          BRYAN YOGIE
-        </a>
+          {/* Brand / Logo */}
+          <a 
+            href="#hero" 
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#hero");
+            }}
+            className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter cursor-pointer hover:opacity-85 transition-opacity"
+          >
+            BRYAN YOGIE
+          </a>
 
-        {/* Trigger Button */}
-        <button 
-          onClick={() => setMenuOpen(true)}
-          className="flex items-center gap-2 group z-50 cursor-pointer"
-          aria-label="Open navigation menu"
-        >
-          <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-50 transition-opacity">
-            Menu
-          </span>
-          <Menu className="w-8 h-8 group-hover:scale-105 transition-transform" />
-        </button>
-      </header>
+          {/* Trigger Button */}
+          <button 
+            onClick={() => setMenuOpen(true)}
+            className="flex items-center gap-2 group cursor-pointer"
+            aria-label="Open navigation menu"
+          >
+            <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-60 transition-opacity font-bold">
+              Menu
+            </span>
+            <Menu className="w-8 h-8 group-hover:scale-105 transition-transform" />
+          </button>
+        </header>
+      )}
 
       {/* =========================================================================
           2. FULLSCREEN OVERLAY MENU (Split Screen Slide with Text Roll Effect)
@@ -240,80 +227,53 @@ export default function Home() {
             initial={{ y: "-100%" }}
             animate={{ y: 0 }}
             exit={{ y: "-100%" }}
-            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
             className="fixed inset-0 bg-[#FF6B00] z-50 flex flex-col md:flex-row text-white overflow-hidden"
           >
-            {/* Overlay Header Bar with Close Trigger */}
-            <div className="absolute top-0 left-0 w-full flex items-center justify-between px-6 md:px-12 py-6 z-50 mix-blend-difference text-white">
-              <div className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter">
+            {/* Top Close Bar */}
+            <div className="absolute top-0 left-0 w-full flex items-center justify-between px-6 md:px-12 py-6 z-50 text-white">
+              <span className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter select-none">
                 BRYAN YOGIE
-              </div>
+              </span>
               <button 
                 onClick={() => setMenuOpen(false)} 
                 className="flex items-center gap-2 group cursor-pointer"
                 aria-label="Close navigation menu"
               >
-                <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-50 transition-opacity">
+                <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-75 transition-opacity font-bold">
                   Close
                 </span>
                 <X className="w-8 h-8 group-hover:rotate-90 transition-transform duration-300" />
               </button>
             </div>
 
-            {/* SISI KIRI: Big Typography Navigation Links with Rolling Slide Effect */}
-            <div className="flex-1 flex flex-col justify-center px-6 md:px-20 space-y-3 md:space-y-4 pt-24 md:pt-0 bg-[#4D354E]">
-              {navMenuItems.map((item, i) => (
-                <motion.a
-                  key={item.title}
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                  initial={{ x: -80, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: -80, opacity: 0 }}
-                  transition={{ delay: 0.25 + i * 0.08, duration: 0.5 }}
-                  className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-outfit font-black tracking-tight text-[#FDF8F0] hover:text-[#FF6B00] transition-colors flex items-center group overflow-hidden w-fit"
-                >
-                  <span className="relative overflow-hidden inline-block leading-[1.05]">
-                    <span className="block group-hover:-translate-y-full transition-transform duration-500 ease-in-out">
-                      {item.title}
+            {/* SISI KIRI: Big Typography Navigation Links with Clean Spacing */}
+            <div className="flex-1 flex flex-col justify-center px-6 md:px-20 space-y-4 md:space-y-6 pt-24 md:pt-0 bg-[#4D354E]">
+              <nav className="flex flex-col space-y-2 md:space-y-4" aria-label="Main Navigation">
+                {navMenuItems.map((item, i) => (
+                  <motion.button
+                    key={item.title}
+                    onClick={() => handleNavClick(item.href)}
+                    initial={{ x: -60, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -60, opacity: 0 }}
+                    transition={{ delay: 0.2 + i * 0.06, duration: 0.4 }}
+                    className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-outfit font-black tracking-tight text-[#FDF8F0] hover:text-[#FF6B00] transition-colors flex items-center group overflow-hidden w-fit cursor-pointer text-left"
+                  >
+                    <span className="relative overflow-hidden inline-block leading-[1.08]">
+                      <span className="block group-hover:-translate-y-full transition-transform duration-500 ease-in-out">
+                        {item.title}
+                      </span>
+                      <span className="absolute top-0 left-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out text-[#FF6B00]">
+                        {item.title}
+                      </span>
                     </span>
-                    <span className="absolute top-0 left-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out text-[#FF6B00]">
-                      {item.title}
-                    </span>
-                  </span>
-                </motion.a>
-              ))}
+                  </motion.button>
+                ))}
+              </nav>
 
-              {/* Sub-Interactive Quick Links */}
-              <div className="pt-3 flex flex-wrap items-center gap-2.5 font-mono text-xs">
-                <button
-                  onClick={() => { setMenuOpen(false); setActiveModal("stack"); }}
-                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#FF6B00] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors cursor-pointer"
-                >
-                  Stack // Tools
-                </button>
-                <button
-                  onClick={() => { setMenuOpen(false); setActiveModal("ama"); }}
-                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#FF6B00] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors cursor-pointer"
-                >
-                  AMA // Tanya Bryan
-                </button>
-                <button
-                  onClick={() => { setMenuOpen(false); setActiveModal("listening"); }}
-                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#FF6B00] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors cursor-pointer"
-                >
-                  Listening
-                </button>
-                <button
-                  onClick={() => { setMenuOpen(false); setActiveModal("til"); }}
-                  className="px-3 py-1.5 rounded-full bg-[#5C435D] text-[#FF6B00] hover:bg-[#FDF8F0] hover:text-[#6E536F] transition-colors cursor-pointer"
-                >
-                  TIL // Snippets
-                </button>
-              </div>
-
-              {/* Social Channels */}
-              <div className="flex flex-wrap gap-6 pt-5 font-mono text-xs sm:text-sm text-[#FDF8F0]/60">
+              {/* Social Channels - Clean & Spaced */}
+              <div className="flex flex-wrap gap-6 sm:gap-8 pt-8 border-t border-[#FDF8F0]/15 font-mono text-xs sm:text-sm text-[#FDF8F0]/70">
                 <a href="https://github.com/Yogiexc" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6B00] transition-colors">
                   GITHUB ↗
                 </a>
@@ -329,29 +289,28 @@ export default function Home() {
               </div>
             </div>
 
-            {/* SISI KANAN (Desktop Only): Featured Focus Card & Massive Ambient Watermark */}
+            {/* SISI KANAN (Desktop Only): Featured Focus Card & Ambient Watermark */}
             <div className="hidden md:flex flex-1 bg-[#FF6B00] p-16 lg:p-20 flex-col justify-center relative overflow-hidden">
               <div className="space-y-6 relative z-10 text-white">
-                <span className="text-xs font-mono opacity-80 uppercase tracking-widest block">
+                <span className="text-xs font-mono opacity-85 uppercase tracking-widest block font-bold">
                   Surakarta, ID • UNS Informatics
                 </span>
                 <h3 className="text-4xl lg:text-5xl font-outfit font-black leading-none max-w-md">
                   BRIDGING HARDWARE TOPOLOGY WITH DISTRIBUTED WEB CODE.
                 </h3>
-                <p className="opacity-90 max-w-sm font-sans text-sm leading-relaxed">
+                <p className="opacity-95 max-w-sm font-sans text-sm leading-relaxed">
                   Forged in Computer &amp; Network Engineering (SMK TKJ). Designing low-latency web apps in Next.js/NestJS and quantitative execution algorithms in Python.
                 </p>
-                <a
-                  href="#projects"
-                  onClick={() => setMenuOpen(false)}
-                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider hover:translate-x-2 transition-transform"
+                <button
+                  onClick={() => handleNavClick("#projects")}
+                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider hover:translate-x-2 transition-transform cursor-pointer"
                 >
                   Explore Projects <ArrowRight className="w-4 h-4" />
-                </a>
+                </button>
               </div>
 
               {/* Watermark Besar Khas Split-Menu */}
-              <span className="absolute -bottom-20 -right-20 text-[20rem] font-outfit font-black leading-none opacity-15 select-none pointer-events-none text-white">
+              <span className="absolute -bottom-20 -right-20 text-[20rem] font-outfit font-black leading-none opacity-20 select-none pointer-events-none text-white">
                 BYS
               </span>
             </div>
@@ -379,7 +338,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-mono text-[#FDF8F0]/80 bg-[#5C435D] px-3.5 py-1.5 rounded-full border border-[#FDF8F0]/15">
+            <div className="flex items-center gap-2 text-xs font-mono text-[#FDF8F0]/90 bg-[#5C435D] px-3.5 py-1.5 rounded-full border border-[#FDF8F0]/15">
               <span className="w-2 h-2 rounded-full bg-[#FF6B00] animate-pulse" />
               <span>Surakarta, ID</span>
             </div>
@@ -625,163 +584,6 @@ export default function Home() {
                 // Full technical essay and code repository logs maintained on GitHub.
               </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* =========================================================================
-          MODALS: FITUR KHUSUS (STACK, AMA, LISTENING, TIL)
-          ========================================================================= */}
-      {activeModal && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setActiveModal(null);
-          }}
-        >
-          <div className="relative w-full max-w-lg bg-[#5C435D] rounded-2xl border border-[#FDF8F0]/20 p-6 sm:p-8 shadow-2xl flex flex-col max-h-[85vh] overflow-y-auto">
-            
-            <div className="flex items-center justify-between pb-4 border-b border-[#FDF8F0]/15 mb-6">
-              <span className="font-mono text-xs uppercase tracking-widest text-[#FF6B00]">
-                bryanyogie.is-a.dev/{activeModal}
-              </span>
-              <button
-                onClick={() => setActiveModal(null)}
-                className="text-xs font-mono px-2 py-1 rounded bg-[#4D354E] hover:bg-[#FDF8F0] text-[#FDF8F0] hover:text-[#6E536F] transition-colors cursor-pointer"
-              >
-                Close [Esc]
-              </button>
-            </div>
-
-            {/* STACK MODAL */}
-            {activeModal === "stack" && (
-              <div className="flex flex-col gap-5">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#4D354E] text-[#FF6B00]">
-                    <Layers size={20} />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-[#FDF8F0]">Bryan's Engineering Stack</h3>
-                    <p className="text-xs text-[#FDF8F0]/60 font-mono">Tools &amp; Hardware yang Dipakai Sehari-hari</p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3.5 text-xs font-mono">
-                  <div className="p-3.5 rounded-lg bg-[#4D354E]/70 border border-[#FDF8F0]/10">
-                    <span className="text-[#FF6B00] block mb-1 font-bold">// WORKSTATION &amp; HARDWARE</span>
-                    <p className="text-[#FDF8F0]/80">Laptop Lenovo + Dual Monitor Setup · MikroTik Routerboard · Gigabit Patch Panel</p>
-                  </div>
-                  <div className="p-3.5 rounded-lg bg-[#4D354E]/70 border border-[#FDF8F0]/10">
-                    <span className="text-[#FF6B00] block mb-1 font-bold">// ENVIRONMENT &amp; CLI</span>
-                    <p className="text-[#FDF8F0]/80">VS Code + Neovim Keybindings · Turbopack · Git · Warp Terminal · Linux WSL2</p>
-                  </div>
-                  <div className="p-3.5 rounded-lg bg-[#4D354E]/70 border border-[#FDF8F0]/10">
-                    <span className="text-[#FF6B00] block mb-1 font-bold">// PRODUCTION TECH</span>
-                    <p className="text-[#FDF8F0]/80">Next.js 16 App Router · TypeScript · NestJS · PostgreSQL · Python MT5 API · Tailwind CSS</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* AMA MODAL */}
-            {activeModal === "ama" && (
-              <div className="flex flex-col gap-5">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#4D354E] text-[#FF6B00]">
-                    <HelpCircle size={20} />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-[#FDF8F0]">Ask Bryan Anything (AMA)</h3>
-                    <p className="text-xs text-[#FDF8F0]/60 font-mono">Kirim pertanyaan seputar jaringan, web, atau bot quant</p>
-                  </div>
-                </div>
-
-                {amaSuccess ? (
-                  <div className="p-6 rounded-xl bg-[#4D354E] text-center flex flex-col items-center gap-2">
-                    <Check size={28} className="text-[#FF6B00]" />
-                    <span className="text-sm font-bold text-[#FDF8F0]">Pesan Diteruskan!</span>
-                    <p className="text-xs text-[#FDF8F0]/70 font-mono">Langsung tersambung ke WhatsApp Bryan.</p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSendQuestion} className="flex flex-col gap-3">
-                    <input
-                      type="text"
-                      value={senderName}
-                      onChange={(e) => setSenderName(e.target.value)}
-                      placeholder="Nama kamu (opsional)"
-                      className="w-full p-3 rounded-xl bg-[#4D354E] border border-[#FDF8F0]/15 text-xs text-[#FDF8F0] placeholder-[#FDF8F0]/40 focus:outline-none focus:border-[#FF6B00] font-sans"
-                    />
-                    <textarea
-                      required
-                      rows={4}
-                      value={question}
-                      onChange={(e) => setQuestion(e.target.value)}
-                      placeholder="Tulis pertanyaanmu di sini..."
-                      className="w-full p-3.5 rounded-xl bg-[#4D354E] border border-[#FDF8F0]/15 text-xs sm:text-sm text-[#FDF8F0] placeholder-[#FDF8F0]/40 focus:outline-none focus:border-[#FF6B00] resize-none font-sans"
-                    />
-                    <button
-                      type="submit"
-                      className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#FF6B00] text-[#FDF8F0] hover:bg-[#FDF8F0] hover:text-[#6E536F] font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
-                    >
-                      <Send size={13} />
-                      <span>Kirim Pertanyaan</span>
-                    </button>
-                  </form>
-                )}
-              </div>
-            )}
-
-            {/* LISTENING MODAL */}
-            {activeModal === "listening" && (
-              <div className="flex flex-col gap-5">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#4D354E] text-[#FF6B00]">
-                    <Headphones size={20} />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-[#FDF8F0]">Listening Telemetry</h3>
-                    <p className="text-xs text-[#FDF8F0]/60 font-mono">Audio background untuk fokus coding</p>
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-xl bg-[#4D354E]/70 border border-[#FDF8F0]/10 flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#FF6B00] animate-ping" />
-                    <div>
-                      <h4 className="text-sm font-bold text-[#FDF8F0]">Deep Minimal Techno &amp; Ambient</h4>
-                      <p className="text-xs text-[#FDF8F0]/60 font-mono">Fokus konstan saat memprogram logika sistem</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* TIL MODAL */}
-            {activeModal === "til" && (
-              <div className="flex flex-col gap-5">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#4D354E] text-[#FF6B00]">
-                    <Terminal size={20} />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-[#FDF8F0]">Today I Learned (TIL)</h3>
-                    <p className="text-xs text-[#FDF8F0]/60 font-mono">Field snippets &amp; catatan teknis harian</p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3 text-xs font-mono">
-                  <div className="p-3 rounded-lg bg-[#4D354E] border border-[#FDF8F0]/10">
-                    <span className="text-[#FF6B00] block mb-1 font-bold">2026-02 // Next.js Turbopack Bundle Splitting</span>
-                    <p className="text-[#FDF8F0]/80">Menghilangkan client wrapper yang tidak perlu memotong Total Blocking Time (TBT) hingga 140ms pada koneksi HP lambat.</p>
-                  </div>
-                  <div className="p-3 rounded-lg bg-[#4D354E] border border-[#FDF8F0]/10">
-                    <span className="text-[#FF6B00] block mb-1 font-bold">2026-01 // MetaTrader 5 Zero-Sleep Tick Dispatch</span>
-                    <p className="text-[#FDF8F0]/80">Beralih dari polling loop interval ke event-driven tick callbacks memangkas latensi eksekusi order trading dari 45ms ke 8ms.</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
           </div>
         </div>
       )}
