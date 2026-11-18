@@ -226,25 +226,28 @@ export default function Home() {
             transition={{ duration: 0.65, ease: [0.76, 0, 0.24, 1] }}
             className="fixed inset-0 bg-[#FF6B00] z-50 flex flex-col md:flex-row text-white overflow-hidden"
           >
-            {/* Top Close Bar */}
-            <div className="absolute top-0 left-0 w-full flex items-center justify-between px-6 md:px-12 py-6 z-50 mix-blend-difference text-white">
-              <span className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter select-none cursor-pointer" onClick={() => setMenuOpen(false)}>
+            {/* Top Close Bar - Menggunakan warna Putih Tulang #FDF8F0 murni tanpa mix-blend agar tidak terbalik jadi hijau mint atau biru */}
+            <div className="absolute top-0 left-0 w-full flex items-center justify-between px-6 md:px-12 py-6 z-50 pointer-events-none">
+              <span 
+                className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter text-[#FDF8F0] select-none cursor-pointer pointer-events-auto hover:opacity-80 transition-opacity" 
+                onClick={() => setMenuOpen(false)}
+              >
                 BRYAN YOGIE
               </span>
               <button 
                 onClick={() => setMenuOpen(false)} 
-                className="flex items-center gap-2 group cursor-pointer"
+                className="flex items-center gap-2 group cursor-pointer pointer-events-auto text-[#FDF8F0] hover:text-[#4D354E] transition-colors"
                 aria-label="Close navigation menu"
               >
-                <span className="hidden md:block font-mono text-xs uppercase tracking-widest group-hover:opacity-50 transition-opacity font-bold">
+                <span className="hidden md:block font-mono text-xs uppercase tracking-widest font-bold opacity-80 group-hover:opacity-100 transition-opacity">
                   Close
                 </span>
                 <X className="w-8 h-8 group-hover:rotate-90 transition-transform duration-300" />
               </button>
             </div>
 
-            {/* SISI KIRI: Big Typography Navigation Links with Clean Spacing */}
-            <div className="flex-1 flex flex-col justify-center px-6 md:px-20 space-y-4 md:space-y-6 pt-32 pb-12 md:pt-0 md:pb-0 bg-[#4D354E] overflow-y-auto">
+            {/* SISI KIRI: Big Typography Navigation Links with Clean Spacing & Separated from Top */}
+            <div className="flex-1 flex flex-col justify-center px-6 md:px-20 space-y-4 md:space-y-6 pt-28 pb-12 md:pt-16 md:pb-0 bg-[#4D354E] overflow-y-auto">
               <nav className="flex flex-col space-y-2 md:space-y-4" aria-label="Main Navigation">
                 {navMenuItems.map((item, i) => (
                   <motion.button
