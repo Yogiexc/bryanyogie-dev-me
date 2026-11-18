@@ -251,19 +251,19 @@ export default function Home() {
             </div>
 
             {/* SISI KIRI: Big Typography Navigation Links with Clean Spacing & Separated from Top */}
-            <div className="flex-1 flex flex-col justify-center px-6 md:px-20 space-y-4 md:space-y-6 pt-32 pb-12 md:pt-20 md:pb-0 bg-[#4D354E] overflow-y-auto">
-              <nav className="flex flex-col space-y-3 md:space-y-4" aria-label="Main Navigation">
+            <div className="flex-1 flex flex-col justify-center px-6 md:px-14 lg:px-20 py-20 bg-[#4D354E] overflow-hidden">
+              <nav className="flex flex-col space-y-1.5 md:space-y-3" aria-label="Main Navigation">
                 {navMenuItems.map((item, i) => (
                   <motion.button
                     key={item.title}
                     onClick={() => handleNavClick(item.href)}
-                    initial={{ x: -40, opacity: 0 }}
+                    initial={{ x: -30, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: -40, opacity: 0 }}
-                    transition={{ delay: 0.15 + i * 0.05, duration: 0.35 }}
-                    className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-outfit font-black tracking-tight text-[#FDF8F0] hover:text-[#FF6B00] transition-colors flex items-center group overflow-hidden w-fit cursor-pointer text-left"
+                    exit={{ x: -30, opacity: 0 }}
+                    transition={{ delay: 0.1 + i * 0.04, duration: 0.3 }}
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-outfit font-black tracking-tight text-[#FDF8F0] hover:text-[#FF6B00] transition-colors flex items-center group overflow-hidden w-fit cursor-pointer text-left"
                   >
-                    <span className="relative overflow-hidden inline-block leading-[1.08]">
+                    <span className="relative overflow-hidden inline-block leading-[1.1]">
                       <span className="block group-hover:-translate-y-full transition-transform duration-500 ease-in-out">
                         {item.title}
                       </span>
@@ -276,7 +276,7 @@ export default function Home() {
               </nav>
 
               {/* Social Channels - Clean & Spaced */}
-              <div className="flex flex-wrap gap-6 sm:gap-8 pt-6 border-t border-[#FDF8F0]/15 font-mono text-xs sm:text-sm text-[#FDF8F0]/70">
+              <div className="flex flex-wrap gap-5 sm:gap-7 pt-6 mt-4 border-t border-[#FDF8F0]/15 font-mono text-xs sm:text-sm text-[#FDF8F0]/70">
                 <a href="https://github.com/Yogiexc" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6B00] transition-colors">
                   GITHUB ↗
                 </a>
