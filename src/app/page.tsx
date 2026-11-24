@@ -9,8 +9,9 @@ import {
   X, 
   ArrowRight,
   MessageSquare, 
-  Send, 
-  Check 
+  FolderGit2,
+  ExternalLink,
+  Search
 } from "lucide-react";
 
 interface Writing {
@@ -59,19 +60,12 @@ const writingsData: Writing[] = [
   },
 ];
 
-const projectsData = [
-  {
-    name: "SIPANDAI",
-    desc: "Sistem Pintar Ekosistem Desa: Platform tata kelola digital publik untuk administrasi kependudukan dan layanan warga desa cerdas.",
-    tag: "Next.js · PostgreSQL · Fullstack",
-    year: "2024",
-    url: "https://github.com/Yogiexc/SIPANDAI---Sistem-Pintar-Ekosistem-Desa",
-    image: "/image/projek/SiPandai.webp",
-  },
+const featuredProjects = [
   {
     name: "Journova",
     desc: "Academic Journal Publishing Platform: Arsitektur monorepo enterprise untuk pengelolaan naskah ilmiah, peer-review, dan publikasi jurnal multi-tenant.",
     tag: "Next.js · NestJS · Prisma · Monorepo",
+    category: "Fullstack Web",
     year: "2024",
     url: "https://github.com/Yogiexc/Journova",
     image: "/image/projek/Journova.webp",
@@ -80,17 +74,194 @@ const projectsData = [
     name: "SemiAutoTrade by BYS",
     desc: "Institutional Sniper Quantitative Algorithm: Mesin eksekusi trading otomatis terintegrasi MetaTrader 5 API dengan kalkulasi risiko real-time dan notifikasi telemetri Telegram.",
     tag: "Python 3 · MT5 API · Quant",
+    category: "Quant & Algo",
     year: "2024",
     url: "https://github.com/Yogiexc/SemiAutoTrade_byBYS",
     image: "/image/projek/botTrading.webp",
   },
   {
+    name: "SIPANDAI",
+    desc: "Sistem Pintar Ekosistem Desa: Platform tata kelola digital publik untuk administrasi kependudukan dan layanan warga desa cerdas.",
+    tag: "Next.js · PostgreSQL · Fullstack",
+    category: "Fullstack Web",
+    year: "2024",
+    url: "https://github.com/Yogiexc/SIPANDAI---Sistem-Pintar-Ekosistem-Desa",
+    image: "/image/projek/SiPandai.webp",
+  },
+  {
     name: "Iky Barbershop",
     desc: "Digital Booking & Slot Reservation: Aplikasi web reservasi antrean dan janji temu pelanggan dengan antarmuka responsif mobile-first.",
     tag: "React · Mobile First · Client Work",
+    category: "Client Work",
     year: "2023",
     url: "https://github.com/Yogiexc/iky_barbershop",
     image: "/image/projek/Iky-Barber.webp",
+  },
+];
+
+// Arsip Lengkap Semua Repositori Publik Milik Bryan Yogie Saputra
+interface ArchiveRepo {
+  name: string;
+  category: "Fullstack" | "Quant & Algo" | "Systems & Backend" | "Mobile" | "UI & Experiments";
+  lang: string;
+  desc: string;
+  url: string;
+}
+
+const allRepositories: ArchiveRepo[] = [
+  {
+    name: "Journova",
+    category: "Fullstack",
+    lang: "TypeScript",
+    desc: "Open-access academic journal management & publishing platform with Next.js monorepo & NestJS API.",
+    url: "https://github.com/Yogiexc/Journova"
+  },
+  {
+    name: "SemiAutoTrade_byBYS",
+    category: "Quant & Algo",
+    lang: "Python",
+    desc: "Semi-automatic MetaTrader 5 scalping bot with multi-timeframe signal filtering & Telegram telemetry.",
+    url: "https://github.com/Yogiexc/SemiAutoTrade_byBYS"
+  },
+  {
+    name: "SIPANDAI---Sistem-Pintar-Ekosistem-Desa",
+    category: "Fullstack",
+    lang: "TypeScript",
+    desc: "Smart village ecosystem & citizen population administrative portal built with Next.js & PostgreSQL.",
+    url: "https://github.com/Yogiexc/SIPANDAI---Sistem-Pintar-Ekosistem-Desa"
+  },
+  {
+    name: "go-job-queue",
+    category: "Systems & Backend",
+    lang: "Go",
+    desc: "High-throughput job queue system implementing the Worker Pool concurrency pattern in Go.",
+    url: "https://github.com/Yogiexc/go-job-queue"
+  },
+  {
+    name: "e-layanan-pbb-mobile",
+    category: "Mobile",
+    lang: "Dart",
+    desc: "Aplikasi mobile E-Layanan Pajak Bumi & Bangunan (PBB P2) Kota Surakarta berbasis Flutter.",
+    url: "https://github.com/Yogiexc/e-layanan-pbb-mobile"
+  },
+  {
+    name: "node-trading-bot-simulator",
+    category: "Quant & Algo",
+    lang: "JavaScript",
+    desc: "Orderbook emulator and educational quantitative trading bot simulator with historical tick backtesting.",
+    url: "https://github.com/Yogiexc/node-trading-bot-simulator"
+  },
+  {
+    name: "Enterprise-REST-API-GO",
+    category: "Systems & Backend",
+    lang: "Go",
+    desc: "Clean architecture enterprise RESTful API template in Go with JWT authentication & database migrations.",
+    url: "https://github.com/Yogiexc/Enterprise-REST-API-GO"
+  },
+  {
+    name: "fastapi-api-monitor",
+    category: "Systems & Backend",
+    lang: "Python",
+    desc: "Real-time endpoint health inspection & monitoring telemetry daemon built with FastAPI & AsyncIO.",
+    url: "https://github.com/Yogiexc/fastapi-api-monitor"
+  },
+  {
+    name: "code-lab",
+    category: "Systems & Backend",
+    lang: "Assembly",
+    desc: "Polyglot Systems Lab: x86-64 Assembly routines, Zig allocators, Nim concurrency, and Elixir actors.",
+    url: "https://github.com/Yogiexc/code-lab"
+  },
+  {
+    name: "GeoField",
+    category: "Mobile",
+    lang: "Dart",
+    desc: "Geospatial land mapping and field surveying mobile application built with Flutter.",
+    url: "https://github.com/Yogiexc/GeoField"
+  },
+  {
+    name: "Mobile_Pajak_Jambi",
+    category: "Mobile",
+    lang: "Dart",
+    desc: "Regional tax billing and taxpayer identity verification mobile app for Jambi municipal systems.",
+    url: "https://github.com/Yogiexc/Mobile_Pajak_Jambi"
+  },
+  {
+    name: "iky_barbershop",
+    category: "Fullstack",
+    lang: "TypeScript",
+    desc: "Digital reservation and queue booking client interface built for Iky Barbershop.",
+    url: "https://github.com/Yogiexc/iky_barbershop"
+  },
+  {
+    name: "cahaya-travel-initial-design",
+    category: "Fullstack",
+    lang: "TypeScript",
+    desc: "Fleet scheduling, passenger booking engine, and ticketing interface for regional travel services.",
+    url: "https://github.com/Yogiexc/cahaya-travel-initial-design"
+  },
+  {
+    name: "rawmap",
+    category: "Systems & Backend",
+    lang: "TypeScript",
+    desc: "Local-first interactive mapping tools and geospatial utilities built for developers.",
+    url: "https://github.com/Yogiexc/rawmap"
+  },
+  {
+    name: "native-web-components",
+    category: "UI & Experiments",
+    lang: "HTML / JS",
+    desc: "Reusable, framework-agnostic design system primitives engineered strictly with Web Components & Shadow DOM.",
+    url: "https://github.com/Yogiexc/native-web-components"
+  },
+  {
+    name: "zig-wasm-frontend-core",
+    category: "Systems & Backend",
+    lang: "Zig",
+    desc: "High-performance WebAssembly calculations compiled directly from Zig to browser runtime.",
+    url: "https://github.com/Yogiexc/zig-wasm-frontend-core"
+  },
+  {
+    name: "leptos-rust-ui",
+    category: "UI & Experiments",
+    lang: "Rust",
+    desc: "Experimental fine-grained reactive fullstack web UI authored in Rust with Leptos WASM framework.",
+    url: "https://github.com/Yogiexc/leptos-rust-ui"
+  },
+  {
+    name: "svelte5-admin-panel",
+    category: "UI & Experiments",
+    lang: "Svelte",
+    desc: "High-density admin dashboard exploring Svelte 5 Runes reactivity and zero-runtime bundle overhead.",
+    url: "https://github.com/Yogiexc/svelte5-admin-panel"
+  },
+  {
+    name: "qwik-resumable-ui",
+    category: "UI & Experiments",
+    lang: "JavaScript",
+    desc: "Zero-hydration resumable web architecture experiment using Qwik framework.",
+    url: "https://github.com/Yogiexc/qwik-resumable-ui"
+  },
+  {
+    name: "React-Performance-Lab",
+    category: "UI & Experiments",
+    lang: "JavaScript",
+    desc: "Benchmarking memoization patterns, concurrent rendering transitions, and virtualization in React.",
+    url: "https://github.com/Yogiexc/React-Performance-Lab"
+  },
+  {
+    name: "jadwalkita",
+    category: "Fullstack",
+    lang: "PHP",
+    desc: "Academic timetable scheduling and institutional classroom resource optimizer.",
+    url: "https://github.com/Yogiexc/jadwalkita"
+  },
+  {
+    name: "classform-product-dashboard",
+    category: "Fullstack",
+    lang: "PHP",
+    desc: "Modular product management dashboard implementing PHP OOP patterns with PDO & MySQL.",
+    url: "https://github.com/Yogiexc/classform-product-dashboard"
   },
 ];
 
@@ -136,6 +307,9 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Writing | null>(null);
+  const [isArchiveOpen, setIsArchiveOpen] = useState(false);
+  const [archiveFilter, setArchiveFilter] = useState<string>("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -150,15 +324,16 @@ export default function Home() {
       if (e.key === "Escape") {
         setMenuOpen(false);
         setSelectedPost(null);
+        setIsArchiveOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Lock body scroll when overlay menu is open
+  // Lock body scroll when overlay menu or modal is open
   useEffect(() => {
-    if (menuOpen) {
+    if (menuOpen || isArchiveOpen || selectedPost) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -166,7 +341,7 @@ export default function Home() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [menuOpen]);
+  }, [menuOpen, isArchiveOpen, selectedPost]);
 
   const handleNavClick = (href: string) => {
     setMenuOpen(false);
@@ -177,6 +352,15 @@ export default function Home() {
       }
     }, 150);
   };
+
+  const filteredArchive = allRepositories.filter((repo) => {
+    const matchesFilter = archiveFilter === "All" || repo.category === archiveFilter;
+    const matchesSearch = 
+      repo.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      repo.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      repo.lang.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
 
   return (
     <div className="min-h-screen bg-[#6E536F] text-[#FDF8F0] selection:bg-[#FF6B00] selection:text-[#FDF8F0] antialiased">
@@ -230,7 +414,7 @@ export default function Home() {
             transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
             className="fixed inset-0 z-50 flex flex-col md:flex-row overflow-hidden"
           >
-            {/* Top Bar Overlay: Logo di sisi kiri (ungu), Tombol Close di sisi kanan (oranye) */}
+            {/* Top Bar Overlay */}
             <div className="absolute top-0 left-0 w-full flex items-center justify-between px-6 md:px-12 py-6 z-50 pointer-events-none">
               <span 
                 className="text-2xl sm:text-3xl font-outfit font-black tracking-tighter text-[#FDF8F0] select-none cursor-pointer pointer-events-auto hover:text-[#FF6B00] transition-colors" 
@@ -250,7 +434,7 @@ export default function Home() {
               </button>
             </div>
 
-            {/* SISI KIRI: Big Typography Navigation Links with Clean Spacing & Separated from Top */}
+            {/* SISI KIRI: Big Typography Navigation Links with Clean Spacing */}
             <div className="flex-1 flex flex-col justify-center px-6 md:px-14 lg:px-20 py-20 bg-[#4D354E] overflow-hidden">
               <nav className="flex flex-col space-y-1.5 md:space-y-3" aria-label="Main Navigation">
                 {navMenuItems.map((item, i) => (
@@ -432,19 +616,29 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 4. Section: Projects */}
+        {/* 4. Section: Projects (4 Flagship Systems + Full Archive Directory Trigger) */}
         <section id="projects" className="flex flex-col gap-6 border-t border-[#FDF8F0]/15 pt-10">
           <div className="flex items-center justify-between">
-            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#FF6B00] font-bold">
-              03 // Selected Projects
-            </h2>
-            <span className="text-xs font-mono text-[#FDF8F0]/50">
-              {projectsData.length} Systems
-            </span>
+            <div className="flex items-center gap-3">
+              <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#FF6B00] font-bold">
+                03 // Selected Projects
+              </h2>
+              <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-[#5C435D] text-[#FDF8F0]/70">
+                {featuredProjects.length} Flagship
+              </span>
+            </div>
+            
+            <button
+              onClick={() => setIsArchiveOpen(true)}
+              className="text-xs font-mono text-[#FF6B00] hover:underline inline-flex items-center gap-1.5 cursor-pointer"
+            >
+              <FolderGit2 size={13} />
+              <span>Full Repository Index ({allRepositories.length}) ↗</span>
+            </button>
           </div>
 
           <div className="flex flex-col divide-y divide-[#FDF8F0]/10">
-            {projectsData.map((project) => (
+            {featuredProjects.map((project) => (
               <a
                 key={project.name}
                 href={project.url}
@@ -484,6 +678,25 @@ export default function Home() {
                 </div>
               </a>
             ))}
+          </div>
+
+          {/* Banner Tombol Jelajahi Semua Repo */}
+          <div className="mt-2 p-5 rounded-xl bg-[#5C435D]/70 border border-[#FDF8F0]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex flex-col gap-1">
+              <span className="text-xs font-mono font-bold text-[#FDF8F0]">
+                Eksplorasi Seluruh Repositori ({allRepositories.length}+ Sistem)
+              </span>
+              <p className="text-xs text-[#FDF8F0]/70 font-sans">
+                Lihat direktori kode lengkap meliputi Quant MT5, Go worker pools, Flutter mobile, hingga x86 Assembly &amp; Zig.
+              </p>
+            </div>
+            <button
+              onClick={() => setIsArchiveOpen(true)}
+              className="px-4 py-2 rounded-lg bg-[#FF6B00] text-[#FDF8F0] hover:bg-[#FDF8F0] hover:text-[#6E536F] text-xs font-mono font-bold tracking-wider transition-colors inline-flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+            >
+              <FolderGit2 size={14} />
+              <span>Buka Repository Index</span>
+            </button>
           </div>
         </section>
 
@@ -549,6 +762,120 @@ export default function Home() {
         </footer>
 
       </main>
+
+      {/* =========================================================================
+          MODAL: ALL REPOSITORIES DIRECTORY (INDEX LENGKAP SEMUA KARYA BRYAN)
+          ========================================================================= */}
+      {isArchiveOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsArchiveOpen(false);
+          }}
+        >
+          <div className="relative w-full max-w-2xl bg-[#5C435D] rounded-2xl border border-[#FDF8F0]/20 p-6 sm:p-8 shadow-2xl flex flex-col max-h-[85vh] overflow-hidden">
+            
+            {/* Header Modal */}
+            <div className="flex items-center justify-between pb-4 border-b border-[#FDF8F0]/15 mb-4 shrink-0">
+              <div className="flex items-center gap-2.5">
+                <FolderGit2 className="text-[#FF6B00]" size={20} />
+                <h3 className="font-outfit font-bold text-lg text-[#FDF8F0]">
+                  Bryan Yogie / Full Repository Index
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsArchiveOpen(false)}
+                className="text-xs font-mono px-2.5 py-1 rounded bg-[#4D354E] hover:bg-[#FDF8F0] text-[#FDF8F0] hover:text-[#6E536F] transition-colors cursor-pointer"
+              >
+                Close [Esc]
+              </button>
+            </div>
+
+            {/* Search & Category Filter Controls */}
+            <div className="flex flex-col gap-3 pb-4 shrink-0">
+              <div className="relative">
+                <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#FDF8F0]/50" />
+                <input
+                  type="text"
+                  placeholder="Cari repo, bahasa (Go, Python, Dart, Zig...), atau kata kunci..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-[#4D354E] border border-[#FDF8F0]/15 text-xs text-[#FDF8F0] placeholder-[#FDF8F0]/40 focus:outline-none focus:border-[#FF6B00]"
+                />
+              </div>
+
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs font-mono scrollbar-none">
+                {["All", "Fullstack", "Quant & Algo", "Systems & Backend", "Mobile", "UI & Experiments"].map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setArchiveFilter(cat)}
+                    className={`px-2.5 py-1 rounded-full whitespace-nowrap transition-colors cursor-pointer ${
+                      archiveFilter === cat 
+                        ? "bg-[#FF6B00] text-white font-bold" 
+                        : "bg-[#4D354E] text-[#FDF8F0]/70 hover:text-[#FDF8F0]"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* List Repositories */}
+            <div className="overflow-y-auto divide-y divide-[#FDF8F0]/10 pr-1 -mr-1">
+              {filteredArchive.length === 0 ? (
+                <div className="py-12 text-center text-xs font-mono text-[#FDF8F0]/50">
+                  Tidak ada repositori yang cocok dengan pencarianmu.
+                </div>
+              ) : (
+                filteredArchive.map((repo) => (
+                  <a
+                    key={repo.name}
+                    href={repo.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-3 flex flex-col gap-1 group hover:bg-[#4D354E]/40 px-2 rounded-lg transition-colors"
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-xs sm:text-sm font-bold text-[#FDF8F0] group-hover:text-[#FF6B00] transition-colors">
+                          {repo.name}
+                        </span>
+                        <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity text-[#FF6B00]" />
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#4D354E] text-[#FF6B00]">
+                          {repo.lang}
+                        </span>
+                        <span className="text-[10px] font-mono text-[#FDF8F0]/50 hidden sm:inline">
+                          {repo.category}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-[#FDF8F0]/70 font-sans leading-relaxed">
+                      {repo.desc}
+                    </p>
+                  </a>
+                ))
+              )}
+            </div>
+
+            {/* Footer Modal */}
+            <div className="pt-3 mt-3 border-t border-[#FDF8F0]/15 flex items-center justify-between text-[11px] font-mono text-[#FDF8F0]/60 shrink-0">
+              <span>Menampilkan {filteredArchive.length} dari {allRepositories.length} repositori</span>
+              <a
+                href="https://github.com/Yogiexc?tab=repositories"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#FF6B00] hover:underline"
+              >
+                Lihat di GitHub Profile ↗
+              </a>
+            </div>
+
+          </div>
+        </div>
+      )}
 
       {/* =========================================================================
           MODAL: BACA TULISAN ARTIKEL BRYAN
