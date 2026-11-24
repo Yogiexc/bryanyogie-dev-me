@@ -331,15 +331,20 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Lock body scroll when overlay menu or modal is open
+  // Handle scroll lock when overlay menu or modal is open
   useEffect(() => {
-    if (menuOpen || isArchiveOpen || selectedPost) {
+    const isLocked = menuOpen || isArchiveOpen || selectedPost !== null;
+    const lenisInstance = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis;
+    if (isLocked) {
       document.body.style.overflow = "hidden";
+      lenisInstance?.stop();
     } else {
       document.body.style.overflow = "";
+      lenisInstance?.start();
     }
     return () => {
       document.body.style.overflow = "";
+      lenisInstance?.start();
     };
   }, [menuOpen, isArchiveOpen, selectedPost]);
 
@@ -822,7 +827,10 @@ export default function Home() {
             </div>
 
             {/* List Repositories */}
-            <div className="overflow-y-auto divide-y divide-[#FDF8F0]/10 pr-1 -mr-1">
+            <div 
+              data-lenis-prevent
+              className="overflow-y-auto overscroll-contain divide-y divide-[#FDF8F0]/10 pr-1 -mr-1"
+            >
               {filteredArchive.length === 0 ? (
                 <div className="py-12 text-center text-xs font-mono text-[#FDF8F0]/50">
                   Tidak ada repositori yang cocok dengan pencarianmu.
@@ -887,7 +895,10 @@ export default function Home() {
             if (e.target === e.currentTarget) setSelectedPost(null);
           }}
         >
-          <div className="relative w-full max-w-lg bg-[#5C435D] rounded-2xl border border-[#FDF8F0]/20 p-6 sm:p-8 shadow-2xl flex flex-col max-h-[85vh] overflow-y-auto">
+          <div 
+            data-lenis-prevent
+            className="relative w-full max-w-lg bg-[#5C435D] rounded-2xl border border-[#FDF8F0]/20 p-6 sm:p-8 shadow-2xl flex flex-col max-h-[85vh] overflow-y-auto overscroll-contain"
+          >
             <div className="flex items-center justify-between pb-4 border-b border-[#FDF8F0]/15 mb-6">
               <span className="font-mono text-xs uppercase tracking-widest text-[#FF6B00]">
                 bryanyogie.is-a.dev/writing/{selectedPost.slug}
