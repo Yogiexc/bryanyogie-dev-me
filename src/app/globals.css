@@ -3,10 +3,11 @@
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-outfit: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
-  --color-background: #6E536F;
+  --color-background: #1C121E;
   --color-foreground: #FDF8F0;
-  --color-surface: #5C435D;
-  --color-cinder: #4D354E;
+  --color-surface: #2D1D31;
+  --color-surface-hover: #3A263F;
+  --color-cinder: #150D17;
   --color-accent: #FF6B00;
   --color-primary: #FF6B00;
   --color-orange: #FF6B00;
@@ -16,13 +17,18 @@
     0% { transform: translateY(-100%); }
     100% { transform: translateY(200%); }
   }
+
+  @keyframes shine {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
 }
 
 :root {
-  --background: #6E536F;
+  --background: #1C121E;
   --foreground: #FDF8F0;
-  --surface: #5C435D;
-  --surface-border: rgba(253, 248, 240, 0.15);
+  --surface: #2D1D31;
+  --surface-border: rgba(253, 248, 240, 0.12);
   --primary: #FF6B00;
   --accent: #FF6B00;
 }
